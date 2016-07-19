@@ -1,0 +1,1 @@
+../../../ChatKit/ChatKit/Class/Module/Conversation/Tool/Categories/UIImageView+LCCKExtension.h
