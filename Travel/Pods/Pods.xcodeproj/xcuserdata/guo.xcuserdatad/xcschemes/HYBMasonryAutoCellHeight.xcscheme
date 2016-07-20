@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'E2ECE6E05A7755195D869739D5F48CE6'
-               BlueprintName = 'TWMessageBarManager'
+               BlueprintIdentifier = '430F2338D335FBD391F68DA9608D1E49'
+               BlueprintName = 'HYBMasonryAutoCellHeight'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libTWMessageBarManager.a'>
+               BuildableName = 'libHYBMasonryAutoCellHeight.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

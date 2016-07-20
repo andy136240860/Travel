@@ -17,7 +17,9 @@ PODS:
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
-  - Masonry (1.0.1)
+  - HYBMasonryAutoCellHeight (2.0.1):
+    - Masonry (~> 0.6)
+  - Masonry (0.6.4)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.10)
   - MLPAutoCompleteTextField (1.5)
@@ -36,6 +38,7 @@ PODS:
 DEPENDENCIES:
   - ChatKit
   - CYLTabBarController
+  - HYBMasonryAutoCellHeight
   - MBProgressHUD
   - MLPAutoCompleteTextField
   - MWPhotoBrowser
@@ -50,7 +53,8 @@ SPEC CHECKSUMS:
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   FDStackView: 3a4bbe0ce9c35e974246a585168b9da8c32213f1
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+  HYBMasonryAutoCellHeight: 9296583777080d32ba6257f55e52b7334dd481fc
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: bb72948c985914b0b5cecac573a2c69a8915fb02
   MLPAutoCompleteTextField: ba4d507bbff2bd4f139d4197814fc8dd39caf77e
@@ -60,6 +64,6 @@ SPEC CHECKSUMS:
   TWMessageBarManager: fd84e7948ba7968a2b5d9454859135761214ec56
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
 
-PODFILE CHECKSUM: b342a367f56c3acb1132091745f17ce2c84be5f8
+PODFILE CHECKSUM: 831fb2a6a4f424f9e9b68f92be83dbd20185fc4e
 
 COCOAPODS: 1.0.1

@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>HYBMasonryAutoCellHeight.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -92,12 +97,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0F2692B20FE0C3E290CE44C20A163C1B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>3E627EC48F7668D3FB853CCCFD4B5F44</key>
+		<key>430F2338D335FBD391F68DA9608D1E49</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,12 +147,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>E2ECE6E05A7755195D869739D5F48CE6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>EA4F3195EACD5B63C3E1B0381DE087E2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>FBC236091A2B7AE29FF95C3781D34B51</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FF50EBDAEE2EF0C44748B9EF23E7F54F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
