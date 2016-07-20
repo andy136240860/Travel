@@ -44,17 +44,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>MWPhotoBrowser-MWPhotoBrowser.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>MWPhotoBrowser.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Masonry.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PSTCollectionView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -82,27 +82,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>062EE6E51BFCDBDE303E5C4729F369CF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0C1D89EAE68EF4D4ABEDB611EC44AAB0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>17AAF306494797C37B6DCA1C72E565C7</key>
+		<key>0F2692B20FE0C3E290CE44C20A163C1B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>27FD9FDD75B4505CA9CA827D8C9C2473</key>
+		<key>3E627EC48F7668D3FB853CCCFD4B5F44</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5813251FEA21E4AEE97385709F1912DE</key>
+		<key>54555E19F0EA47056F04EA6C77574CA7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6AF584FB133D0BE20665F5CC52B53278</key>
+		<key>625225DB194C2C53ADE11A7065063055</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,47 +117,42 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9668CD285064E4381BE7346245214262</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>9775596B3CA16905FC8F66DA8E2A3C67</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CF3D7C974AED4DF9FAE03F9E119A4749</key>
+		<key>B51AAA437FAA18FAA9633065EAD8C47D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D059DAF9FB027BE243EE6C5041FCA73F</key>
+		<key>C5B49272FC9E8FA74FDDF02623FC080B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D0E68CE59EC9EB01E032F5ED19F82AD3</key>
+		<key>C7477F39C50A2FD23A33A83A68AB4646</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E2FE87384A67337831E53490EEA8BF11</key>
+		<key>C9B9BA857AABD8C32F1462CD497F0451</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F2B331BDBB3FF1D55519B4238D0444DF</key>
+		<key>D058B89EB3B3DF45457A2DCD3971AFFE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F50062F1F6F48175E788F0CFAC7050AE</key>
+		<key>EA4F3195EACD5B63C3E1B0381DE087E2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FE2F1D7B9D9FCEA148517E4657B243F4</key>
+		<key>FBC236091A2B7AE29FF95C3781D34B51</key>
 		<dict>
 			<key>primary</key>
 			<true/>

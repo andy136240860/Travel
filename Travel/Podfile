@@ -15,5 +15,6 @@ pod 'TWMessageBarManager'
 #pod "FDStackView", "1.0"
 pod 'MWPhotoBrowser'
 pod 'MLPAutoCompleteTextField'
+pod 'SDWebImage','>=3.8.1'
 
 end

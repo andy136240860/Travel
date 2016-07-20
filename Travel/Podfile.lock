@@ -2,7 +2,7 @@ PODS:
   - AVOSCloud (3.3.5)
   - AVOSCloudIM (3.3.5):
     - AVOSCloud
-  - ChatKit (0.1.2):
+  - ChatKit (0.1.5):
     - AVOSCloud
     - AVOSCloudIM
     - FDStackView
@@ -18,13 +18,15 @@ PODS:
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
   - Masonry (1.0.1)
-  - MBProgressHUD (0.9.2)
+  - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.10)
   - MLPAutoCompleteTextField (1.5)
-  - MWPhotoBrowser (2.1.2):
-    - DACircularProgress (~> 2.3)
-    - MBProgressHUD (~> 0.9)
-    - SDWebImage (!= 3.7.2, ~> 3.7)
+  - MWPhotoBrowser (1.2.1):
+    - DACircularProgress
+    - MBProgressHUD
+    - PSTCollectionView (~> 1.2)
+    - SDWebImage (~> 3.5)
+  - PSTCollectionView (1.2.3)
   - SDWebImage (3.8.1):
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
@@ -37,25 +39,27 @@ DEPENDENCIES:
   - MBProgressHUD
   - MLPAutoCompleteTextField
   - MWPhotoBrowser
+  - SDWebImage (>= 3.8.1)
   - TWMessageBarManager
 
 SPEC CHECKSUMS:
   AVOSCloud: 1fe170768bee7e05bc3ea86e38d5bddb105cb957
   AVOSCloudIM: dc307c48e951fcd861f4ae6db6d807e7b40639c8
-  ChatKit: 03e762eafa1d2e3a2788452ea5bb06b3227550f3
+  ChatKit: da9444c3749192470f53598d4b096498c9cedc59
   CYLTabBarController: efbdd574772be17f17965acd7ee993f5972ff02f
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   FDStackView: 3a4bbe0ce9c35e974246a585168b9da8c32213f1
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
-  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: bb72948c985914b0b5cecac573a2c69a8915fb02
   MLPAutoCompleteTextField: ba4d507bbff2bd4f139d4197814fc8dd39caf77e
-  MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
+  MWPhotoBrowser: 7087b4c828297ef34ff2b0892c8e967034a86842
+  PSTCollectionView: 6749df92885353521f55279a7ce2b293762e2be4
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   TWMessageBarManager: fd84e7948ba7968a2b5d9454859135761214ec56
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
 
-PODFILE CHECKSUM: 3130f94aaceb36c99910734be261963293b390a0
+PODFILE CHECKSUM: b342a367f56c3acb1132091745f17ce2c84be5f8
 
 COCOAPODS: 1.0.1

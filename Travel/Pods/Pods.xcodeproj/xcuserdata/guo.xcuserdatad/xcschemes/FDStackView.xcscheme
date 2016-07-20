@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'D059DAF9FB027BE243EE6C5041FCA73F'
+               BlueprintIdentifier = '062EE6E51BFCDBDE303E5C4729F369CF'
                BlueprintName = 'FDStackView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libFDStackView.a'>

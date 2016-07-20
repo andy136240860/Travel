@@ -1,1 +1,1 @@
-../../../ChatKit/ChatKit/LCChatKit.h
+../../../ChatKit/ChatKit/Class/LCChatKit.h

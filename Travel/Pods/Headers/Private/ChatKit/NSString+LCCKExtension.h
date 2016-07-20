@@ -1,1 +1,1 @@
-../../../ChatKit/ChatKit/Class/Module/Conversation/Tool/Categories/NSString+LCCKExtension.h
+../../../ChatKit/ChatKit/Class/Tool/Categories/NSString+LCCKExtension.h

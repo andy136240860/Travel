@@ -160,7 +160,6 @@
 		3EFB22361AB5B43F000872F3 /* SNTopTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFB22351AB5B43F000872F3 /* SNTopTabViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3EFB223B1AB5B5A4000872F3 /* SNTopTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFB22381AB5B5A4000872F3 /* SNTopTabBar.m */; };
 		3EFB223C1AB5B5A4000872F3 /* SNTopTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFB223A1AB5B5A4000872F3 /* SNTopTabBarItem.m */; };
-		5E5F928D6D12A519585C78E6 /* libPods-Travel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FBCBAB7B79B9F8C50EEA5A /* libPods-Travel.a */; };
 		7F229E841C97F57C009C19E8 /* DoctorFameListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F229E831C97F57C009C19E8 /* DoctorFameListController.m */; };
 		7F229E871C97F59E009C19E8 /* DoctorFameListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F229E861C97F59E009C19E8 /* DoctorFameListModel.m */; };
 		7F229E8A1C97F5F8009C19E8 /* DoctorFameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F229E891C97F5F8009C19E8 /* DoctorFameCell.m */; };
@@ -211,6 +210,7 @@
 		7FFB94921C967051003523B4 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFB94911C967051003523B4 /* Comment.m */; };
 		7FFB94951C96BAD1003523B4 /* MyCommentListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFB94941C96BAD1003523B4 /* MyCommentListModel.m */; };
 		7FFB94981C96C3E6003523B4 /* CUCommentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFB94971C96C3E6003523B4 /* CUCommentManager.m */; };
+		9C6D46F4FE6A44FA69104497 /* libPods-Travel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5AF75FA5F8020920EAA209D /* libPods-Travel.a */; };
 		BC003A0D1C9FC215006098BA /* flag_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC003A0C1C9FC215006098BA /* flag_selected@2x.png */; };
 		BC0E84B31C7857E700082AA9 /* AddFamilyMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0E84B21C7857E700082AA9 /* AddFamilyMemberViewController.m */; };
 		BC0E84B51C78598E00082AA9 /* littleTrumpet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC0E84B41C78598E00082AA9 /* littleTrumpet@2x.png */; };
@@ -601,7 +601,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3190A14C76DD0E6EDD10A74A /* Pods-Travel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel.release.xcconfig"; path = "Pods/Target Support Files/Pods-Travel/Pods-Travel.release.xcconfig"; sourceTree = "<group>"; };
 		3E239E541AB2A645001F0B3F /* SNPhoneHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNPhoneHelper.h; sourceTree = "<group>"; };
 		3E239E551AB2A645001F0B3F /* SNPhoneHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNPhoneHelper.m; sourceTree = "<group>"; };
 		3E239E681AB2CF90001F0B3F /* TipHandler+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TipHandler+HUD.h"; sourceTree = "<group>"; };
@@ -881,7 +880,6 @@
 		3EFB22381AB5B5A4000872F3 /* SNTopTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTopTabBar.m; sourceTree = "<group>"; };
 		3EFB22391AB5B5A4000872F3 /* SNTopTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTopTabBarItem.h; sourceTree = "<group>"; };
 		3EFB223A1AB5B5A4000872F3 /* SNTopTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTopTabBarItem.m; sourceTree = "<group>"; };
-		49CE6CC92CC511EF7F2CD17B /* Pods-Travel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Travel/Pods-Travel.debug.xcconfig"; sourceTree = "<group>"; };
 		7F229E821C97F57C009C19E8 /* DoctorFameListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoctorFameListController.h; sourceTree = "<group>"; };
 		7F229E831C97F57C009C19E8 /* DoctorFameListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoctorFameListController.m; sourceTree = "<group>"; };
 		7F229E851C97F59E009C19E8 /* DoctorFameListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoctorFameListModel.h; sourceTree = "<group>"; };
@@ -1128,7 +1126,7 @@
 		BCFE4BE21D3B6B6400FBB7ED /* XQFeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQFeedCell.m; sourceTree = "<group>"; };
 		BCFE4BE31D3B6B6400FBB7ED /* XQFeedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQFeedModel.h; sourceTree = "<group>"; };
 		BCFE4BE41D3B6B6400FBB7ED /* XQFeedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQFeedModel.m; sourceTree = "<group>"; };
-		D2FBCBAB7B79B9F8C50EEA5A /* libPods-Travel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Travel.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3BF72F04D9EDA939E4FB4F5 /* Pods-Travel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Travel/Pods-Travel.debug.xcconfig"; sourceTree = "<group>"; };
 		D405CC5E1C003DA700A56264 /* CUPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CUPasswordView.h; sourceTree = "<group>"; };
 		D405CC5F1C003DA700A56264 /* CUPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CUPasswordView.m; sourceTree = "<group>"; };
 		D405CC651C00CBB900A56264 /* login_hide_password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_hide_password@2x.png"; sourceTree = "<group>"; };
@@ -1150,6 +1148,8 @@
 		D4A54FB01C0C184B00952B30 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D4A54FB21C0C186600952B30 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D4A54FB41C0C187A00952B30 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		D5AF75FA5F8020920EAA209D /* libPods-Travel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Travel.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFC36173AD9EAC5C231E18FC /* Pods-Travel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel.release.xcconfig"; path = "Pods/Target Support Files/Pods-Travel/Pods-Travel.release.xcconfig"; sourceTree = "<group>"; };
 		E10EDC671B8B598E0035B6E7 /* CUOrderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CUOrderManager.h; sourceTree = "<group>"; };
 		E10EDC681B8B598E0035B6E7 /* CUOrderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CUOrderManager.m; sourceTree = "<group>"; };
 		E10EDC691B8B598E0035B6E7 /* OrderManager+ThirdPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OrderManager+ThirdPay.h"; sourceTree = "<group>"; };
@@ -1782,7 +1782,7 @@
 				E1EB1ECC1B70A4D70048B8EB /* AlipaySDK.framework in Frameworks */,
 				BC98DB661D3CCDFC00261BB1 /* libReveal.dylib in Frameworks */,
 				3EDEBACF1A961FC600E72809 /* CoreTelephony.framework in Frameworks */,
-				5E5F928D6D12A519585C78E6 /* libPods-Travel.a in Frameworks */,
+				9C6D46F4FE6A44FA69104497 /* libPods-Travel.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2000,8 +2000,8 @@
 				3ED8566B1A9379B700516900 /* SNArchitecture */,
 				3EDEBAE01A9620C400E72809 /* FrameWork */,
 				3ED8563F1A9376D400516900 /* Products */,
-				BDCF07E31B2D1D3664ECADE2 /* Frameworks */,
-				B140116EC19B68B872148235 /* Pods */,
+				B911BBCFADE28B2EAC170BC5 /* Pods */,
+				F63261054AECAEAB79DC6E4C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2725,11 +2725,11 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		B140116EC19B68B872148235 /* Pods */ = {
+		B911BBCFADE28B2EAC170BC5 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				49CE6CC92CC511EF7F2CD17B /* Pods-Travel.debug.xcconfig */,
-				3190A14C76DD0E6EDD10A74A /* Pods-Travel.release.xcconfig */,
+				C3BF72F04D9EDA939E4FB4F5 /* Pods-Travel.debug.xcconfig */,
+				DFC36173AD9EAC5C231E18FC /* Pods-Travel.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -3010,14 +3010,6 @@
 				BCAA4AC61C85964D0085A165 /* TotalMoneyView.m */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		BDCF07E31B2D1D3664ECADE2 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D2FBCBAB7B79B9F8C50EEA5A /* libPods-Travel.a */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D405CC641C0061FD00A56264 /* CUPassword */ = {
@@ -4340,6 +4332,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		F63261054AECAEAB79DC6E4C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D5AF75FA5F8020920EAA209D /* libPods-Travel.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4347,12 +4347,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3ED856641A9376D500516900 /* Build configuration list for PBXNativeTarget "Travel" */;
 			buildPhases = (
-				B80AB63C5B1943B5D2FE907D /* [CP] Check Pods Manifest.lock */,
+				F3BE49884D84221FCBB991F8 /* [CP] Check Pods Manifest.lock */,
 				3ED8563A1A9376D400516900 /* Sources */,
 				3ED8563B1A9376D400516900 /* Frameworks */,
 				3ED8563C1A9376D400516900 /* Resources */,
-				9D23B7BB907C0C9080120907 /* [CP] Embed Pods Frameworks */,
-				F6C86843371602539CB8A833 /* [CP] Copy Pods Resources */,
+				EE110A4C04E02FC6901D4C0D /* [CP] Embed Pods Frameworks */,
+				CBB1B70450C82C123C31EED9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4599,34 +4599,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9D23B7BB907C0C9080120907 /* [CP] Embed Pods Frameworks */ = {
+		CBB1B70450C82C123C31EED9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Travel/Pods-Travel-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B80AB63C5B1943B5D2FE907D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Travel/Pods-Travel-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E10706E31B0E2F460048FAB8 /* ShellScript */ = {
@@ -4642,19 +4627,34 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh $SRCROOT/build_ota_process.sh";
 		};
-		F6C86843371602539CB8A833 /* [CP] Copy Pods Resources */ = {
+		EE110A4C04E02FC6901D4C0D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Travel/Pods-Travel-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Travel/Pods-Travel-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F3BE49884D84221FCBB991F8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -5127,7 +5127,7 @@
 		};
 		3ED856651A9376D500516900 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 49CE6CC92CC511EF7F2CD17B /* Pods-Travel.debug.xcconfig */;
+			baseConfigurationReference = C3BF72F04D9EDA939E4FB4F5 /* Pods-Travel.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -5211,7 +5211,7 @@
 		};
 		3ED856661A9376D500516900 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3190A14C76DD0E6EDD10A74A /* Pods-Travel.release.xcconfig */;
+			baseConfigurationReference = DFC36173AD9EAC5C231E18FC /* Pods-Travel.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
