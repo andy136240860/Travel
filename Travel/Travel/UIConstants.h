@@ -88,6 +88,10 @@
 #define kCurrentLng     [[NSUserDefaults standardUserDefaults] objectForKey:@"lng"]
 //#define kCurrentCity    [[NSUserDefaults standardUserDefaults] objectForKey:@"city"]
 
+
+#define kChatKeyBoardColor              [UIColor colorWithRed:245/255.f green:245/255.f blue:245/255.f alpha:1.0f]//ChatKeyBoard背景颜色
+#define kChatToolBarHeight              49    //ChatKeyboard用的//键盘上面的工具条
+
 #define kPageSize       20
 #define kPageInfoKey    @"pageInfo"
 #define kCurrPageKey    @"currentPage"

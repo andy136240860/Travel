@@ -98,6 +98,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "TWMessageBarManager/Classes/Icons/icon-info@2x.png"
   install_resource "TWMessageBarManager/Classes/Icons/icon-success.png"
   install_resource "TWMessageBarManager/Classes/Icons/icon-success@2x.png"
+  install_resource "ZFPlayer/ZFPlayer/ZFPlayer.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "ChatKit/ChatKit/Class/Resources/BarButtonIcon.bundle"
@@ -118,6 +119,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "TWMessageBarManager/Classes/Icons/icon-info@2x.png"
   install_resource "TWMessageBarManager/Classes/Icons/icon-success.png"
   install_resource "TWMessageBarManager/Classes/Icons/icon-success@2x.png"
+  install_resource "ZFPlayer/ZFPlayer/ZFPlayer.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

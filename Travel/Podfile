@@ -17,6 +17,7 @@ pod 'MWPhotoBrowser'
 pod 'MLPAutoCompleteTextField'
 pod 'SDWebImage','>=3.8.1'
 pod 'HYBMasonryAutoCellHeight'
+pod 'ZFPlayer'
 #pod 'Masonry','1.0.1'
 
 end
