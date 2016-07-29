@@ -12,6 +12,7 @@
 #import "CUUIContant.h"
 #import "BMapKit.h"
 #import "CUUserManager.h"
+#import <AVOSCloud/AVOSCloud.h>
 
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
@@ -29,9 +30,8 @@
 #import "CUPlatFormManager.h"
 
 #import "HomeViewController.h"
-#import "UserCenterController.h"
-#import "VIPController.h"
-#import "NearbyController.h"
+#import "MeViewController.h"
+#import "ExploreViewController.h"
 
 #import "UserViewController.h"
 #import "OrderManager+ThirdPay.h"
@@ -67,6 +67,9 @@
 {
     //加载各引擎类
     [[AppCore sharedInstance] load];
+    
+    [AVOSCloud setApplicationId:@"YpRaRTRbziVSjxPDLoW3jMH9-gzGzoHsz" clientKey:@"hzNWspVOq52ocxjySeXqHrGo"];
+    [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(IOS_7_0)) {
@@ -297,17 +300,18 @@
     HomeViewController *homeVC = [[HomeViewController alloc] initWithPageName:@"HomeViewController"];
     homeVC.customTabBarItem = [self tabBarItemAtIndex:0];
     
-    NearbyController *orderVC = [[NearbyController alloc] initWithPageName:@"NearbyController"];
-    orderVC.customTabBarItem = [self tabBarItemAtIndex:1];
-    
-//    VIPController *scoreBoradVC = [[VIPController alloc] initWithPageName:@"VIPController"];
-//    scoreBoradVC.customTabBarItem = [self tabBarItemAtIndex:2];
+    ExploreViewController *exploreVC = [[ExploreViewController alloc] initWithPageName:@"ExploreViewController"];
+    exploreVC.customTabBarItem = [self tabBarItemAtIndex:1];
     
     UserViewController *userVC = [[UserViewController alloc] initWithPageName:@"UserViewController"];
     userVC.customTabBarItem = [self tabBarItemAtIndex:2];
     
+    MeViewController *meVC = [[MeViewController alloc] initWithPageName:@"VIPController"];
+    meVC.customTabBarItem = [self tabBarItemAtIndex:3];
+    
+    
     self.tabController = [[SNTabViewController alloc] initWithHeight:Height_Tabbar];
-    self.tabController.viewControllers = @[homeVC,orderVC,userVC];
+    self.tabController.viewControllers = @[homeVC,exploreVC,userVC,meVC];
     
     self.tabController.selectedIndex = 0;
     self.tabController.customTabBar.selectedIndex = 0;
@@ -317,7 +321,7 @@
 
 - (SNTabBarItem *)tabBarItemAtIndex:(int)index
 {
-    NSArray *titles = @[@"优医",@"优医馆",@"我的",@"VIP"];
+    NSArray *titles = @[@"Home",@"Explore",@"S&R",@"Me"];
     NSArray *norIcons = @[@"tabbar_home_nor",@"tabbar_nearby_nor",@"tabbar_mine_nor",@"tabbar_vip_nor"];
     //    NSArray *hilIcons = @[@"tabbar_icon_home_highlighted",@"tabbar_icon_service_highlighted",@"tabbar_icon_discount_highlighted",@"tabbar_icon_mine_highlighted"];
     NSArray *selIcons = @[@"tabbar_home_sel",@"tabbar_nearby_sel",@"tabbar_mine_sel",@"tabbar_vip_sel"];

@@ -23,7 +23,7 @@
     return _commentModelArray;
 }
 
-- (instancetype) initWithDictionary:(NSDictionary *) dictionary {
+- (instancetype)initWithDictionary:(NSDictionary *) dictionary {
     
     if (self = [super init]) {
         self.homeCellType = 0;

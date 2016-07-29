@@ -15,19 +15,6 @@
 
 #import "LoginViewController.h"
 
-#import "MyDiagnosisRecordsListModel.h"
-#import "MyDiagnosisRecordsViewController.h"
-
-#import "MyDoctorListModel.h"
-#import "MyDoctorListViewController.h"
-
-#import "MyClinicListViewController.h"
-#import "MyClinicListModel.h"
-
-#import "MyAccountMainViewController.h"
-
-#import "MyCommentViewController.h"
-#import "MyCommentListModel.h"
 
 @interface UserViewController ()<UIAlertViewDelegate,UITableViewDataSource,UITableViewDelegate>{
     UserHeaderView *userHeaderView;
@@ -109,98 +96,98 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = UIColorFromHex(Color_Hex_ImageDefault);
-        
-        UserHeaderView *userHeaderView = [[UserHeaderView alloc]initWithFrame:CGRectMake(0, 9, kScreenWidth, 95)];
-        [cell addSubview:userHeaderView];
-        
-        return cell;
-    }
-    
-    if(indexPath.row == contentTableViewCellText.count){
-        UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = UIColorFromHex(Color_Hex_ImageDefault);
-        
-        UIButton *resignButton = [[UIButton alloc]initWithFrame:CGRectMake(26, 24, kScreenWidth-52, 40)];
-        resignButton.layer.cornerRadius = 20;
-        resignButton.clipsToBounds = YES;
-        resignButton.layer.backgroundColor = UIColorFromHex(0xe15f31).CGColor;
-        [resignButton setTitle:@"退出当前账号" forState:UIControlStateNormal];
-        [resignButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [resignButton addTarget:self action:@selector(resignAction) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:resignButton];
-        return cell;
-    }
+//    if (indexPath.row == 0) {
+//        UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        cell.backgroundColor = UIColorFromHex(Color_Hex_ImageDefault);
+//        
+//        UserHeaderView *userHeaderView = [[UserHeaderView alloc]initWithFrame:CGRectMake(0, 9, kScreenWidth, 95)];
+//        [cell addSubview:userHeaderView];
+//        
+//        return cell;
+//    }
+//    
+//    if(indexPath.row == contentTableViewCellText.count){
+//        UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        cell.backgroundColor = UIColorFromHex(Color_Hex_ImageDefault);
+//        
+//        UIButton *resignButton = [[UIButton alloc]initWithFrame:CGRectMake(26, 24, kScreenWidth-52, 40)];
+//        resignButton.layer.cornerRadius = 20;
+//        resignButton.clipsToBounds = YES;
+//        resignButton.layer.backgroundColor = UIColorFromHex(0xe15f31).CGColor;
+//        [resignButton setTitle:@"退出当前账号" forState:UIControlStateNormal];
+//        [resignButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        [resignButton addTarget:self action:@selector(resignAction) forControlEvents:UIControlEventTouchUpInside];
+//        [cell addSubview:resignButton];
+//        return cell;
+//    }
     
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    cell.imageView.image = [UIImage imageNamed:[contentTableViewCellIcon objectAtIndex:(indexPath.row -1)]];
-    cell.textLabel.text = [contentTableViewCellText objectAtIndex:(indexPath.row - 1)];
-    cell.textLabel.font = [UIFont systemFontOfSize:13];
-    
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(20, 62.5, kScreenWidth-20, 0.5)];
-    lineView.backgroundColor = UIColorFromHex(0xcccccc);
-    [cell.contentView addSubview:lineView];
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    
+//    cell.imageView.image = [UIImage imageNamed:[contentTableViewCellIcon objectAtIndex:(indexPath.row -1)]];
+//    cell.textLabel.text = [contentTableViewCellText objectAtIndex:(indexPath.row - 1)];
+//    cell.textLabel.font = [UIFont systemFontOfSize:13];
+//    
+//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    
+//    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(20, 62.5, kScreenWidth-20, 0.5)];
+//    lineView.backgroundColor = UIColorFromHex(0xcccccc);
+//    [cell.contentView addSubview:lineView];
     return cell;
     
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch (indexPath.row) {
-            //我的医生
-        case 1:{
-            MyDoctorListModel *listModel = [[MyDoctorListModel alloc]initWithSortType:1];
-            MyDoctorListViewController *myDoctorVC = [[MyDoctorListViewController alloc]initWithPageName:@"UserViewController" listModel:listModel];
-            [self.slideNavigationController  pushViewController:myDoctorVC animated:YES];
-            break;
-        }
-            //我的诊所
-        case 2:{
-            MyClinicListModel *listModel = [[MyClinicListModel alloc]initWithSortType:1];
-            MyClinicListViewController *myClinicVC = [[MyClinicListViewController alloc]initWithPageName:@"UserViewController" listModel:listModel];
-            [self.slideNavigationController  pushViewController:myClinicVC animated:YES];
-            break;
-        }
-            //就诊记录
-        case 3:{
-            MyDiagnosisRecordsListModel *listModel = [[MyDiagnosisRecordsListModel alloc]initWithSortType:1];
-            MyDiagnosisRecordsViewController *myDiagnosisRecordsVC = [[MyDiagnosisRecordsViewController alloc]initWithPageName:@"UserViewController" listModel:listModel];
-            [self.slideNavigationController  pushViewController:myDiagnosisRecordsVC animated:YES];
-            break;
-        }
-            //我的账户
-        case 4:{
-            MyAccountMainViewController   *myAccountVC = [[MyAccountMainViewController alloc]initWithPageName:@"MyAccountMainViewController"];
-            [self.slideNavigationController pushViewController:myAccountVC animated:YES];
-            break;
-        }
-            //我的点评
-        case 5 :
-        {
-            MyCommentListModel * listModel = [[MyCommentListModel alloc] init];
-            listModel.filter.lastID = 0;
-            MyCommentViewController * VC = [[MyCommentViewController alloc]initWithPageName:@"UserViewController" listModel:listModel];
-            [self.slideNavigationController  pushViewController:VC animated:YES];
-            break;
-        }
-            //我的积分
-        case 6:{
-            break;
-        }
-        default:{
-            NSLog(@"参数错误");
-            
-            break;
-        }
-    }
+//    switch (indexPath.row) {
+//            //我的医生
+//        case 1:{
+//            MyDoctorListModel *listModel = [[MyDoctorListModel alloc]initWithSortType:1];
+//            MyDoctorListViewController *myDoctorVC = [[MyDoctorListViewController alloc]initWithPageName:@"UserViewController" listModel:listModel];
+//            [self.slideNavigationController  pushViewController:myDoctorVC animated:YES];
+//            break;
+//        }
+//            //我的诊所
+//        case 2:{
+//            MyClinicListModel *listModel = [[MyClinicListModel alloc]initWithSortType:1];
+//            MyClinicListViewController *myClinicVC = [[MyClinicListViewController alloc]initWithPageName:@"UserViewController" listModel:listModel];
+//            [self.slideNavigationController  pushViewController:myClinicVC animated:YES];
+//            break;
+//        }
+//            //就诊记录
+//        case 3:{
+//            MyDiagnosisRecordsListModel *listModel = [[MyDiagnosisRecordsListModel alloc]initWithSortType:1];
+//            MyDiagnosisRecordsViewController *myDiagnosisRecordsVC = [[MyDiagnosisRecordsViewController alloc]initWithPageName:@"UserViewController" listModel:listModel];
+//            [self.slideNavigationController  pushViewController:myDiagnosisRecordsVC animated:YES];
+//            break;
+//        }
+//            //我的账户
+//        case 4:{
+//            MyAccountMainViewController   *myAccountVC = [[MyAccountMainViewController alloc]initWithPageName:@"MyAccountMainViewController"];
+//            [self.slideNavigationController pushViewController:myAccountVC animated:YES];
+//            break;
+//        }
+//            //我的点评
+//        case 5 :
+//        {
+//            MyCommentListModel * listModel = [[MyCommentListModel alloc] init];
+//            listModel.filter.lastID = 0;
+//            MyCommentViewController * VC = [[MyCommentViewController alloc]initWithPageName:@"UserViewController" listModel:listModel];
+//            [self.slideNavigationController  pushViewController:VC animated:YES];
+//            break;
+//        }
+//            //我的积分
+//        case 6:{
+//            break;
+//        }
+//        default:{
+//            NSLog(@"参数错误");
+//            
+//            break;
+//        }
+//    }
     
     
 }
