@@ -13,14 +13,14 @@
 /** < 返回 **/
 - (void)addLeftBackButtonItemWithImageAndTitle;
 /** < **/
-- (void)addLeftBackButtonItemWithImage;
+- (UIButton *)addLeftBackButtonItemWithImage;
 /** 返回 **/
 //- (void)addLeftBackButtonItemWithTitle;
 
 /** x 关闭 **/
 - (void)addLeftCloseButtonItemWithImageAndTitle;
 /** x **/
-- (void)addLeftCloseButtonItemWithImage;
+- (UIButton *)addLeftCloseButtonItemWithImage;
 /** 关闭 **/
 - (void)addLeftCloseButtonItemWithTitle;
 

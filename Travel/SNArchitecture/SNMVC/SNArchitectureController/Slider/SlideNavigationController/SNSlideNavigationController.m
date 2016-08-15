@@ -280,7 +280,7 @@
 - (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     int index = [self.viewControllers indexOfObject:viewController];
-    return [self popToViewControllerAtIndex:index animated:YES];
+    return [self popToViewControllerAtIndex:index animated:animated];
 }
 
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated

@@ -19,6 +19,6 @@ pod 'SDWebImage','>=3.8.1'
 pod 'HYBMasonryAutoCellHeight'
 pod 'ZFPlayer'
 pod 'YYKit'
-#pod 'Masonry','1.0.1'
+pod 'TSMessages'
 
 end

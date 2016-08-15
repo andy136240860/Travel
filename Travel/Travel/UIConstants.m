@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-NSInteger Color_Hex_NavItem_Normal = 0xfa571a;
+NSInteger Color_Hex_NavItem_Normal = 0xffffff;
 NSInteger Color_Hex_NavText_Normal = 0xffffff;
 NSInteger Color_Hex_NavText_Selected = 0xffffff;
 NSInteger Color_Hex_NavText = 0xffffff;

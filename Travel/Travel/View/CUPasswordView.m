@@ -14,6 +14,7 @@
 #import "MBProgressHUD.h"
 #import "UIImage+Color.h"
 
+
 #define kHeight_Field            35.0
 #define kTextFieldTPadding      25.0
 
@@ -213,40 +214,7 @@
 
 - (void)codeLableAction
 {
-    [self endEditing:YES];
-    [self showHUD];
-    
-    [self startTimer];
-    _codeField.text = @"";
-    
-    [[CUUserManager sharedInstance] requireVerifyCodeWithCellPhone:[CUUserManager sharedInstance].user.cellPhone resultBlock:^(SNHTTPRequestOperation *request, SNServerAPIResultData *result)
-     {
-         [self hideHUD];
-         
-         if (!result.hasError) {
-             if (![(NSNumber *)[result.responseObject valueForKey:@"err_code"] integerValue]) {
-                 [CUUserManager sharedInstance].user.codetoken = [[result.responseObject valueForKey:@"data"] valueForKey:@"codetoken"];
-                 [[CUUserManager sharedInstance] save];
-             }
-             else {
-                 [TipHandler showTipOnlyTextWithNsstring:[result.responseObject valueForKey:@"data"]];
-                 
-                 [self stopTimer];
-                 [self resetButton];
-             }
-         }
-         else {
-             //提示错误
-             NSString *msg = [result.error.userInfo valueForKey:NSLocalizedDescriptionKey];
-             NSLog(@"===ERROR===%@",msg);
-             
-             [TipHandler showTipOnlyTextWithNsstring:msg];
-             
-             [self stopTimer];
-             [self resetButton];
-         }
-     } pageName:@"CUUserVerifyCode"];
-    
+
 }
 
 - (void)stopTimer
@@ -287,23 +255,6 @@
     _codeLabel.text = [NSString stringWithFormat:@"%@s",strTime];
     
     timerCount--;
-}
-
-- (void)showHUD
-{
-    if (_hud == nil) {
-        _hud = [[MBProgressHUD alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-        _hud.center = CGPointMake(CGRectGetWidth(self.attachedView.bounds)/2, CGRectGetHeight(self.attachedView.bounds)/2);
-        [self.attachedView addSubview:_hud];
-        [self.attachedView bringSubviewToFront:_hud];
-    }
-    
-    [_hud show:YES];
-}
-
-- (void)hideHUD
-{
-    [_hud hide:NO];
 }
 
 - (NSString *)oldPassword

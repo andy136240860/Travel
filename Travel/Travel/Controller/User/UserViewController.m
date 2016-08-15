@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "CUUserManager.h"
 
-#import "LoginViewController.h"
+#import "LoginVC.h"
 
 
 @interface UserViewController ()<UIAlertViewDelegate,UITableViewDataSource,UITableViewDelegate>{
@@ -23,7 +23,7 @@
     NSArray *contentTableViewCellText;
 }
 
-@property (nonatomic, strong) LoginViewController *loginVC;
+@property (nonatomic, strong) LoginVC *loginVC;
 
 @end
 
@@ -223,7 +223,7 @@
 - (void)loginAction
 {
     if (!self.loginVC) {
-        self.loginVC = [[LoginViewController alloc] init];
+        self.loginVC = [[LoginVC alloc] init];
     }
     self.loginVC.hasNavigationBar = NO;
     //    self.loginVC.verifyCode = YES;

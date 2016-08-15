@@ -1,21 +1,25 @@
 //
-//  LoginViewController.m
+//  RegisterAccountVC.m
 //  FindDoctor
 //
 //  Created by 晓炜 郭 on 16/1/4.
 //  Copyright © 2016年 li na. All rights reserved.
 //
 
-#import "LoginViewController.h"
+#import "RegisterAccountVC.h"
 #import "LoginTextFeildView.h"
 
-#import "CUUserManager.h"
 #import "MBProgressHUD.h"
 #import "TipHandler+HUD.h"
+#import "AVOSCloud.h"
+#import "AVUser.h"
+
+#import "RegisterAddDetailsVC.h"
+#import "UINavigationBar+Background.h"
 
 #define kCodeButtonWith         80
 
-@interface LoginViewController (){
+@interface RegisterAccountVC (){
     UIButton *_codeButton;
     UILabel *_codeLabel;
     
@@ -25,37 +29,46 @@
     int timerCount;
 }
 
-@property (nonatomic, strong) UIScrollView *contentScrollView;
-
 @property (nonatomic,strong) MBProgressHUD *hud;
 @property (nonatomic,strong) NSTimer *timer;
 
 @end
 
-@implementation LoginViewController
+@implementation RegisterAccountVC
+
+- (instancetype)initWithPageName:(NSString *)pageName{
+    self = [super initWithPageName:pageName];
+    if (self) {
+//        self.hasNavigationBar = NO;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
-    self.title = @"登陆";
+    self.title = @"验证手机号";
     [super viewDidLoad];
-    [self loadContentScrollView];
-    [self loadContens];
+    [self.navigationBar useTranslucentBackgroundImage];
     
+    self.view.layer.contents = (id)[UIImage imageNamed:@"LoginOrRegisterVC_background"].CGImage;
+    UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(endEdit)];
+    [self.contentView addGestureRecognizer:tap];
+    
+    [self loadContens];
     // Do any additional setup after loading the view.
 }
 
-- (void)loadContentScrollView{
-    _contentScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, [self.view frameWidth], [self.view frameHeight])];
-    [self.view addSubview:_contentScrollView];
-    
-    self.contentView.frame = _contentScrollView.frame;
-    self.contentView.layer.contents = (id)[UIImage imageNamed:@"login_bg"].CGImage;
-    [_contentScrollView addSubview:self.contentView];
-    
-    UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(endEdit)];
-    [self.contentView addGestureRecognizer:tap];
-}
-
 - (void)loadContens{
+//    UIButton* leftButton = [UIButton buttonWithType:UIButtonTypeSystem];
+//    leftButton.backgroundColor = [UIColor clearColor];
+//    leftButton.frame = CGRectMake(0, 0, 50, 50);
+//    [leftButton setImage:[UIImage imageNamed:ImgStr_BackBtn] forState:UIControlStateNormal];
+//    [leftButton setTitle:@"返回" forState:UIControlStateNormal];
+//    leftButton.tintColor = UIColorFromHex(Color_Hex_NavItem_Normal);
+//    leftButton.imageEdgeInsets = UIEdgeInsetsMake(0, -13, 0, 0);
+//    [leftButton addTarget:self action:@selector(cancelLogin) forControlEvents:UIControlEventTouchUpInside];
+//
+//    [self.contentView addSubview:leftButton];
+    
     int intervalY = 30;
     int textFeildWidth = 280 , textFeildHeight = 30;
     
@@ -65,16 +78,20 @@
     [self.contentView addSubview:logoImageView];
     
     userTextFeildView = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, CGRectGetMaxY(logoImageView.frame) + intervalY, textFeildWidth, textFeildHeight) image:[UIImage imageNamed:@"login_icon_phone"]];
-    userTextFeildView.contentTextFeild.placeholder = @"请输入手机号";
+    userTextFeildView.contentTextField.placeholder = @"请输入手机号";
     [self.contentView addSubview:userTextFeildView];
     
+    passwordTextFeildView = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, CGRectGetMaxY(userTextFeildView.frame) + intervalY, textFeildWidth, textFeildHeight) image:[UIImage imageNamed:@"login_icon_code"]];
+    passwordTextFeildView.contentTextField.placeholder = @"请输入验证码";
+    [self.contentView addSubview:passwordTextFeildView];
+    
     _codeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _codeButton.frame = CGRectMake(CGRectGetMaxX(userTextFeildView.frame) - kCodeButtonWith, CGRectGetMinY(userTextFeildView.frame), kCodeButtonWith, CGRectGetHeight(userTextFeildView.frame));
+    _codeButton.frame = CGRectMake(CGRectGetMaxX(passwordTextFeildView.frame) - kCodeButtonWith, CGRectGetMinY(passwordTextFeildView.frame), kCodeButtonWith, CGRectGetHeight(passwordTextFeildView.frame));
     [_codeButton setBackgroundImage:[UIImage imageNamed:@"login_code_bg"] forState:UIControlStateNormal];
     [_codeButton setBackgroundImage:[UIImage imageNamed:@"login_code_bg"] forState:UIControlStateDisabled];
     _codeButton.adjustsImageWhenHighlighted = NO;
     [_codeButton addTarget:self action:@selector(codeLableAction) forControlEvents:UIControlEventTouchUpInside];
-    [_contentScrollView addSubview:_codeButton];
+    [self.contentView addSubview:_codeButton];
     
     _codeLabel = [[UILabel alloc] initWithFrame:_codeButton.frame];
     _codeLabel.backgroundColor = [UIColor clearColor];
@@ -82,65 +99,38 @@
     _codeLabel.textAlignment = NSTextAlignmentCenter;
     _codeLabel.textColor = [UIColor whiteColor];
     _codeLabel.text = @"获取验证码";
-    [_contentScrollView addSubview:_codeLabel];
-   
-    passwordTextFeildView = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, CGRectGetMaxY(userTextFeildView.frame) + intervalY, textFeildWidth, textFeildHeight) image:[UIImage imageNamed:@"login_icon_code"]];
-    passwordTextFeildView.contentTextFeild.placeholder = @"请输入验证码";
-    [self.contentView addSubview:passwordTextFeildView];
+    [self.contentView addSubview:_codeLabel];
     
-    UIButton *loginButton = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, CGRectGetMaxY(passwordTextFeildView.frame) + intervalY, textFeildWidth, 42)];
-    loginButton.layer.backgroundColor = [UIColor clearColor].CGColor;
-    loginButton.layer.cornerRadius = 21.f;
-    loginButton.layer.borderColor = [UIColor whiteColor].CGColor;
-    loginButton.layer.borderWidth = 1.f;
-    [loginButton setTitle:@"登           陆" forState:UIControlStateNormal];
-    [loginButton addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:loginButton];
+    UIButton *nextButton = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, CGRectGetMaxY(passwordTextFeildView.frame) + intervalY, textFeildWidth, 42)];
+    nextButton.layer.backgroundColor = [UIColor clearColor].CGColor;
+    nextButton.layer.cornerRadius = 21.f;
+    nextButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    nextButton.layer.borderWidth = 1.f;
+    [nextButton setTitle:@"下   一   步" forState:UIControlStateNormal];
+    [nextButton addTarget:self action:@selector(nextButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:nextButton];
 }
 
 - (void)codeLableAction
 {
     [self endEdit];
-    if ([userTextFeildView.contentTextFeild.text isEmpty])
+    if ([userTextFeildView.contentTextField.text isEmpty])
     {
         [TipHandler showTipOnlyTextWithNsstring:@"请输入手机号"];
         return;
     }
     else{
-        if (userTextFeildView.contentTextFeild.text.length != 11) {
+        if (userTextFeildView.contentTextField.text.length != 11) {
             [TipHandler showTipOnlyTextWithNsstring:@"请输入正确的手机号"];
             return;
         }
         else{
-            [self showHUD];
-            
-            [self startTimer];
-            //    _codeField.text = @"";
-            
-            [[CUUserManager sharedInstance] requireVerifyCodeWithCellPhone:userTextFeildView.contentTextFeild.text resultBlock:^(SNHTTPRequestOperation *request, SNServerAPIResultData *result)
-             {
-                 [self hideHUD];
-                 
-                 if (!result.hasError) {
-                     NSInteger errCode = [[result.responseObject valueForKey:@"errCode"] integerValue];
-                     if(errCode == 0){
-                         codetoken = [[result.responseObject valueForKey:@"data"] valueForKey:@"token"];
-                     }
-                     else{
-                         [TipHandler showHUDText:[result.responseObject valueForKey:@"data"] inView:self.view];
-                     }
-                 }
-                 else {
-                     //提示错误
-                     NSString *msg = [result.error.userInfo valueForKey:NSLocalizedDescriptionKey];
-                     NSLog(@"===ERROR===%@",msg);
-                     
-                     [TipHandler showTipOnlyTextWithNsstring:msg];
-                     
-                     [self stopTimer];
-                     [self resetButton];
-                 }
-             } pageName:@"CUUserVerifyCode"];
+            __weak __block typeof(self) blockSelf = self;
+            [AVOSCloud requestSmsCodeWithPhoneNumber:userTextFeildView.contentTextField.text callback:^(BOOL succeeded, NSError *error) {
+                if(succeeded){
+                    [blockSelf startTimer];
+                }
+            }];
         }
     }
 }
@@ -201,32 +191,38 @@
 {
     [_hud hide:NO];
 }
-- (void)loginButtonAction{
-    if ([passwordTextFeildView.contentTextFeild.text isEmpty]) {
+- (void)nextButtonAction{
+    if ([passwordTextFeildView.contentTextField.text isEmpty]) {
         [TipHandler showTipOnlyTextWithNsstring:@"请输入验证码"];
         return;
     }
     else {
-        [self showHUD];
-        [[CUUserManager sharedInstance] loginWithCellPhone:userTextFeildView.contentTextFeild.text code:passwordTextFeildView.contentTextFeild.text codetoken:codetoken resultBlock:^(SNHTTPRequestOperation *request, SNServerAPIResultData *result) {
-            [self hideHUD];
-            if (!result.hasError) {
-                
+        __weak __block typeof(self) blockSelf = self;
+        [AVOSCloud verifySmsCode:passwordTextFeildView.contentTextField.text mobilePhoneNumber:userTextFeildView.contentTextField.text callback:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                RegisterAddDetailsVC *vc = [[RegisterAddDetailsVC alloc]initWithPageName:NSStringFromClass([RegisterAddDetailsVC class])];
+                XWUser *user = [XWUser user];
+                user.mobilePhoneNumber = [userTextFeildView.contentTextField.text copy];
+                vc.user = user;
+                [blockSelf.slideNavigationController pushViewController:vc animated:YES];
             }
-            
-        } pageName:@"LoginViewController"];
+        }];
     }
 }
 
 - (void)endEdit{
     [self.contentView endEditing:YES];
-//    [userTextFeildView.contentTextFeild resignFirstResponder];
-//    [passwordTextFeildView.contentTextFeild resignFirstResponder];
+//    [userTextFeildView.contentTextField resignFirstResponder];
+//    [passwordTextFeildView.contentTextField resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)loadNavigationBar{
+    [self addLeftBackButtonItemWithImage];
 }
 
 /*

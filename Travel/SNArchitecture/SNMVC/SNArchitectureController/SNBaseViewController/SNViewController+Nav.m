@@ -12,7 +12,7 @@
 
 @implementation SNViewController (Nav)
 
-- (void)addLeftBackButtonItemWithImage
+- (UIButton *)addLeftBackButtonItemWithImage
 {
     UIView* leftButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 45, 50)];
     leftButtonView.tag = kNavigationItemAlignment_HL_VC;
@@ -29,9 +29,10 @@
     
     UIBarButtonItem * leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:leftButtonView];
     self.navigationItem.leftBarButtonItem = leftBarButton;
+    return leftButton;
 }
 
-- (void)addLeftCloseButtonItemWithImage
+- (UIButton *)addLeftCloseButtonItemWithImage
 {
     UIView* leftButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 45, 50)];
     leftButtonView.tag = kNavigationItemAlignment_HL_VC;
@@ -48,7 +49,9 @@
     [leftButtonView addSubview:leftButton];
     
     UIBarButtonItem * leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:leftButtonView];
-    self.navigationItem.leftBarButtonItem = leftBarButton;}
+    self.navigationItem.leftBarButtonItem = leftBarButton;
+    return leftButton;
+}
 
 - (void)addLeftBackButtonItemWithImageAndTitle
 {
@@ -88,8 +91,6 @@
     
     UIBarButtonItem * leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:leftButtonView];
     self.navigationItem.leftBarButtonItem = leftBarButton;
-    
-
 }
 
 - (void)addLeftCloseButtonItemWithImageAndTitle
@@ -136,21 +137,40 @@
     
 }
 
+//- (void)addRightButtonItemWithTitle:(NSString *)title target:(id)target action:(SEL)selector{
+//    CGFloat height = 30;
+//    CGFloat width = 40;
+//    UIView * rightBtnView = [[UIView alloc] initWithFrame:CGRectMake(kScreenWidth - width, 0, width, height)];
+//    rightBtnView.userInteractionEnabled = YES;
+//    rightBtnView.backgroundColor = [UIColor redColor];
+//    UIButton * rightBtn = [[UIButton alloc] initWithFrame:rightBtnView.frame];
+//    rightBtn.backgroundColor = [UIColor blackColor];
+//    [rightBtn setTitle:title forState:UIControlStateNormal];
+//    rightBtn.tintColor = UIColorFromHex(Color_Hex_NavItem_Normal);
+//    [rightBtn sizeToFit];
+//    rightBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -13, 0, 0);
+//    [rightBtn addTarget:target action:@selector(selector) forControlEvents:UIControlEventTouchUpInside];
+//    [rightBtnView addSubview:rightBtn];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtnView];
+//
+//}
+
 - (void)addRightButtonItemWithTitle:(NSString *)title target:(id)target action:(SEL)selector{
-    CGFloat height = 30;
-    CGFloat width = 40;
-    UIView * rightBtnView = [[UIView alloc] initWithFrame:CGRectMake(kScreenWidth - width, 0, width, height)];
-    rightBtnView.userInteractionEnabled = YES;
-    rightBtnView.backgroundColor = [UIColor redColor];
-    UIButton * rightBtn = [[UIButton alloc] initWithFrame:rightBtnView.frame];
-    rightBtn.backgroundColor = [UIColor blackColor];
+    UIView* rightBtnView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    
+    UIButton* rightBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    rightBtn.backgroundColor = [UIColor clearColor];
+    rightBtn.frame = rightBtnView.frame;
+//    [rightBtn setImage:[UIImage imageNamed:ImgStr_BackBtn] forState:UIControlStateNormal];
     [rightBtn setTitle:title forState:UIControlStateNormal];
     rightBtn.tintColor = UIColorFromHex(Color_Hex_NavItem_Normal);
     rightBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -13, 0, 0);
-    [rightBtn addTarget:target action:@selector(selector) forControlEvents:UIControlEventTouchUpInside];
+    
+    [rightBtn addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [rightBtnView addSubview:rightBtn];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtnView];
-
+    
+    UIBarButtonItem * rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:rightBtnView];
+    self.navigationItem.rightBarButtonItem = rightBarButton;
 }
 
 @end

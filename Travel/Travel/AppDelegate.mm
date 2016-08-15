@@ -70,6 +70,7 @@
     
     [AVOSCloud setApplicationId:@"YpRaRTRbziVSjxPDLoW3jMH9-gzGzoHsz" clientKey:@"hzNWspVOq52ocxjySeXqHrGo"];
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    [AVOSCloud setAllLogsEnabled:YES];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(IOS_7_0)) {

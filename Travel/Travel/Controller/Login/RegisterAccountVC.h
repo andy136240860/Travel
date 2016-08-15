@@ -1,5 +1,5 @@
 //
-//  LoginViewController.h
+//  RegisterAccountVC.h
 //  FindDoctor
 //
 //  Created by 晓炜 郭 on 16/1/4.
@@ -8,6 +8,6 @@
 
 #import "CUViewController.h"
 
-@interface LoginViewController : CUViewController
+@interface RegisterAccountVC : CUViewController
 
 @end

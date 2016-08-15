@@ -65,7 +65,7 @@
 //    CGRect contentFrame = (self.navigationBar.hidden == YES)?CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-self.toolbarHeight):[self subviewFrame];
     self.content = [[UIView alloc] initWithFrame:[self subviewFrame]];
     [self.view addSubview:self.content];
-    self.content.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
+//    self.content.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
     if (self.hasTab)
     {
         self.content.frameHeight -= Height_Tabbar;
