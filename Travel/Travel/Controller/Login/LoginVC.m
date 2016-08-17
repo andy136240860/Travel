@@ -14,7 +14,8 @@
 #import "LoginOrRegisterVC.h"
 #import "LjjUISegmentedControl.h"
 #import "XWUser.h"
-#import "MBProgressHUD.h"
+#import "TSMessage.h"
+#import "CUViewController+TSMessageHandler.h"
 
 @interface LoginVC ()<LjjUISegmentedControlDelegate,UITextFieldDelegate>{
     UIView             *phoneLoginView;
@@ -74,6 +75,7 @@
     phonePasswordTextFeildView.contentTextField.placeholder = @"密码";
     phonePasswordTextFeildView.contentTextField.keyboardType = UIKeyboardTypeDefault;
     phonePasswordTextFeildView.contentTextField.delegate = self;
+    phonePasswordTextFeildView.contentTextField.secureTextEntry = YES;
     [phoneLoginView addSubview:phonePasswordTextFeildView];
     
     userNameLoginView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(ljjuisement.frame), kScreenWidth, 300)];
@@ -90,6 +92,7 @@
     userPasswordTextFeildView.contentTextField.placeholder = @"密码";
     userPasswordTextFeildView.contentTextField.keyboardType = UIKeyboardTypeDefault;
     userPasswordTextFeildView.contentTextField.delegate = self;
+    userPasswordTextFeildView.contentTextField.secureTextEntry = YES;
     [userNameLoginView addSubview:userPasswordTextFeildView];
     
     nextButton = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, kScreenHeight - 120 - kNavigationHeight, textFeildWidth, 42)];
@@ -97,7 +100,7 @@
     nextButton.layer.cornerRadius = 21.f;
     nextButton.layer.borderColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.3].CGColor;
     nextButton.layer.borderWidth = 1.f;
-    [nextButton setTitle:@"下   一   步" forState:UIControlStateNormal];
+    [nextButton setTitle:@"登        录" forState:UIControlStateNormal];
     [nextButton setTitleColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:0.3] forState:UIControlStateNormal];
     nextButton.userInteractionEnabled = NO;
     [nextButton addTarget:self action:@selector(nextButtonAction) forControlEvents:UIControlEventTouchUpInside];
@@ -194,18 +197,20 @@
     if (phoneLoginView.hidden == NO){
         [AVUser logInWithMobilePhoneNumberInBackground:phoneNumberTextFeildView.contentTextField.text password:phonePasswordTextFeildView.contentTextField.text block:^(AVUser *user, NSError *error) {
             if (user != nil) {
-                [self dismissView];
+                [self showMessageWithTitle:@"登录成功" subTitle:nil type:TSMessageNotificationTypeSuccess];
+                [self performSelector:@selector(dismissView) withObject:self afterDelay:1];
             } else {
-                [error.userInfo objectForKey:@"NSLocalizedDescription"];
+                [self showMessageWithTitle:@"登录失败" subTitle:[error.userInfo objectForKey:@"NSLocalizedDescription"] type:TSMessageNotificationTypeError];
             }
         }];
     }
     if (userNameLoginView.hidden == NO) {
         [AVUser logInWithUsernameInBackground:userNameTextFeildView.contentTextField.text password:userPasswordTextFeildView.contentTextField.text block:^(AVUser *user, NSError *error) {
             if (user != nil) {
-                [self dismissView];
+                [self showMessageWithTitle:@"登录成功" subTitle:nil type:TSMessageNotificationTypeSuccess];
+                [self performSelector:@selector(dismissView) withObject:self afterDelay:1];
             } else {
-                
+                [self showMessageWithTitle:@"登录失败" subTitle:[error.userInfo objectForKey:@"NSLocalizedDescription"] type:TSMessageNotificationTypeError];
             }
         }];
     }
@@ -241,6 +246,8 @@
     RegisterAccountVC *pushvc = [[RegisterAccountVC alloc]initWithPageName:NSStringFromClass([RegisterAccountVC class])];
     [slide pushViewController:pushvc animated:YES];
 }
+
+
 
 /*
 #pragma mark - Navigation

@@ -237,7 +237,7 @@
         [TipHandler showTipOnlyTextWithNsstring:@"请输入手机号"];
         return;
     }
-
+    [self startTimer];
 }
 
 - (void)endEdit{
