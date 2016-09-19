@@ -6,10 +6,9 @@
 //  Copyright © 2016年 li na. All rights reserved.
 //
 
-#import "CUViewController.h"
 #import "TSMessage.h"
 
-@interface CUViewController (TSMessageHandler)
+@interface UIViewController (TSMessageHandler)
 
 - (void)showWarningWithTitle:(NSString *)title;
 - (void)showErrorWithTitle:(NSString *)title;

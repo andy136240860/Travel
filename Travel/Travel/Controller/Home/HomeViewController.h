@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CUViewController.h"
+#import "XWViewController.h"
 
-@interface HomeViewController : CUViewController
+@interface HomeViewController : UIViewController
 
 @property (strong,nonatomic) UITableView *tableView;
 

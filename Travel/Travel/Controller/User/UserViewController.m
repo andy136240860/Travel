@@ -38,7 +38,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    _loginVC.slideNavigationController = self.slideNavigationController;
+//    _loginVC.slideNavigationController = self.slideNavigationController;
     [super viewWillAppear:animated];
     [_contentTableView reloadData];
 }
@@ -225,10 +225,10 @@
     if (!self.loginVC) {
         self.loginVC = [[LoginVC alloc] init];
     }
-    self.loginVC.hasNavigationBar = NO;
+//    self.loginVC.hasNavigationBar = NO;
     //    self.loginVC.verifyCode = YES;
     //    self.loginVC.intervalY = kTabBarHeight + kNavigationHeight;
-    self.loginVC.slideNavigationController = self.slideNavigationController;
+//    self.loginVC.slideNavigationController = self.slideNavigationController;
     self.loginVC.view.userInteractionEnabled = YES;
     
     self.hasNavigationBar = NO;

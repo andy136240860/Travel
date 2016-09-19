@@ -11,7 +11,7 @@
 #import "CollectionViewCellForMeVC.h"
 #import "CollectionHeaderViewForMeVC.h"
 #import "SubObjectHeaderViewForMeVC.h"
-#import "CUViewController+Login.h"
+#import "UIViewController+Login.h"
 #import "MyTravelViewController.h"
 
 @interface MeViewController ()<EqualSpaceFlowLayoutDelegate,UICollectionViewDelegate,UICollectionViewDataSource,CollectionHeaderViewForMeVCDelegate>
@@ -22,31 +22,26 @@
 
 @implementation MeViewController
 
-- (instancetype)initWithPageName:(NSString *)pageName{
-    self = [super initWithPageName:pageName];
-    if (self) {
-        self.hasNavigationBar = NO;
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden = YES;
     // Do any additional setup after loading the view.
 }
 
 - (void)loadContentView{
-    self.contentView.backgroundColor = UIColorFromHex(Color_Hex_ImageDefault);
+    self.view.backgroundColor = [UIColor redColor];
     EqualSpaceFlowLayout *collectionLayout = [[EqualSpaceFlowLayout alloc] init];
+//    UICollectionViewFlowLayout *collectionLayout = [[UICollectionViewFlowLayout alloc]init];
     collectionLayout.delegate = self;
     
-    CGRect collectionFrame = CGRectMake(0, 0, kScreenWidth, self.contentView.frameHeight - kTabBarHeight);
+    CGRect collectionFrame = CGRectMake(0, -20 , kScreenWidth, self.view.frameHeight+20);
     
     UICollectionView *collectionview = [[UICollectionView alloc] initWithFrame:collectionFrame collectionViewLayout:collectionLayout];
     collectionview.backgroundColor = [UIColor clearColor];
     collectionview.delegate = self;
     collectionview.dataSource = self;
-    [self.contentView addSubview:collectionview];
+    [self.view addSubview:collectionview];
     
     self.collectionView = collectionview;
     
@@ -55,6 +50,7 @@
     [self.collectionView registerClass:[SubObjectHeaderViewForMeVC class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([SubObjectHeaderViewForMeVC class])];
     
     [self.collectionView registerClass:[CollectionHeaderViewForMeVC class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([CollectionHeaderViewForMeVC class])];
+    
 }
 
 #pragma mark - headerButtomsClickDelegate
@@ -140,6 +136,7 @@
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         if (indexPath.section == 0) {
             CollectionHeaderViewForMeVC *headerview = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:NSStringFromClass([CollectionHeaderViewForMeVC class]) forIndexPath:indexPath];
+            headerview.backgroundColor = [UIColor blueColor];
             headerview.delegate = self;
             [headerview resetData];
             return headerview;
@@ -159,7 +156,7 @@
     if (section == 0) {
         return CGSizeMake(kScreenWidth, CollectionHeaderViewForMeVCHeight);
     }
-    return CGSizeMake(kScreenWidth, 27);
+    return CGSizeMake(kScreenWidth, 0);
 }
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section

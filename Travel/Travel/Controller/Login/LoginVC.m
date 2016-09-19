@@ -8,14 +8,14 @@
 //
 
 #import "LoginVC.h"
-#import "UINavigationBar+Background.h"
 #import "LoginTextFeildView.h"
 #import "RegisterAccountVC.h"
 #import "LoginOrRegisterVC.h"
 #import "LjjUISegmentedControl.h"
 #import "XWUser.h"
-#import "TSMessage.h"
-#import "CUViewController+TSMessageHandler.h"
+#import "UIViewController+TSMessageHandler.h"
+#import "XWNavigationController.h"
+#import "UIViewController+NavBarTool.h"
 
 @interface LoginVC ()<LjjUISegmentedControlDelegate,UITextFieldDelegate>{
     UIView             *phoneLoginView;
@@ -37,8 +37,12 @@
     [super viewDidLoad];
     self.title = @"登录";
     self.view.layer.contents = (id)[UIImage imageNamed:@"LoginOrRegisterVC_background"].CGImage;
-    [self.navigationBar useTranslucentBackgroundImage];
-    // Do any additional setup after loading the view.
+    
+    [self useTranslucentBackgroundImage];
+    
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    [self addRightButtonWithTitle:@"注册" seletor:@selector(registerAccountAction)];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -49,14 +53,14 @@
     int intervalY = 30;
     int textFeildWidth = 280 , textFeildHeight = 30;
     
-    LjjUISegmentedControl* ljjuisement=[[LjjUISegmentedControl alloc]initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 220)/2.f, intervalY, 220, LjjUISegmentedControlDefaultHeight)];
+    LjjUISegmentedControl* ljjuisement=[[LjjUISegmentedControl alloc]initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 220)/2.f, intervalY + kNavigationHeight, 220, LjjUISegmentedControlDefaultHeight)];
     NSArray* ljjarray=[NSArray arrayWithObjects:@"手机号登录",@"用户名登录",nil];
     ljjuisement.delegate = self;
     [ljjuisement AddSegumentArray:ljjarray];
-    [self.contentView addSubview:ljjuisement];
+    [self.view addSubview:ljjuisement];
     
     phoneLoginView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(ljjuisement.frame), kScreenWidth, 300)];
-    [self.contentView addSubview:phoneLoginView];
+    [self.view addSubview:phoneLoginView];
     
     countryChooesView = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2,  intervalY, textFeildWidth, textFeildHeight) title:@"国家" hasTitleLine:NO canEidt:NO];
     countryChooesView.contentTextField.text = @">";
@@ -79,7 +83,7 @@
     [phoneLoginView addSubview:phonePasswordTextFeildView];
     
     userNameLoginView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(ljjuisement.frame), kScreenWidth, 300)];
-    [self.contentView addSubview:userNameLoginView];
+    [self.view addSubview:userNameLoginView];
     userNameLoginView.hidden = YES;
     
     userNameTextFeildView = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2,  intervalY, textFeildWidth, textFeildHeight) image:[UIImage imageNamed:@"login_icon_phone"]];
@@ -104,7 +108,7 @@
     [nextButton setTitleColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:0.3] forState:UIControlStateNormal];
     nextButton.userInteractionEnabled = NO;
     [nextButton addTarget:self action:@selector(nextButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:nextButton];
+    [self.view addSubview:nextButton];
 }
 
 - (void)makeButtonUserInteractionEnabled:(BOOL)canClicked{
@@ -217,7 +221,7 @@
 }
 
 - (void)dismissView{
-    [self.slideNavigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -225,13 +229,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)loadNavigationBar{
-    [self addLeftBackButtonItemWithImage];
-    [self addRightButtonItemWithTitle:@"注册" target:self action:@selector(registerAccountAction)];
-}
+//- (void)loadNavigationBar{
+//    [self addLeftBackButtonItemWithImage];
+//    [self addRightButtonItemWithTitle:@"注册" target:self action:@selector(registerAccountAction)];
+//}
 
 - (void)registerAccountAction{
-    SNSlideNavigationController *slide = self.slideNavigationController;
+     UINavigationController *slide = self.navigationController;
 //    UIViewController *vc = nil;
 //    for (UIViewController *controller in slide.viewControllers) {
 //        if ([controller isKindOfClass:[LoginOrRegisterVC class]]) {
@@ -243,8 +247,12 @@
 //        [slide popToViewController:vc animated:NO];
 //    }
 //    
-    RegisterAccountVC *pushvc = [[RegisterAccountVC alloc]initWithPageName:NSStringFromClass([RegisterAccountVC class])];
+    RegisterAccountVC *pushvc = [[RegisterAccountVC alloc]init];
     [slide pushViewController:pushvc animated:YES];
+}
+
+- (void)backAction{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

@@ -10,7 +10,7 @@
 #import "LoginTextFeildView.h"
 
 #import "MBProgressHUD.h"
-#import "CUViewController+TSMessageHandler.h"
+#import "UIViewController+TSMessageHandler.h"
 #import "AVOSCloud.h"
 #import "AVUser.h"
 
@@ -39,22 +39,15 @@
 
 @implementation RegisterAccountVC
 
-- (instancetype)initWithPageName:(NSString *)pageName{
-    self = [super initWithPageName:pageName];
-    if (self) {
-//        self.hasNavigationBar = NO;
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     self.title = @"验证手机号";
     [super viewDidLoad];
-    [self.navigationBar useTranslucentBackgroundImage];
+    [self useTranslucentBackgroundImage];
     
     self.view.layer.contents = (id)[UIImage imageNamed:@"LoginOrRegisterVC_background"].CGImage;
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(endEdit)];
-    [self.contentView addGestureRecognizer:tap];
+    [self.view addGestureRecognizer:tap];
     
     [self loadContens];
     // Do any additional setup after loading the view.
@@ -69,24 +62,24 @@
     UIImage *logoImage = [UIImage imageNamed:@"login_header_image"];
     UIView *logoImageView = [[UIView alloc]initWithFrame:CGRectMake((kScreenWidth - logoImage.size.width)/2, 1.2*intervalY , logoImage.size.width, logoImage.size.height)];
     logoImageView.layer.contents = (id)logoImage.CGImage;
-    [self.contentView addSubview:logoImageView];
+    [self.view addSubview:logoImageView];
     
-    countryChooesView = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2,  intervalY, textFeildWidth, textFeildHeight) title:@"国家" hasTitleLine:NO canEidt:NO];
+    countryChooesView = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2,  intervalY + kNavigationHeight, textFeildWidth, textFeildHeight) title:@"国家" hasTitleLine:NO canEidt:NO];
     countryChooesView.contentTextField.text = @">";
     countryChooesView.clickBlock = ^{
         NSLog(@"选择国家");
     };
-    [self.contentView addSubview:countryChooesView];
+    [self.view addSubview:countryChooesView];
     
     userTextFeildView = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2,  CGRectGetMaxY(countryChooesView.frame) + intervalY, textFeildWidth, textFeildHeight) title:@"+86" canEidt:YES];
     userTextFeildView.contentTextField.placeholder = @"手机号";
     userTextFeildView.contentTextField.keyboardType = UIKeyboardTypeDefault;
-    [self.contentView addSubview:userTextFeildView];
+    [self.view addSubview:userTextFeildView];
     
     passwordTextFeildView = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, CGRectGetMaxY(userTextFeildView.frame) + intervalY, textFeildWidth, textFeildHeight) image:nil];
     passwordTextFeildView.contentTextField.placeholder = @"短信验证码";
     passwordTextFeildView.contentTextField.textAlignment = NSTextAlignmentLeft;
-    [self.contentView addSubview:passwordTextFeildView];
+    [self.view addSubview:passwordTextFeildView];
     
     _codeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _codeButton.frame = CGRectMake(CGRectGetMaxX(passwordTextFeildView.frame) - kCodeButtonWith, CGRectGetMinY(passwordTextFeildView.frame)-3, kCodeButtonWith, textFeildHeight);
@@ -95,7 +88,7 @@
     _codeButton.layer.cornerRadius = 3;
     _codeButton.adjustsImageWhenHighlighted = NO;
     [_codeButton addTarget:self action:@selector(codeLableAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:_codeButton];
+    [self.view addSubview:_codeButton];
     
     _codeLabel = [[UILabel alloc] initWithFrame:_codeButton.frame];
     _codeLabel.backgroundColor = [UIColor clearColor];
@@ -103,7 +96,7 @@
     _codeLabel.textAlignment = NSTextAlignmentCenter;
     _codeLabel.textColor = [UIColor whiteColor];
     _codeLabel.text = @"获取验证码";
-    [self.contentView addSubview:_codeLabel];
+    [self.view addSubview:_codeLabel];
     
     UIButton *nextButton = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, kScreenHeight - 120 - kNavigationHeight, textFeildWidth, 42)];
     nextButton.layer.backgroundColor = [UIColor clearColor].CGColor;
@@ -112,7 +105,7 @@
     nextButton.layer.borderWidth = 1.f;
     [nextButton setTitle:@"下   一   步" forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(nextButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:nextButton];
+    [self.view addSubview:nextButton];
 }
 
 - (void)codeLableAction
@@ -217,7 +210,7 @@
                 XWUser *user = [XWUser user];
                 user.mobilePhoneNumber = [userTextFeildView.contentTextField.text copy];
                 vc.user = user;
-                [blockSelf.slideNavigationController pushViewController:vc animated:YES];
+                [blockSelf.navigationController pushViewController:vc animated:YES];
             }
             else{
                 [self showErrorWithTitle:@"获取验证码失败"];
@@ -227,7 +220,7 @@
 }
 
 - (void)endEdit{
-    [self.contentView endEditing:YES];
+    [self.view endEditing:YES];
 //    [userTextFeildView.contentTextField resignFirstResponder];
 //    [passwordTextFeildView.contentTextField resignFirstResponder];
 }
@@ -235,10 +228,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)loadNavigationBar{
-    [self addLeftBackButtonItemWithImage];
 }
 
 /*

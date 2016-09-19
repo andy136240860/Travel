@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "SNSlideNavigationController.h"
-//#import "CULoginViewController.h"
+#import "XWTabBarController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 + (AppDelegate *)app;
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) SNSlideNavigationController  * slideNaviController;
+@property (nonatomic, strong) XWTabBarController  * tabBarVC;
 //@property (nonatomic,strong)CULoginViewController * loginViewController;
 
 

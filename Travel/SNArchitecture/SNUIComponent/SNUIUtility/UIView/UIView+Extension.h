@@ -22,6 +22,8 @@
 @property(nonatomic, assign) CGFloat maxY;
 @property(nonatomic, assign) CGFloat maxX;
 
+@property (nonatomic, assign) CGSize size;
+
 /**
  * Returns the UIImage representation of this view.
  */

@@ -12,7 +12,7 @@
 
 #define kControllerGrayColor     UIColorFromHex(0xf6f6f6)
 
-#define kGreenColor        UIColorFromRGB(65, 156, 159) //UIColorFromRGB(86, 179, 11)
+#define kGreenColor        UIColorFromRGB(0, 190, 144) //UIColorFromRGB(86, 179, 11)
 #define kDarkGreenColor    UIColorFromRGB(75, 166, 169) //UIColorFromRGB(78, 163, 25)
 #define kYellowColor       UIColorFromRGB(242, 138, 49)
 #define kBlackColor        UIColorFromHex(0x333333)

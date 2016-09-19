@@ -39,11 +39,9 @@
 
 @implementation HomeViewController
 
-- (instancetype)initWithPageName:(NSString *)pageName{
-    self = [super initWithPageName:pageName];
+- (instancetype)init{
+    self = [super init];
     if (self) {
-        self.hasNavigationBar = NO;
-        
         //注册键盘出现NSNotification
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:)
@@ -60,11 +58,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"朋友圈";
+    self.navigationController.navigationBar.barTintColor = kGreenColor;
+    self.navigationController.navigationBar.translucent = NO;
     
-    self.tableView = [[UITableView alloc]initWithFrame:self.contentView.bounds style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.contentView addSubview:self.tableView];
+    [self.view addSubview:self.tableView];
     
     [self loadJSONData:^{ // 加载完josn数据后要做的操作
         

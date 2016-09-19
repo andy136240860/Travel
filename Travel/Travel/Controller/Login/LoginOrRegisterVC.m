@@ -30,8 +30,7 @@ NSString *const phoneLoginButtonImageStr = @"phoneLoginButton";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.layer.contents = (id)[UIImage imageNamed:@"LoginOrRegisterVC_background"].CGImage;
-    [self.navigationBar useTranslucentBackgroundImage];
-    // Do any additional setup after loading the view.
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -42,22 +41,22 @@ NSString *const phoneLoginButtonImageStr = @"phoneLoginButton";
     CGFloat velocity = 8;
     //四个button的动画
     [UIView animateWithDuration:aminateDuration delay:0.5 usingSpringWithDamping:damping initialSpringVelocity:velocity options:UIViewAnimationOptionLayoutSubviews animations:^{
-        _wechatLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5, self.contentView.frameHeight - 129, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
+        _wechatLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5, self.view.frameHeight - 129, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
     } completion:^(BOOL finished) {
         
     }];
     [UIView animateWithDuration:aminateDuration delay:0.6 usingSpringWithDamping:damping initialSpringVelocity:velocity options:UIViewAnimationOptionLayoutSubviews animations:^{
-        _QQLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*2 + [_wechatLoginButton frameWidth], self.contentView.frameHeight - 129, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
+        _QQLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*2 + [_wechatLoginButton frameWidth], self.view.frameHeight - 129, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
     } completion:^(BOOL finished) {
         
     }];
     [UIView animateWithDuration:aminateDuration delay:0.7 usingSpringWithDamping:damping initialSpringVelocity:velocity options:UIViewAnimationOptionLayoutSubviews animations:^{
-        _weiboLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*3 + [_wechatLoginButton frameWidth]*2, self.contentView.frameHeight - 129, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
+        _weiboLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*3 + [_wechatLoginButton frameWidth]*2, self.view.frameHeight - 129, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
     } completion:^(BOOL finished) {
         
     }];
     [UIView animateWithDuration:aminateDuration delay:0.8 usingSpringWithDamping:damping initialSpringVelocity:velocity options:UIViewAnimationOptionLayoutSubviews animations:^{
-        _phoneLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*4 + [_wechatLoginButton frameWidth]*3, self.contentView.frameHeight - 129, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
+        _phoneLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*4 + [_wechatLoginButton frameWidth]*3, self.view.frameHeight - 129, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
     } completion:^(BOOL finished) {
         
     }];
@@ -74,14 +73,14 @@ NSString *const phoneLoginButtonImageStr = @"phoneLoginButton";
     banner.translucent = YES;
     [self.view addSubview:banner];
     
-    self.wechatLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5, self.contentView.frameHeight, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
-    self.QQLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*2 + [_wechatLoginButton frameWidth], self.contentView.frameHeight, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
-    self.weiboLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*3 + [_wechatLoginButton frameWidth]*2, self.contentView.frameHeight, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
-    self.phoneLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*4 + [_wechatLoginButton frameWidth]*3, self.contentView.frameHeight, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
-    [self.contentView addSubview:self.wechatLoginButton];
-    [self.contentView addSubview:self.QQLoginButton];
-    [self.contentView addSubview:self.weiboLoginButton];
-    [self.contentView addSubview:self.phoneLoginButton];
+    self.wechatLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5, self.view.frameHeight, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
+    self.QQLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*2 + [_wechatLoginButton frameWidth], self.view.frameHeight, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
+    self.weiboLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*3 + [_wechatLoginButton frameWidth]*2, self.view.frameHeight, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
+    self.phoneLoginButton.frame = CGRectMake((kScreenWidth - [_wechatLoginButton frameWidth]*4)/5*4 + [_wechatLoginButton frameWidth]*3, self.view.frameHeight, [_wechatLoginButton frameWidth], [_wechatLoginButton frameHeight]);
+    [self.view addSubview:self.wechatLoginButton];
+    [self.view addSubview:self.QQLoginButton];
+    [self.view addSubview:self.weiboLoginButton];
+    [self.view addSubview:self.phoneLoginButton];
     
     UIButton *cancelButton = [[UIButton alloc]init];
     [cancelButton setTitle:@"随便看看" forState:UIControlStateNormal];
@@ -89,9 +88,9 @@ NSString *const phoneLoginButtonImageStr = @"phoneLoginButton";
     cancelButton.titleLabel.font = [UIFont systemFontOfSize:10];
     [cancelButton sizeToFit];
     cancelButton.layer.cornerRadius = cancelButton.frameHeight/2.f;
-    cancelButton.frame = CGRectMake((kScreenWidth - cancelButton.frameWidth - 14)/2.f, self.contentView.frameHeight - 35, cancelButton.frameWidth+14, cancelButton.frameHeight);
+    cancelButton.frame = CGRectMake((kScreenWidth - cancelButton.frameWidth - 14)/2.f, self.view.frameHeight - 35, cancelButton.frameWidth+14, cancelButton.frameHeight);
     [cancelButton addTarget:self action:@selector(cancelLogin) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:cancelButton];
+    [self.view addSubview:cancelButton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -159,54 +158,12 @@ NSString *const phoneLoginButtonImageStr = @"phoneLoginButton";
 }
 
 - (void)phoneLoginAction{
-    LoginVC *vc = [[LoginVC alloc]initWithPageName:NSStringFromClass([LoginVC class])];
-    [self.slideNavigationController pushViewController:vc animated:YES];
+    LoginVC *vc = [[LoginVC alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)cancelLogin{
-    [self.slideNavigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
-
-//- (void)loadNavigationBar{
-//    [[self addLeftCloseButtonItemWithImage] addTarget:self action:@selector(cancelLogin) forControlEvents:UIControlEventTouchUpInside];
-//}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-//- (UIView *)loginView{
-//    if (_loginView) {
-//        return _loginView;
-//    }
-//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, self.contentView.frameHeight - 50, kScreenWidth, 50)];
-//    view.userInteractionEnabled = YES;
-//    view.layer.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.1].CGColor;
-//
-//    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.5)];
-//    lineView.layer.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.4].CGColor;
-//    [view addSubview:lineView];
-//
-//    UILabel *label = [[UILabel alloc]init];
-//    label.text = @"已经有账户了？登录。";
-//    label.font = [UIFont systemFontOfSize:12];
-//    label.textColor = [UIColor whiteColor];
-//    [label sizeToFit];
-//    label.frame = CGRectMake((kScreenWidth - label.frameWidth)/2, (view.frameHeight - label.frameHeight)/2, label.frameWidth, label.frameHeight);
-//    [view addSubview:label];
-//
-//    UITapGestureRecognizer *loginTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(loginAction)];
-//    loginTap.numberOfTapsRequired = 1;
-//    loginTap.numberOfTouchesRequired = 1;
-//    [view addGestureRecognizer:loginTap];
-//    _loginView = view;
-//    return _loginView;
-//}
 
 @end

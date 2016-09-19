@@ -6,9 +6,9 @@
 //  Copyright © 2016年 li na. All rights reserved.
 //
 
-#import "CUViewController+TSMessageHandler.h"
+#import "UIViewController+TSMessageHandler.h"
 
-@implementation CUViewController (TSMessageHandler)
+@implementation UIViewController (TSMessageHandler)
 
 - (void)showWarningWithTitle:(NSString *)title{
     [self showMessageWithTitle:title type:TSMessageNotificationTypeWarning];
@@ -23,7 +23,9 @@
 }
 
 - (void)showMessageWithTitle:(NSString *)title subTitle:(NSString *)subTitle type:(TSMessageNotificationType)type{
-    self.navigationBar.hidden = YES;
+    if (self.navigationController.navigationBarHidden == NO) {
+        self.navigationController.navigationBarHidden = YES;
+    }//必须要加
     [TSMessage showNotificationInViewController:self
                                           title:title
                                        subtitle:subTitle

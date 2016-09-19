@@ -82,7 +82,7 @@
         }];
     }
     else {
-        [UPPayPlugin startPay:tn mode:kMode viewController:[[AppDelegate app] slideNaviController] delegate:(id)self];
+        [UPPayPlugin startPay:tn mode:kMode viewController:[[AppDelegate app] tabBarVC] delegate:(id)self];
     }
 }
 

@@ -29,10 +29,6 @@
 #import "SNIntroduceView.h"
 #import "CUPlatFormManager.h"
 
-#import "HomeViewController.h"
-#import "MeViewController.h"
-#import "ExploreViewController.h"
-
 #import "UserViewController.h"
 #import "OrderManager+ThirdPay.h"
 #import "Pingpp.h"
@@ -43,6 +39,8 @@
 #import "JSONKit.h"
 #import "CUServerAPIConstant.h"
 #import "TipHandler+HUD.h"
+
+#import "XWTabBarController.h"
 
 @interface AppDelegate () <BMKGeneralDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
 
@@ -254,22 +252,11 @@
         [UIApplication sharedApplication].statusBarHidden = NO;
     }
     
-    if (self.slideNaviController == nil)
+    if (self.tabBarVC == nil)
     {
-        self.slideNaviController = [[SNSlideNavigationController alloc] initWithRootViewController:[self createTabBarController]];
-        //        [[UINavigationBar appearance] setTitleTextAttributes:
-        //         [NSDictionary dictionaryWithObjectsAndKeys:
-        //          [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0],
-        //          UITextAttributeTextColor,
-        //          [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8],
-        //          UITextAttributeTextShadowColor,
-        //          [NSValue valueWithUIOffset:UIOffsetMake(0, -1)],
-        //          UITextAttributeTextShadowOffset,
-        //          [UIFont fontWithName:@"Arial-Bold" size:0.0],
-        //          UITextAttributeFont,
-        //          nil]];
+        self.tabBarVC = [[XWTabBarController alloc] init];
     }
-    self.window.rootViewController = self.slideNaviController;
+    self.window.rootViewController = self.tabBarVC;
     //    self.slideNaviController.view.alpha = 0;
     //    [UIView animateWithDuration:0.25 animations:^{
     //        self.slideNaviController.view.alpha = 1;
@@ -295,55 +282,55 @@
     }];
     
 }
-
-- (SNTabViewController*)createTabBarController
-{
-    HomeViewController *homeVC = [[HomeViewController alloc] initWithPageName:@"HomeViewController"];
-    homeVC.customTabBarItem = [self tabBarItemAtIndex:0];
-    
-    ExploreViewController *exploreVC = [[ExploreViewController alloc] initWithPageName:@"ExploreViewController"];
-    exploreVC.customTabBarItem = [self tabBarItemAtIndex:1];
-    
-    UserViewController *userVC = [[UserViewController alloc] initWithPageName:@"UserViewController"];
-    userVC.customTabBarItem = [self tabBarItemAtIndex:2];
-    
-    MeViewController *meVC = [[MeViewController alloc] initWithPageName:@"VIPController"];
-    meVC.customTabBarItem = [self tabBarItemAtIndex:3];
-    
-    
-    self.tabController = [[SNTabViewController alloc] initWithHeight:Height_Tabbar];
-    self.tabController.viewControllers = @[homeVC,exploreVC,userVC,meVC];
-    
-    self.tabController.selectedIndex = 0;
-    self.tabController.customTabBar.selectedIndex = 0;
-    
-    return self.tabController;
-}
-
-- (SNTabBarItem *)tabBarItemAtIndex:(int)index
-{
-    NSArray *titles = @[@"Home",@"Explore",@"S&R",@"Me"];
-    NSArray *norIcons = @[@"tabbar_home_nor",@"tabbar_nearby_nor",@"tabbar_mine_nor",@"tabbar_vip_nor"];
-    //    NSArray *hilIcons = @[@"tabbar_icon_home_highlighted",@"tabbar_icon_service_highlighted",@"tabbar_icon_discount_highlighted",@"tabbar_icon_mine_highlighted"];
-    NSArray *selIcons = @[@"tabbar_home_sel",@"tabbar_nearby_sel",@"tabbar_mine_sel",@"tabbar_vip_sel"];
-    
-    //    NSArray *titles = @[@"养生",@"附近",@"首页",@"上门",@"我的"];
-    //    NSArray *norIcons = @[@"tabbar_home_nor",@"tabbar_order_nor",@"tabbar_home_nor",@"tabbar_rank_nor",@"tabbar_mine_nor"];
-    //    //    NSArray *hilIcons = @[@"tabbar_icon_home_highlighted",@"tabbar_icon_service_highlighted",@"tabbar_icon_discount_highlighted",@"tabbar_icon_mine_highlighted"];
-    //    NSArray *selIcons = @[@"tabbar_home_sel",@"tabbar_order_sel",@"tabbar_home_sel",@"tabbar_rank_sel",@"tabbar_mine_sel"];
-    
-    float tabBarWidth = kScreenWidth / titles.count;
-    SNTabBarItem *customTabBarItem = [[SNTabBarItem alloc] initWithFrame:CGRectMake(tabBarWidth * index, 0, tabBarWidth, Height_Tabbar)];
-    customTabBarItem.image = [UIImage imageNamed:[norIcons objectAtIndex:index]];
-    customTabBarItem.selectedImage = [UIImage imageNamed:[selIcons objectAtIndex:index]];
-    
-    customTabBarItem.titleEdgeInsets = UIEdgeInsetsMake(-10, 0, 0, 0);
-    //customTabBarItem.title = [titles objectAtIndex:index];
-    customTabBarItem.showTitle = NO;
-    customTabBarItem.titleColor = UIColorFromHex(0xabaeb2);
-    customTabBarItem.selectedTitleColor = kDarkBlueColor;
-    return customTabBarItem;
-}
+//
+//- (SNTabViewController*)createTabBarController
+//{
+//    HomeViewController *homeVC = [[HomeViewController alloc] initWithPageName:@"HomeViewController"];
+//    homeVC.customTabBarItem = [self tabBarItemAtIndex:0];
+//    
+//    ExploreViewController *exploreVC = [[ExploreViewController alloc] initWithPageName:@"ExploreViewController"];
+//    exploreVC.customTabBarItem = [self tabBarItemAtIndex:1];
+//    
+//    UserViewController *userVC = [[UserViewController alloc] initWithPageName:@"UserViewController"];
+//    userVC.customTabBarItem = [self tabBarItemAtIndex:2];
+//    
+//    MeViewController *meVC = [[MeViewController alloc] initWithPageName:@"VIPController"];
+//    meVC.customTabBarItem = [self tabBarItemAtIndex:3];
+//    
+//    
+//    self.tabController = [[SNTabViewController alloc] initWithHeight:Height_Tabbar];
+//    self.tabController.viewControllers = @[homeVC,exploreVC,userVC,meVC];
+//    
+//    self.tabController.selectedIndex = 0;
+//    self.tabController.customTabBar.selectedIndex = 0;
+//    
+//    return self.tabController;
+//}
+//
+//- (SNTabBarItem *)tabBarItemAtIndex:(int)index
+//{
+//    NSArray *titles = @[@"Home",@"Explore",@"S&R",@"Me"];
+//    NSArray *norIcons = @[@"tabbar_home_nor",@"tabbar_nearby_nor",@"tabbar_mine_nor",@"tabbar_vip_nor"];
+//    //    NSArray *hilIcons = @[@"tabbar_icon_home_highlighted",@"tabbar_icon_service_highlighted",@"tabbar_icon_discount_highlighted",@"tabbar_icon_mine_highlighted"];
+//    NSArray *selIcons = @[@"tabbar_home_sel",@"tabbar_nearby_sel",@"tabbar_mine_sel",@"tabbar_vip_sel"];
+//    
+//    //    NSArray *titles = @[@"养生",@"附近",@"首页",@"上门",@"我的"];
+//    //    NSArray *norIcons = @[@"tabbar_home_nor",@"tabbar_order_nor",@"tabbar_home_nor",@"tabbar_rank_nor",@"tabbar_mine_nor"];
+//    //    //    NSArray *hilIcons = @[@"tabbar_icon_home_highlighted",@"tabbar_icon_service_highlighted",@"tabbar_icon_discount_highlighted",@"tabbar_icon_mine_highlighted"];
+//    //    NSArray *selIcons = @[@"tabbar_home_sel",@"tabbar_order_sel",@"tabbar_home_sel",@"tabbar_rank_sel",@"tabbar_mine_sel"];
+//    
+//    float tabBarWidth = kScreenWidth / titles.count;
+//    SNTabBarItem *customTabBarItem = [[SNTabBarItem alloc] initWithFrame:CGRectMake(tabBarWidth * index, 0, tabBarWidth, Height_Tabbar)];
+//    customTabBarItem.image = [UIImage imageNamed:[norIcons objectAtIndex:index]];
+//    customTabBarItem.selectedImage = [UIImage imageNamed:[selIcons objectAtIndex:index]];
+//    
+//    customTabBarItem.titleEdgeInsets = UIEdgeInsetsMake(-10, 0, 0, 0);
+//    //customTabBarItem.title = [titles objectAtIndex:index];
+//    customTabBarItem.showTitle = NO;
+//    customTabBarItem.titleColor = UIColorFromHex(0xabaeb2);
+//    customTabBarItem.selectedTitleColor = kDarkBlueColor;
+//    return customTabBarItem;
+//}
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {

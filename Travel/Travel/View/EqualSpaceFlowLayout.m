@@ -40,7 +40,7 @@
         self.minimumInteritemSpacing = 5;   //默认cell之间的最小间距，可以用代理重写
         self.minimumLineSpacing = 5;     //默认的行间距（包括section直接的间距），可以用代码修改，如果全部用代理修改， 则此条只改变section直接的间距
         self.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
-        self.headerReferenceSize = CGSizeMake(kScreenWidth, 40);   //默认sectionHeader大小
+        self.headerReferenceSize = CGSizeMake(kScreenWidth, 0);   //默认sectionHeader大小
         self.sectionHeadersPinToVisibleBounds = NO;
     }
     return self;
