@@ -30,12 +30,21 @@ NSString *const phoneLoginButtonImageStr = @"phoneLoginButton";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.layer.contents = (id)[UIImage imageNamed:@"LoginOrRegisterVC_background"].CGImage;
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     CGFloat aminateDuration = 0.3;
     CGFloat damping = 1;
     CGFloat velocity = 8;
@@ -91,6 +100,7 @@ NSString *const phoneLoginButtonImageStr = @"phoneLoginButton";
     cancelButton.frame = CGRectMake((kScreenWidth - cancelButton.frameWidth - 14)/2.f, self.view.frameHeight - 35, cancelButton.frameWidth+14, cancelButton.frameHeight);
     [cancelButton addTarget:self action:@selector(cancelLogin) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cancelButton];
+
 }
 
 - (void)didReceiveMemoryWarning {

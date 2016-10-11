@@ -17,7 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadContentView];
-    [self useDefaultNavBarTitleColor];
+    //[self Nav_useDefaultNavBarTitleColor];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     // Do any additional setup after loading the view.
 }
 

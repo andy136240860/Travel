@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "UIViewController+NavBarTool.h"
+#import "UIViewController+TitleView.h"
+#import "UIViewController+SNExtension.h"
 
 @interface XWViewController : UIViewController
+
+- (void)loadContentView;
 
 @end

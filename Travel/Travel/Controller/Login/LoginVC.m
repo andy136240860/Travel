@@ -38,16 +38,13 @@
     self.title = @"登录";
     self.view.layer.contents = (id)[UIImage imageNamed:@"LoginOrRegisterVC_background"].CGImage;
     
-    [self useTranslucentBackgroundImage];
+//    [self Nav_useTranslucentBackgroundImage];
     
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
-    [self addRightButtonWithTitle:@"注册" seletor:@selector(registerAccountAction)];
+    [self Nav_addRightButtonWithTitle:@"注册" seletor:@selector(registerAccountAction)];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-}
 
 - (void)loadContentView{
     int intervalY = 30;
@@ -202,6 +199,7 @@
         [AVUser logInWithMobilePhoneNumberInBackground:phoneNumberTextFeildView.contentTextField.text password:phonePasswordTextFeildView.contentTextField.text block:^(AVUser *user, NSError *error) {
             if (user != nil) {
                 [self showMessageWithTitle:@"登录成功" subTitle:nil type:TSMessageNotificationTypeSuccess];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotification_LogoutSuccess object:nil];
                 [self performSelector:@selector(dismissView) withObject:self afterDelay:1];
             } else {
                 [self showMessageWithTitle:@"登录失败" subTitle:[error.userInfo objectForKey:@"NSLocalizedDescription"] type:TSMessageNotificationTypeError];

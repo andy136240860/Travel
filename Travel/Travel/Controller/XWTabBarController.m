@@ -36,18 +36,15 @@
     
     // 添加子控制器
     HomeViewController *asdkHomeFeedVC      = [[HomeViewController alloc] init];
-    UINavigationController *asdkHomeFeedNavCtrl  = [[UINavigationController alloc] initWithRootViewController:asdkHomeFeedVC];
-    asdkHomeFeedNavCtrl.tabBarItem               = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"tabbar_home_nor"] tag:0];
-    asdkHomeFeedNavCtrl.hidesBarsOnSwipe         = YES;
+    asdkHomeFeedVC.tabBarItem               = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"tabbar_home_nor"] tag:0];
     
     // ASDK Home Feed viewController & navController
     MeViewController *uikitHomeFeedVC     = [[MeViewController alloc] init];
-    UINavigationController *uikitHomeFeedNavCtrl = [[UINavigationController alloc] initWithRootViewController:uikitHomeFeedVC];
-    uikitHomeFeedNavCtrl.tabBarItem              = [[UITabBarItem alloc] initWithTitle:@"我" image:[UIImage imageNamed:@"tabbar_home_nor"] tag:1];
+    uikitHomeFeedVC.tabBarItem              = [[UITabBarItem alloc] initWithTitle:@"我" image:[UIImage imageNamed:@"tabbar_home_nor"] tag:1];
     
     // UITabBarController
-    self.viewControllers             = @[uikitHomeFeedNavCtrl, asdkHomeFeedNavCtrl,uikitHomeFeedNavCtrl,uikitHomeFeedNavCtrl];
-    self.selectedViewController      = asdkHomeFeedNavCtrl;
+    self.viewControllers             = @[asdkHomeFeedVC, asdkHomeFeedVC,uikitHomeFeedVC,uikitHomeFeedVC];
+    self.selectedViewController      = asdkHomeFeedVC;
     [[UITabBar appearance] setTintColor:kGreenColor];
     
     XWTabBar *tabBar = [[XWTabBar alloc] init];
@@ -72,7 +69,7 @@
 - (void)tabBarDidClickPlusButton:(XWTabBar *)tabBar
 {
     [self effectViewWithTabBar:(XWTabBar *)tabBar].alpha = 0.f;
-    [self.view addSubview:_effectView];
+    [[UIApplication sharedApplication].keyWindow addSubview:_effectView];
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:5 options:UIViewAnimationOptionLayoutSubviews animations:^{
         _effectView.alpha = 1.f;
     } completion:^(BOOL finished) {

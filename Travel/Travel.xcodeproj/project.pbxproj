@@ -191,7 +191,6 @@
 		7FD0BBD71C9A58C9004D2E02 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7FD0BBC91C9A58C9004D2E02 /* IQKeyboardManager.bundle */; };
 		7FFB94921C967051003523B4 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFB94911C967051003523B4 /* Comment.m */; };
 		9C6D46F4FE6A44FA69104497 /* libPods-Travel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5AF75FA5F8020920EAA209D /* libPods-Travel.a */; };
-		BC06631D1D539E5600073BB8 /* MyTravelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC06631C1D539E5600073BB8 /* MyTravelViewController.m */; };
 		BC0E84B81C7AB95F00082AA9 /* radioButtonActivated@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC0E84B61C7AB95F00082AA9 /* radioButtonActivated@2x.png */; };
 		BC0E84B91C7AB95F00082AA9 /* radioButtonDisActivated@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC0E84B71C7AB95F00082AA9 /* radioButtonDisActivated@2x.png */; };
 		BC0E84D71C7C46DB00082AA9 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC0E84BD1C7C46DB00082AA9 /* AlipaySDK.bundle */; };
@@ -217,13 +216,19 @@
 		BC190E851C9257F7007BA6A8 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = BC190E811C9257F7007BA6A8 /* Icon-120.png */; };
 		BC190E861C9257F7007BA6A8 /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = BC190E821C9257F7007BA6A8 /* Icon-152.png */; };
 		BC190E871C9257F7007BA6A8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC190E831C9257F7007BA6A8 /* Icon@2x.png */; };
+		BC1C91B01DA234F80059955A /* UIViewController+TitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1C91AF1DA234F80059955A /* UIViewController+TitleView.m */; };
+		BC1C91B31DA239C50059955A /* UIViewController+SNExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1C91B21DA239C50059955A /* UIViewController+SNExtension.m */; };
 		BC2114911D3B3CA3008316EF /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = BC2114901D3B3CA3008316EF /* data.json */; };
 		BC2815441D3B6D3C006060B7 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2815431D3B6D3C006060B7 /* HomeViewController.m */; };
+		BC2D6E511DAA310E00211026 /* MyTravelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D6E501DAA310E00211026 /* MyTravelDetailViewController.m */; };
+		BC2D6E551DAA314200211026 /* MyTravelDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D6E541DAA314200211026 /* MyTravelDetailHeaderView.m */; };
+		BC2D6E581DAA327400211026 /* TravelDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2D6E571DAA327400211026 /* TravelDetailHeaderView.m */; };
 		BC313D211C3A143C00C9469D /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC313D201C3A143C00C9469D /* UserViewController.m */; };
 		BC313D271C3A147500C9469D /* BigButtonsInUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BC313D241C3A147500C9469D /* BigButtonsInUser.m */; };
 		BC313D281C3A147500C9469D /* UserHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC313D261C3A147500C9469D /* UserHeaderView.m */; };
 		BC362F081D3D1CFC003FF709 /* XWImageShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC362F071D3D1CFC003FF709 /* XWImageShowView.m */; };
 		BC3A62131D61EA26006C8DFD /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3A62121D61EA26006C8DFD /* HexColor.m */; };
+		BC42DAE11DA9DDEC00502D09 /* XWUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BC42DAE01DA9DDEC00502D09 /* XWUser.m */; };
 		BC464B151D502A4A00FDD0E6 /* EqualSpaceFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BC464B141D502A4A00FDD0E6 /* EqualSpaceFlowLayout.m */; };
 		BC464B181D502B8100FDD0E6 /* CollectionViewCellForMeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC464B171D502B8100FDD0E6 /* CollectionViewCellForMeVC.m */; };
 		BC464B1B1D502BAE00FDD0E6 /* SubObjectHeaderViewForMeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC464B1A1D502BAE00FDD0E6 /* SubObjectHeaderViewForMeVC.m */; };
@@ -554,7 +559,6 @@
 		BC91D5B01D5B4BC2007A335F /* XWBannerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC91D5AC1D5B4BC2007A335F /* XWBannerViewCell.m */; };
 		BC91D5B11D5B4BC2007A335F /* XWPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BC91D5AE1D5B4BC2007A335F /* XWPageControl.m */; };
 		BC91D5B41D5B5122007A335F /* loginBannerView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC91D5B31D5B5122007A335F /* loginBannerView@2x.png */; };
-		BC9510EF1D54D49800E9E313 /* XWUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9510EE1D54D49800E9E313 /* XWUser.m */; };
 		BC9510F71D59D3CA00E9E313 /* RegisterAccountVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9510F61D59D3CA00E9E313 /* RegisterAccountVC.m */; };
 		BC9510FE1D59D83B00E9E313 /* LoginTextFeildView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9510FD1D59D83B00E9E313 /* LoginTextFeildView.m */; };
 		BC9511041D5B26F100E9E313 /* LoginOrRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9511031D5B26F100E9E313 /* LoginOrRegisterVC.m */; };
@@ -566,6 +570,8 @@
 		BCAA4ACD1C8597F70085A165 /* MyAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAA4ACC1C8597F70085A165 /* MyAccount.m */; };
 		BCAA4AD11C8686750085A165 /* Diagnosis.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAA4AD01C8686750085A165 /* Diagnosis.m */; };
 		BCABD6741D4464D1003E2104 /* video_list_cell_big_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCABD6731D4464D1003E2104 /* video_list_cell_big_icon@2x.png */; };
+		BCB042E21DACCD1000896FF9 /* TravelHeaderViewBG@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BCB042E11DACCD1000896FF9 /* TravelHeaderViewBG@2x.jpg */; };
+		BCB042E81DACDA1700896FF9 /* Travel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB042E71DACDA1700896FF9 /* Travel.m */; };
 		BCB0506C1C15982500F988B1 /* TipMessageData.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB0506B1C15982500F988B1 /* TipMessageData.m */; };
 		BCB383E21D64E2940055F6AE /* temp.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB383E11D64E2940055F6AE /* temp.m */; };
 		BCB383EB1D6558BD0055F6AE /* publish_tabButton_camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB383E41D6558BD0055F6AE /* publish_tabButton_camera@2x.png */; };
@@ -1068,8 +1074,6 @@
 		7FD0BBC91C9A58C9004D2E02 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
 		7FFB94901C967051003523B4 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		7FFB94911C967051003523B4 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
-		BC06631B1D539E5600073BB8 /* MyTravelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTravelViewController.h; sourceTree = "<group>"; };
-		BC06631C1D539E5600073BB8 /* MyTravelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTravelViewController.m; sourceTree = "<group>"; };
 		BC0E84B61C7AB95F00082AA9 /* radioButtonActivated@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "radioButtonActivated@2x.png"; sourceTree = "<group>"; };
 		BC0E84B71C7AB95F00082AA9 /* radioButtonDisActivated@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "radioButtonDisActivated@2x.png"; sourceTree = "<group>"; };
 		BC0E84BD1C7C46DB00082AA9 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
@@ -1105,9 +1109,19 @@
 		BC190E811C9257F7007BA6A8 /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
 		BC190E821C9257F7007BA6A8 /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
 		BC190E831C9257F7007BA6A8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		BC1C91AE1DA234F80059955A /* UIViewController+TitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TitleView.h"; sourceTree = "<group>"; };
+		BC1C91AF1DA234F80059955A /* UIViewController+TitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TitleView.m"; sourceTree = "<group>"; };
+		BC1C91B11DA239C50059955A /* UIViewController+SNExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SNExtension.h"; sourceTree = "<group>"; };
+		BC1C91B21DA239C50059955A /* UIViewController+SNExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SNExtension.m"; sourceTree = "<group>"; };
 		BC2114901D3B3CA3008316EF /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		BC2815421D3B6D3C006060B7 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		BC2815431D3B6D3C006060B7 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		BC2D6E4F1DAA310E00211026 /* MyTravelDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTravelDetailViewController.h; sourceTree = "<group>"; };
+		BC2D6E501DAA310E00211026 /* MyTravelDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTravelDetailViewController.m; sourceTree = "<group>"; };
+		BC2D6E531DAA314200211026 /* MyTravelDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTravelDetailHeaderView.h; sourceTree = "<group>"; };
+		BC2D6E541DAA314200211026 /* MyTravelDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTravelDetailHeaderView.m; sourceTree = "<group>"; };
+		BC2D6E561DAA327400211026 /* TravelDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelDetailHeaderView.h; sourceTree = "<group>"; };
+		BC2D6E571DAA327400211026 /* TravelDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelDetailHeaderView.m; sourceTree = "<group>"; };
 		BC313D1F1C3A143C00C9469D /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserViewController.h; path = User/UserViewController.h; sourceTree = "<group>"; };
 		BC313D201C3A143C00C9469D /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserViewController.m; path = User/UserViewController.m; sourceTree = "<group>"; };
 		BC313D231C3A147500C9469D /* BigButtonsInUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigButtonsInUser.h; sourceTree = "<group>"; };
@@ -1118,8 +1132,10 @@
 		BC362F071D3D1CFC003FF709 /* XWImageShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWImageShowView.m; sourceTree = "<group>"; };
 		BC3A62111D61EA26006C8DFD /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
 		BC3A62121D61EA26006C8DFD /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
+		BC42DADF1DA9DDEC00502D09 /* XWUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWUser.h; sourceTree = "<group>"; };
+		BC42DAE01DA9DDEC00502D09 /* XWUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWUser.m; sourceTree = "<group>"; };
 		BC464B131D502A4A00FDD0E6 /* EqualSpaceFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EqualSpaceFlowLayout.h; sourceTree = "<group>"; };
-		BC464B141D502A4A00FDD0E6 /* EqualSpaceFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EqualSpaceFlowLayout.m; path = ../View/EqualSpaceFlowLayout.m; sourceTree = "<group>"; };
+		BC464B141D502A4A00FDD0E6 /* EqualSpaceFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EqualSpaceFlowLayout.m; sourceTree = "<group>"; };
 		BC464B161D502B8100FDD0E6 /* CollectionViewCellForMeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCellForMeVC.h; sourceTree = "<group>"; };
 		BC464B171D502B8100FDD0E6 /* CollectionViewCellForMeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCellForMeVC.m; sourceTree = "<group>"; };
 		BC464B191D502BAE00FDD0E6 /* SubObjectHeaderViewForMeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubObjectHeaderViewForMeVC.h; sourceTree = "<group>"; };
@@ -1490,8 +1506,6 @@
 		BC91D5AD1D5B4BC2007A335F /* XWPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWPageControl.h; sourceTree = "<group>"; };
 		BC91D5AE1D5B4BC2007A335F /* XWPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWPageControl.m; sourceTree = "<group>"; };
 		BC91D5B31D5B5122007A335F /* loginBannerView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBannerView@2x.png"; sourceTree = "<group>"; };
-		BC9510ED1D54D49800E9E313 /* XWUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWUser.h; sourceTree = "<group>"; };
-		BC9510EE1D54D49800E9E313 /* XWUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWUser.m; sourceTree = "<group>"; };
 		BC9510F51D59D3CA00E9E313 /* RegisterAccountVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterAccountVC.h; sourceTree = "<group>"; };
 		BC9510F61D59D3CA00E9E313 /* RegisterAccountVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterAccountVC.m; sourceTree = "<group>"; };
 		BC9510F81D59D4B800E9E313 /* RegisterAddDetailsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterAddDetailsVC.h; sourceTree = "<group>"; };
@@ -1511,6 +1525,9 @@
 		BCAA4ACF1C8686750085A165 /* Diagnosis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Diagnosis.h; sourceTree = "<group>"; };
 		BCAA4AD01C8686750085A165 /* Diagnosis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Diagnosis.m; sourceTree = "<group>"; };
 		BCABD6731D4464D1003E2104 /* video_list_cell_big_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video_list_cell_big_icon@2x.png"; sourceTree = "<group>"; };
+		BCB042E11DACCD1000896FF9 /* TravelHeaderViewBG@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "TravelHeaderViewBG@2x.jpg"; sourceTree = "<group>"; };
+		BCB042E61DACDA1700896FF9 /* Travel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Travel.h; sourceTree = "<group>"; };
+		BCB042E71DACDA1700896FF9 /* Travel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Travel.m; sourceTree = "<group>"; };
 		BCB0506A1C15982500F988B1 /* TipMessageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipMessageData.h; sourceTree = "<group>"; };
 		BCB0506B1C15982500F988B1 /* TipMessageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipMessageData.m; sourceTree = "<group>"; };
 		BCB383E01D64E2940055F6AE /* temp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = temp.h; sourceTree = "<group>"; };
@@ -2968,6 +2985,25 @@
 			path = One;
 			sourceTree = "<group>";
 		};
+		BC2D6E4E1DAA310E00211026 /* MyTravel */ = {
+			isa = PBXGroup;
+			children = (
+				BC2D6E521DAA311B00211026 /* View */,
+				BC2D6E4F1DAA310E00211026 /* MyTravelDetailViewController.h */,
+				BC2D6E501DAA310E00211026 /* MyTravelDetailViewController.m */,
+			);
+			path = MyTravel;
+			sourceTree = "<group>";
+		};
+		BC2D6E521DAA311B00211026 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BC2D6E531DAA314200211026 /* MyTravelDetailHeaderView.h */,
+				BC2D6E541DAA314200211026 /* MyTravelDetailHeaderView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		BC313D221C3A147500C9469D /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -3078,6 +3114,10 @@
 		BC4F95251D641F070007BD40 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				BC1C91B11DA239C50059955A /* UIViewController+SNExtension.h */,
+				BC1C91B21DA239C50059955A /* UIViewController+SNExtension.m */,
+				BC1C91AE1DA234F80059955A /* UIViewController+TitleView.h */,
+				BC1C91AF1DA234F80059955A /* UIViewController+TitleView.m */,
 				BC4F95261D641F1A0007BD40 /* UIViewController+Login.h */,
 				BC4F95271D641F1A0007BD40 /* UIViewController+Login.m */,
 				BC4F95281D641F1A0007BD40 /* UIViewController+TSMessageHandler.h */,
@@ -4380,6 +4420,7 @@
 		BC91D5B21D5B5122007A335F /* Temp */ = {
 			isa = PBXGroup;
 			children = (
+				BCB042E11DACCD1000896FF9 /* TravelHeaderViewBG@2x.jpg */,
 				BC91D5B31D5B5122007A335F /* loginBannerView@2x.png */,
 			);
 			path = Temp;
@@ -4391,10 +4432,10 @@
 				BC9510FB1D59D83B00E9E313 /* View */,
 				BC9510F51D59D3CA00E9E313 /* RegisterAccountVC.h */,
 				BC9510F61D59D3CA00E9E313 /* RegisterAccountVC.m */,
-				BC9510F81D59D4B800E9E313 /* RegisterAddDetailsVC.h */,
-				BC9511051D5B275700E9E313 /* RegisterAddDetailsVC.m */,
 				BC9511021D5B26F100E9E313 /* LoginOrRegisterVC.h */,
 				BC9511031D5B26F100E9E313 /* LoginOrRegisterVC.m */,
+				BC9510F81D59D4B800E9E313 /* RegisterAddDetailsVC.h */,
+				BC9511051D5B275700E9E313 /* RegisterAddDetailsVC.m */,
 				BC8E8A841D5B2CAC003CFE7C /* LoginVC.h */,
 				BC8E8A851D5B2CAC003CFE7C /* LoginVC.m */,
 			);
@@ -4416,8 +4457,6 @@
 				BCBA604B1D4F44BA0078267A /* View */,
 				BC9D892E1D49C34B00B1A5FB /* MeViewController.h */,
 				BC9D892F1D49C34B00B1A5FB /* MeViewController.m */,
-				BC06631B1D539E5600073BB8 /* MyTravelViewController.h */,
-				BC06631C1D539E5600073BB8 /* MyTravelViewController.m */,
 			);
 			path = Me;
 			sourceTree = "<group>";
@@ -4591,11 +4630,11 @@
 		E1EB1B871B70A43A0048B8EB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				BC2D6E4E1DAA310E00211026 /* MyTravel */,
 				BC4F952C1D641F780007BD40 /* XWTabBarController.h */,
 				BC4F952D1D641F780007BD40 /* XWTabBarController.m */,
 				BC4F95251D641F070007BD40 /* Category */,
 				BC9510F41D59D3CA00E9E313 /* Login */,
-				BC464B141D502A4A00FDD0E6 /* EqualSpaceFlowLayout.m */,
 				BC9D892D1D49C32300B1A5FB /* Explore */,
 				BC9D892C1D49C31C00B1A5FB /* Me */,
 				BC8E36D61C27EB4D00304637 /* User */,
@@ -4760,8 +4799,10 @@
 				7FB267C31C8699B4008FCF05 /* Search.m */,
 				7FFB94901C967051003523B4 /* Comment.h */,
 				7FFB94911C967051003523B4 /* Comment.m */,
-				BC9510ED1D54D49800E9E313 /* XWUser.h */,
-				BC9510EE1D54D49800E9E313 /* XWUser.m */,
+				BC42DADF1DA9DDEC00502D09 /* XWUser.h */,
+				BC42DAE01DA9DDEC00502D09 /* XWUser.m */,
+				BCB042E61DACDA1700896FF9 /* Travel.h */,
+				BCB042E71DACDA1700896FF9 /* Travel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5046,6 +5087,9 @@
 				BC362F061D3D1CFC003FF709 /* XWImageShowView.h */,
 				BC362F071D3D1CFC003FF709 /* XWImageShowView.m */,
 				BC464B131D502A4A00FDD0E6 /* EqualSpaceFlowLayout.h */,
+				BC464B141D502A4A00FDD0E6 /* EqualSpaceFlowLayout.m */,
+				BC2D6E561DAA327400211026 /* TravelDetailHeaderView.h */,
+				BC2D6E571DAA327400211026 /* TravelDetailHeaderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5499,6 +5543,7 @@
 				BC62C55E1D3F27B900977F58 /* f_static_073@2x.png in Resources */,
 				BC4B79471D61E7D600F57DB5 /* NotificationBackgroundMessage.png in Resources */,
 				BC62C58B1D3F27B900977F58 /* f_static_095@3x.png in Resources */,
+				BCB042E21DACCD1000896FF9 /* TravelHeaderViewBG@2x.jpg in Resources */,
 				BC62C4AE1D3F27B900977F58 /* Delete_ios7@3x.png in Resources */,
 				BC62C4C11D3F27B900977F58 /* section0_emotion15@2x.png in Resources */,
 				BC62C5A11D3F27B900977F58 /* f_static_106@3x.png in Resources */,
@@ -5866,7 +5911,6 @@
 				BC91D5B11D5B4BC2007A335F /* XWPageControl.m in Sources */,
 				3ED0275E1AA9A4420051E41C /* SNLabel.m in Sources */,
 				E10EDC781B8B5EFF0035B6E7 /* CUOrderParser.m in Sources */,
-				BC9510EF1D54D49800E9E313 /* XWUser.m in Sources */,
 				BCAA4ACD1C8597F70085A165 /* MyAccount.m in Sources */,
 				3EDEBABE1A961C4800E72809 /* UIDevice+Hardware.m in Sources */,
 				E1EB1ECD1B70A4D70048B8EB /* AlixPayOrder.m in Sources */,
@@ -5936,6 +5980,7 @@
 				7FD0BBD01C9A58C9004D2E02 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				3EDEBAAE1A961C4800E72809 /* NSArray+SNExtension.m in Sources */,
 				7FCDEEC71D065F3500578FC3 /* HFModelVerify.m in Sources */,
+				BC1C91B31DA239C50059955A /* UIViewController+SNExtension.m in Sources */,
 				BC8E36C61C27C69400304637 /* TitleView.m in Sources */,
 				3E239E6C1AB2CF90001F0B3F /* TipHandler+HUD.m in Sources */,
 				3EDEBAAF1A961C4800E72809 /* NSData+Base64.m in Sources */,
@@ -5957,7 +6002,6 @@
 				E1EB1E601B70A43B0048B8EB /* SNCycleScrollView.m in Sources */,
 				BC8E36CD1C27D95900304637 /* CUPageControl.m in Sources */,
 				E10EDCB21B8B60DE0035B6E7 /* StarRatingView.m in Sources */,
-				BC06631D1D539E5600073BB8 /* MyTravelViewController.m in Sources */,
 				E1EB1E5C1B70A43B0048B8EB /* CUBlankView.m in Sources */,
 				3EDEBABD1A961C4800E72809 /* SNServerAPIResultData.m in Sources */,
 				E1EB1E3F1B70A43B0048B8EB /* UIImageView+LBBlurredImage.m in Sources */,
@@ -5965,6 +6009,7 @@
 				BC91D5B01D5B4BC2007A335F /* XWBannerViewCell.m in Sources */,
 				BC62C5B71D3F27B900977F58 /* ChatToolBar.m in Sources */,
 				3EDEBA891A961C4800E72809 /* SNNetworkClient+CompletionBlock.m in Sources */,
+				BC2D6E551DAA314200211026 /* MyTravelDetailHeaderView.m in Sources */,
 				BC464B181D502B8100FDD0E6 /* CollectionViewCellForMeVC.m in Sources */,
 				E1EB1ED61B70A4D70048B8EB /* RSADataSigner.m in Sources */,
 				3EDEBA6F1A961C4800E72809 /* SNLogging.m in Sources */,
@@ -5986,6 +6031,7 @@
 				3EDEBACB1A961C4800E72809 /* UIView+Extension.m in Sources */,
 				3EDEBA731A961C4800E72809 /* AFHTTPClient.m in Sources */,
 				E1EB1D7D1B70A43B0048B8EB /* AppCore.m in Sources */,
+				BCB042E81DACDA1700896FF9 /* Travel.m in Sources */,
 				BC62C5AB1D3F27B900977F58 /* FaceThemeModel.m in Sources */,
 				BCF0D2441C89664200D16245 /* PhotosShowView.m in Sources */,
 				E1EB1E3B1B70A43B0048B8EB /* AvatarHelper.m in Sources */,
@@ -6001,6 +6047,7 @@
 				BC362F081D3D1CFC003FF709 /* XWImageShowView.m in Sources */,
 				BC9511041D5B26F100E9E313 /* LoginOrRegisterVC.m in Sources */,
 				BC4B79121D619D4300F57DB5 /* LjjUISegmentedControl.m in Sources */,
+				BC42DAE11DA9DDEC00502D09 /* XWUser.m in Sources */,
 				E1283B031B96066E00FC26C5 /* DOPDropDownMenu.m in Sources */,
 				E10EDC6F1B8B5A190035B6E7 /* CUOrder.m in Sources */,
 				3EDEBA741A961C4800E72809 /* AFHTTPRequestOperation.m in Sources */,
@@ -6024,6 +6071,7 @@
 				3EDD3C2D1AAC68220038338F /* SNLocationRequest.m in Sources */,
 				3ED0A7541AA603C50040E529 /* SNNavigationBar.m in Sources */,
 				E18CF5B81B3E673100E40DB4 /* SNListEmptyView.m in Sources */,
+				BC2D6E511DAA310E00211026 /* MyTravelDetailViewController.m in Sources */,
 				3ED0A75D1AA603C50040E529 /* SNSlideNavigationController+SNSlideStatus.m in Sources */,
 				E10EDCCC1B8B84D40035B6E7 /* WXUtil.mm in Sources */,
 				3EDEBA8D1A961C4800E72809 /* SNNetworkImageCache.m in Sources */,
@@ -6048,6 +6096,7 @@
 				3ED0A7681AA607FD0040E529 /* SNTabViewController.m in Sources */,
 				BC313D271C3A147500C9469D /* BigButtonsInUser.m in Sources */,
 				BC62C5B01D3F27B900977F58 /* FaceButton.m in Sources */,
+				BC1C91B01DA234F80059955A /* UIViewController+TitleView.m in Sources */,
 				3EDEBAC31A961C4800E72809 /* UIImage+Draw.m in Sources */,
 				3ED0A7651AA604E50040E529 /* SNTabBarItem.m in Sources */,
 				E1EB1ED21B70A4D70048B8EB /* DataVerifier.m in Sources */,
@@ -6056,6 +6105,7 @@
 				E1EB1E651B70A43B0048B8EB /* SearchTooBar.m in Sources */,
 				3EDEBAB11A961C4800E72809 /* NSDate+SNExtension.m in Sources */,
 				E1283B2C1BA07A5000FC26C5 /* CUUserManager+FamilyMember.m in Sources */,
+				BC2D6E581DAA327400211026 /* TravelDetailHeaderView.m in Sources */,
 				3EDEBA781A961C4800E72809 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				3EDEBAC81A961C4800E72809 /* UIImage+SNExtension.m in Sources */,
 				3ED0A74D1AA603C50040E529 /* UIViewController+SNSlideStatus.m in Sources */,

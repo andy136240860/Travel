@@ -15,6 +15,7 @@
 + (AppDelegate *)app;
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) XWTabBarController  * tabBarVC;
 //@property (nonatomic,strong)CULoginViewController * loginViewController;
 

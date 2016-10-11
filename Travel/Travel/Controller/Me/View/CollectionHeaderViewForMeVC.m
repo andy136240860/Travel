@@ -10,7 +10,7 @@
 #import "Masonry.h"
 #import "UIImageView+WebCache.h"
 #import "CUUserManager.h"
-#import "XWUser.h"
+#import "AVUser.h"
 
 @interface  CollectionHeaderViewForMeVC(){
     UIImageView *_backgroundImageView;
@@ -85,8 +85,8 @@
 }
 
 - (void)resetData{
-    if ([[XWUser currentUser] isAuthenticated]) {
-        _nameLabel.text = [XWUser currentUser].username;
+    if ([[AVUser currentUser] isAuthenticated]) {
+        _nameLabel.text = [AVUser currentUser].username;
         [_avatarImageView sd_setImageWithURL:[NSURL URLWithString:[CUUserManager sharedInstance].user.icon] placeholderImage:[UIImage imageNamed:@"CollectionHeaderViewForMeVC_userAvatarDefaultImage"]];
     }
     else{

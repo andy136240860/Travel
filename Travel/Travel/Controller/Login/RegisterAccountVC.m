@@ -15,7 +15,6 @@
 #import "AVUser.h"
 
 #import "RegisterAddDetailsVC.h"
-#import "UINavigationBar+Background.h"
 
 #import "TSMessage.h"
 
@@ -43,7 +42,7 @@
 - (void)viewDidLoad {
     self.title = @"验证手机号";
     [super viewDidLoad];
-    [self useTranslucentBackgroundImage];
+    //[self Nav_useTranslucentBackgroundImage];
     
     self.view.layer.contents = (id)[UIImage imageNamed:@"LoginOrRegisterVC_background"].CGImage;
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(endEdit)];
@@ -190,12 +189,12 @@
         [self.view bringSubviewToFront:_hud];
     }
     
-    [_hud show:YES];
+    [_hud showAnimated:YES];
 }
 
 - (void)hideHUD
 {
-    [_hud hide:NO];
+    [_hud hideAnimated:NO];
 }
 - (void)nextButtonAction{
     if ([passwordTextFeildView.contentTextField.text isEmpty]) {
@@ -206,8 +205,8 @@
         __weak __block typeof(self) blockSelf = self;
         [AVOSCloud verifySmsCode:passwordTextFeildView.contentTextField.text mobilePhoneNumber:userTextFeildView.contentTextField.text callback:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
-                RegisterAddDetailsVC *vc = [[RegisterAddDetailsVC alloc]initWithPageName:NSStringFromClass([RegisterAddDetailsVC class])];
-                XWUser *user = [XWUser user];
+                RegisterAddDetailsVC *vc = [[RegisterAddDetailsVC alloc]init];
+                AVUser *user = [AVUser user];
                 user.mobilePhoneNumber = [userTextFeildView.contentTextField.text copy];
                 vc.user = user;
                 [blockSelf.navigationController pushViewController:vc animated:YES];

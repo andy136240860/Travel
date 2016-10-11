@@ -7,22 +7,21 @@
 //
 
 #import "UIViewController+Login.h"
-#import "XWUser.h"
+#import "AVUser.h"
 #import "LoginOrRegisterVC.h"
 
 @implementation UIViewController (Login)
 
 - (void)pushViewControllerWithVerifyLogin:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if ([[XWUser currentUser] isAuthenticated]) {
+    if ([[AVUser currentUser] isAuthenticated]) {
         [self.navigationController pushViewController:viewController animated:animated];
     }
     else{
         LoginOrRegisterVC *loginVC = [[LoginOrRegisterVC alloc]init];
         UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:loginVC];
-        [self.navigationController presentViewController:navVC animated:YES completion:nil];
+        [self.navigationController presentViewController:navVC animated:animated completion:nil];
     }
-
 }
 
 @end

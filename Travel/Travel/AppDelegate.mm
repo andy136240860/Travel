@@ -41,6 +41,7 @@
 #import "TipHandler+HUD.h"
 
 #import "XWTabBarController.h"
+#import "UIImage+Color.h"
 
 @interface AppDelegate () <BMKGeneralDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
 
@@ -252,11 +253,14 @@
         [UIApplication sharedApplication].statusBarHidden = NO;
     }
     
-    if (self.tabBarVC == nil)
+    if (self.navigationController == nil)
     {
-        self.tabBarVC = [[XWTabBarController alloc] init];
+        self.navigationController = [[UINavigationController alloc] initWithRootViewController:[self createTabBarController]];
+        
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage createImageWithColor:UIColorFromHex(Color_Hex_NavBackground)] forBarMetrics:UIBarMetricsDefault];
+//        [self.navigationController.navigationBar setShadowImage:[UIImage createImageWithColor:UIColorFromHex(Color_Hex_NavShadow) size:CGSizeMake(kDefaultLintWidth,kDefaultLintWidth)]];
     }
-    self.window.rootViewController = self.tabBarVC;
+    self.window.rootViewController = self.navigationController;
     //    self.slideNaviController.view.alpha = 0;
     //    [UIView animateWithDuration:0.25 animations:^{
     //        self.slideNaviController.view.alpha = 1;
@@ -282,31 +286,16 @@
     }];
     
 }
-//
-//- (SNTabViewController*)createTabBarController
-//{
-//    HomeViewController *homeVC = [[HomeViewController alloc] initWithPageName:@"HomeViewController"];
-//    homeVC.customTabBarItem = [self tabBarItemAtIndex:0];
-//    
-//    ExploreViewController *exploreVC = [[ExploreViewController alloc] initWithPageName:@"ExploreViewController"];
-//    exploreVC.customTabBarItem = [self tabBarItemAtIndex:1];
-//    
-//    UserViewController *userVC = [[UserViewController alloc] initWithPageName:@"UserViewController"];
-//    userVC.customTabBarItem = [self tabBarItemAtIndex:2];
-//    
-//    MeViewController *meVC = [[MeViewController alloc] initWithPageName:@"VIPController"];
-//    meVC.customTabBarItem = [self tabBarItemAtIndex:3];
-//    
-//    
-//    self.tabController = [[SNTabViewController alloc] initWithHeight:Height_Tabbar];
-//    self.tabController.viewControllers = @[homeVC,exploreVC,userVC,meVC];
-//    
-//    self.tabController.selectedIndex = 0;
-//    self.tabController.customTabBar.selectedIndex = 0;
-//    
-//    return self.tabController;
-//}
-//
+
+- (XWTabBarController*)createTabBarController
+{
+    if (_tabBarVC == nil)
+    {
+        _tabBarVC = [[XWTabBarController alloc] init];
+    }
+    return _tabBarVC;
+}
+
 //- (SNTabBarItem *)tabBarItemAtIndex:(int)index
 //{
 //    NSArray *titles = @[@"Home",@"Explore",@"S&R",@"Me"];

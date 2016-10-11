@@ -12,11 +12,16 @@
 #import "CollectionHeaderViewForMeVC.h"
 #import "SubObjectHeaderViewForMeVC.h"
 #import "UIViewController+Login.h"
-#import "MyTravelViewController.h"
+#import "MyTravelDetailViewController.h"
+//#import "UINavigationController+FDFullscreenPopGesture.h"
+#import "LoginOrRegisterVC.h"
+#import "AVUser.h"
 
 @interface MeViewController ()<EqualSpaceFlowLayoutDelegate,UICollectionViewDelegate,UICollectionViewDataSource,CollectionHeaderViewForMeVCDelegate>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) CollectionHeaderViewForMeVC *headerView;
+@property (nonatomic)   BOOL isPresent;
 
 @end
 
@@ -25,8 +30,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden = YES;
-    // Do any additional setup after loading the view.
+    //self.fd_prefersNavigationBarHidden = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (!_isPresent) {
+        [self.navigationController setNavigationBarHidden:YES animated:animated];
+    }
+    [super viewWillAppear:animated];
+    if (_headerView) {
+        [_headerView resetData];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (!_isPresent) {
+        [self.navigationController setNavigationBarHidden:NO animated:animated];
+    }
 }
 
 - (void)loadContentView{
@@ -56,11 +77,17 @@
 #pragma mark - headerButtomsClickDelegate
 
 - (void)clickButtonActionWithModel:(CollectionHeaderViewForMeVCClickModel)model{
+    if (![[AVUser currentUser] isAuthenticated]) {
+        LoginOrRegisterVC *loginVC = [[LoginOrRegisterVC alloc]init];
+        UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:loginVC];
+        _isPresent = YES;
+        [self.navigationController presentViewController:navVC animated:YES completion:nil];
+        return;
+    }
+    
     switch (model) {
         case CollectionHeaderViewModel_userAvatar:{
             NSLog(@"点击头像了， 因为未登录， 调用登陆页面");
-            MyTravelViewController *vc = [[MyTravelViewController alloc]initWithPageName:NSStringFromClass([MyTravelViewController class])];
-            [self pushViewControllerWithVerifyLogin:vc animated:YES];
         }
             break;
         case CollectionHeaderViewModel_userName:{
@@ -69,6 +96,8 @@
             break;
         case CollectionHeaderViewModel_myTravel:{
             NSLog(@"我的旅程");
+            MyTravelDetailViewController *vc = [[MyTravelDetailViewController alloc]init];
+            [self pushViewControllerWithVerifyLogin:vc animated:YES];
         }
             break;
         case CollectionHeaderViewModel_myRequest:{
@@ -135,11 +164,12 @@
 {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         if (indexPath.section == 0) {
-            CollectionHeaderViewForMeVC *headerview = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:NSStringFromClass([CollectionHeaderViewForMeVC class]) forIndexPath:indexPath];
-            headerview.backgroundColor = [UIColor blueColor];
-            headerview.delegate = self;
-            [headerview resetData];
-            return headerview;
+            CollectionHeaderViewForMeVC *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:NSStringFromClass([CollectionHeaderViewForMeVC class]) forIndexPath:indexPath];
+            headerView.backgroundColor = [UIColor blueColor];
+            headerView.delegate = self;
+            _headerView = headerView;
+            [_headerView resetData];
+            return headerView;
         }
         else{
             SubObjectHeaderViewForMeVC *headerview = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:NSStringFromClass([SubObjectHeaderViewForMeVC class]) forIndexPath:indexPath];

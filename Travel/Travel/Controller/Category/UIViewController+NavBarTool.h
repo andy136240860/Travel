@@ -10,10 +10,10 @@
 
 @interface UIViewController (NavBarTool)
 
-- (void)useTranslucentBackgroundImage; //使用透明的NavBar
+- (void)Nav_useTranslucentBackgroundImage; //使用透明的NavBar
 
-- (void)useDefaultNavBarTitleColor;  //使用自定义的tintColor
+- (void)Nav_useDefaultNavBarTitleColor;  //使用自定义的tintColor
 
-- (void)addRightButtonWithTitle:(NSString *)title seletor:(SEL)selector;
+- (void)Nav_addRightButtonWithTitle:(NSString *)title seletor:(SEL)selector;
 
 @end

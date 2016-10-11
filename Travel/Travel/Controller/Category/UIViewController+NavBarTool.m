@@ -10,7 +10,7 @@
 
 @implementation UIViewController (NavBarTool)
 
-- (void)useTranslucentBackgroundImage
+- (void)Nav_useTranslucentBackgroundImage
 {
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
@@ -19,11 +19,11 @@
     self.navigationController.navigationBar.translucent = YES;
 }
 
-- (void)useDefaultNavBarTitleColor{
+- (void)Nav_useDefaultNavBarTitleColor{
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
-- (void)addRightButtonWithTitle:(NSString *)title seletor:(SEL)selector{
+- (void)Nav_addRightButtonWithTitle:(NSString *)title seletor:(SEL)selector{
     UIBarButtonItem *resignItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:self action:selector];
     self.navigationItem.rightBarButtonItem = resignItem;
 }

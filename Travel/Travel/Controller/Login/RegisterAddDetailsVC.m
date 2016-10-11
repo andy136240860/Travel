@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.layer.contents = (id)[UIImage imageNamed:@"LoginOrRegisterVC_background"].CGImage;
-    [self.navigationBar useTranslucentBackgroundImage];
+    //[self Nav_useTranslucentBackgroundImage];
     // Do any additional setup after loading the view.
 }
 
@@ -40,7 +40,7 @@
     _avatarImageView.image = [UIImage imageNamed:@"CollectionHeaderViewForMeVC_userAvatarDefaultImage@2x"];
     _avatarImageView.userInteractionEnabled = YES;
     _avatarImageView.contentMode = 2;
-    [self.contentView addSubview:_avatarImageView];
+    [self.view addSubview:_avatarImageView];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openMenuAction)];
     tap.numberOfTapsRequired = 1;
@@ -54,19 +54,19 @@
     userTextFeildView.contentTextField.placeholder = @"用户名";
     userTextFeildView.contentTextField.textAlignment = NSTextAlignmentRight;
     userTextFeildView.contentTextField.keyboardType = UIKeyboardTypeDefault;
-    [self.contentView addSubview:userTextFeildView];
+    [self.view addSubview:userTextFeildView];
     
     passwordTextFeildView = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, CGRectGetMaxY(userTextFeildView.frame) + intervalY, textFeildWidth, textFeildHeight) image:[UIImage imageNamed:@"login_icon_code"]];
     passwordTextFeildView.contentTextField.placeholder = @"密码";
     passwordTextFeildView.contentTextField.keyboardType = UIKeyboardTypeDefault;
     passwordTextFeildView.contentTextField.textAlignment = NSTextAlignmentRight;
-    [self.contentView addSubview:passwordTextFeildView];
+    [self.view addSubview:passwordTextFeildView];
     
     nameTextFeild = [[LoginTextFeildView alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, CGRectGetMaxY(passwordTextFeildView.frame) + intervalY, textFeildWidth, textFeildHeight) image:[UIImage imageNamed:@"login_icon_code"]];
     nameTextFeild.contentTextField.placeholder = @"姓名(可选)";
     nameTextFeild.contentTextField.keyboardType = UIKeyboardTypeDefault;
     nameTextFeild.contentTextField.textAlignment = NSTextAlignmentRight;
-    [self.contentView addSubview:nameTextFeild];
+    [self.view addSubview:nameTextFeild];
     
     UIButton *nextButton = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth - textFeildWidth)/2, CGRectGetMaxY(nameTextFeild.frame) + intervalY, textFeildWidth, 42)];
     nextButton.layer.backgroundColor = [UIColor clearColor].CGColor;
@@ -75,7 +75,7 @@
     nextButton.layer.borderWidth = 1.f;
     [nextButton setTitle:@"下   一   步" forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(nextButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:nextButton];
+    [self.view addSubview:nextButton];
 
 }
 
@@ -105,7 +105,7 @@
 }
 
 - (void)dismissAction{
-    [self.slideNavigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -183,9 +183,9 @@
 
 }
 
-- (void)loadNavigationBar{
-    [self addLeftBackButtonItemWithImage];
-}
+//- (void)loadNavigationBar{
+//    [self addLeftBackButtonItemWithImage];
+//}
 
 /*
 #pragma mark - Navigation
