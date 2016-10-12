@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "XWViewController.h"
 
-@interface HomeViewController : UIViewController
+@interface HomeViewController : XWViewController
 
 @property (strong,nonatomic) UITableView *tableView;
 

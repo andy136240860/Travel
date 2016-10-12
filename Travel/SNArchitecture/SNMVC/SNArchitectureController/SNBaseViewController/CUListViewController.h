@@ -10,12 +10,12 @@
 #import "SNBaseListModel.h"
 #import "SNRefreshControl.h"
 #import "SNLoadMoreControl.h"
-#import "SNListEmptyView.h"
 
-@interface CUListViewController : SNViewController <UITableViewDataSource,UITableViewDelegate>
+@interface CUListViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong) UIView * content;
-@property (nonatomic,strong) SNListEmptyView * emptyView;
+@property (nonatomic,strong,readonly) NSString * pageName;
+
+- (instancetype)initWithPageName:(NSString *)pageName;
 
 - (instancetype)initWithPageName:(NSString *)pageName listModel:(SNBaseListModel *)listModel;
 
@@ -25,26 +25,32 @@
 /**第一次进入页面loading**/
 - (void)initalizeLoading;
 
+
 @property (nonatomic,strong) SNBaseListModel * listModel;
 @property (nonatomic,strong) UITableView * contentTableView;
 
 @property (nonatomic,strong,readonly) UIView * contentView;
-@property (nonatomic,assign,readwrite)BOOL hasTab;
 @property (nonatomic,assign,readwrite)BOOL hasFreshControl;
 @property (nonatomic,assign,readwrite)BOOL hasLoadMoreControl;
 @property (nonatomic,assign,readwrite)BOOL shouldFreshWhenComing;
-@property (nonatomic,strong)MBProgressHUD   * progressView;
 
 @property (nonatomic,strong) SNRefreshControl * freshControl;
 @property (nonatomic,strong) SNLoadMoreControl * loadMoreControl;
 
+@property (nonatomic,strong) UIView *noMoreFooterView;
+@property (nonatomic,strong) UIButton *scrollToTopButton;
+
+@property (nonatomic,strong) UIView * emptyView;
+@property (nonatomic,strong) UIView * errorView;
+
 //@property (nonatomic,strong) NSMutableArray * heightOfCells;
 @property (nonatomic,strong) NSMutableDictionary * heightDictOfCells;
 
-- (void)setShouldHaveTab;
+
 - (void)loadNavigationBar;
 - (void)loadContentView;
 - (void)removeContentView;
+
 
 - (void)setShouldFreshControl;
 - (void)setShouldLoadMoreControl;
@@ -53,12 +59,6 @@
 
 @end
 
-@interface CUListViewController (HUD)
-
-- (void)showProgressView;
-- (void)hideProgressView;
-
-@end
 
 @interface CUListViewController (listEmptyView)
 
@@ -70,5 +70,12 @@
 @interface CUListViewController (keybord)
 
 -(void)setViewMovedUp:(CGFloat)movedUpOffSet;
+
+@end
+
+@interface CUListViewController (listErrorView)
+
+/**集成后由子类实现**/
+- (UIView *)listErrorView;
 
 @end

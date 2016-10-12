@@ -9,13 +9,12 @@
 #import "CUScrollViewController.h"
 #import "CUUIContant.h"
 #import "UIView+Extension.h"
-#import "MBProgressHUD.h"
 #import "UIImage+Color.h"
+
 
 @interface CUScrollViewController ()
 
 @property (nonatomic,assign)CGPoint tempContentOffset;
-@property (nonatomic,strong)MBProgressHUD   * progressView;
 
 @end
 
@@ -24,6 +23,15 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+//    ImgStr_BackBtn = @"navbar_back_button";
+//    Color_Hex_NavText_Normal = Color_Hex_Text_Normal;
+    self.hidesBottomBarWhenPushed = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.hidesBottomBarWhenPushed = YES;
 }
 
 - (void)viewDidLoad
@@ -32,19 +40,26 @@
     
     self.view.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
     
-    
-    [self setShouldHaveTab];
-    
     // --------------------如果有nav则重新生成一个可视的view,跟loadContentView的顺序不可以改
     [self addScrollContentView];
     // --------------------子类执行以下方法
-    self.navigationBar.shadowImage = [UIImage createImageWithColor:UIColorFromHex( Color_Hex_NavShadow)];
     [self loadNavigationBar];
     [self loadContentView];
 }
 
 - (void)loadNavigationBar
 {
+    // 去掉导航的阴影
+//    self.navigationBar.shadowImage = [UIImage new];
+}
+
+- (instancetype)initWithPageName:(NSString *)pageName
+{
+    if (self = [super init])
+    {
+        self.pageName = pageName;
+    }
+    return self;
     
 }
 
@@ -53,40 +68,40 @@
     
 }
 
-- (void)setShouldHaveTab
-{
-    self.hasTab = NO;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+
+#warning TODO
 - (void)addScrollContentView
 {
-    self.scrollContentView = [[UIScrollView alloc] init];
-    [self.view addSubview:self.scrollContentView];
-    self.scrollContentView.frame = [self subviewFrame];
+    self.scrollContentView = [UIScrollView newAutoLayoutView];
     self.scrollContentView.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
-//    self.scrollContentView.delegate = self;
-    
-     if (self.hasTab)
-    {
-        self.scrollContentView.frameHeight -= Height_Tabbar;
-    }
-    
-//    self.scrollContentView.delegate = self;
-    self.scrollContentView.showsVerticalScrollIndicator = NO;
-    self.scrollContentView.showsHorizontalScrollIndicator = NO;
-    self.automaticallyAdjustsScrollViewInsets = NO;
-//    self.scrollContentView.contentSize = CGSizeMake(self..boundsWidth, self.scrollContentView.boundsHeight + 1);
-    CGSize newSize = CGSizeMake(self.scrollContentView.frameWidth, self.scrollContentView.frameHeight);
-    [self.scrollContentView setContentSize:newSize];
-    
+    [self.view addSubview:self.scrollContentView];
 }
 
-
+//- (void)addScrollContentView
+//{
+//    self.scrollContentView = [[UIScrollView alloc] init];
+//    [self.view addSubview:self.scrollContentView];
+//    self.scrollContentView.frame = [self subviewFrame];
+//    self.scrollContentView.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
+//    
+//     if (self.hasTab)
+//    {
+//        self.scrollContentView.frameHeight -= Height_Tabbar;
+//    }
+//    
+//    self.scrollContentView.showsVerticalScrollIndicator = NO;
+//    self.scrollContentView.showsHorizontalScrollIndicator = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
+//    CGSize newSize = CGSizeMake(self.scrollContentView.frameWidth, self.scrollContentView.frameHeight);
+//    [self.scrollContentView setContentSize:newSize];
+//    
+//}
 
 - (UIScrollView *)contentView
 {
@@ -157,33 +172,7 @@
 
 @end
 
-@implementation CUScrollViewController (HUD)
 
-- (void)showProgressView
-{
-    if (self.progressView == nil) {
-        self.progressView = [[MBProgressHUD alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-        self.progressView.center = CGPointMake(CGRectGetWidth(self.contentView.bounds)/2.0, CGRectGetHeight(self.contentView.bounds)/2.0);
-        [self.view addSubview:self.progressView];
-        self.progressView.dimBackground = NO;
-        self.progressView.opacity = 0.1;
-    }
-    
-    [self.progressView show:YES];
-    self.contentView.userInteractionEnabled = NO;
-    self.view.userInteractionEnabled = NO;
-    
-}
-
-- (void)hideProgressView
-{
-    [self.progressView hide:NO];
-    self.contentView.userInteractionEnabled = YES;
-    self.view.userInteractionEnabled = YES;
-}
-
-
-@end
 
 @implementation CUScrollViewController (keybord)
 

@@ -18,7 +18,8 @@
     [super viewDidLoad];
     [self loadContentView];
     [self useDefaultNavBarTitleColor];
-    // Do any additional setup after loading the view.
+    [self useDefaultNavBarBackgroudColor];
+
 }
 
 - (void)loadContentView{

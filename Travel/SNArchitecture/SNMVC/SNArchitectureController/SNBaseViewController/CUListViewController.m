@@ -14,13 +14,14 @@
 #import "SNListEmptyView.h"
 #import "UIImage+Color.h"
 #import "CUUIContant.h"
+//#import "UINavigationBar+Background.h"
 
 #define kLoadMoreCellHeigth 55
 #define kDefaultCellNormalHeight    44
 
 @interface CUListViewController ()<SNListEmptyViewDelegate>
 
-
+@property (nonatomic,strong) UIView * content;
 
 @end
 
@@ -39,17 +40,27 @@
     self.shouldFreshWhenComing = YES;
 }
 
+- (id)init
+{
+    self = [super init];
+    
+    if (self) {
+        [self setShouldFreshControl];
+        [self setShouldLoadMoreControl];
+        [self setShouldFreshWhenComing];
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.view.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
+    //[self.navigationController.navigationBar setBackgroundImage:[UIImage createImageWithColor:UIColorFromHex(Color_Hex_NavBackground)] forBarMetrics:UIBarMetricsDefault];
     
-    
-    [self setShouldHaveTab];
-    [self setShouldFreshControl];
-    [self setShouldLoadMoreControl];
-    [self setShouldFreshWhenComing];
+    //[self.navigationController.navigationBar setShadowImage:[UIImage createImageWithColor:UIColorFromHex(Color_Hex_NavShadow) size:CGSizeMake(kDefaultLintWidth,kDefaultLintWidth)]];
     
     // --------------------如果有nav则重新生成一个可视的view,跟loadContentView的顺序不可以改
     [self addContentView];
@@ -60,6 +71,7 @@
         if (self.hasLoadMoreControl)
         {
             [self loadLoadMoreControl];
+            [self loadNoMoreFooterView];
         }
         if (self.hasFreshControl)
         {
@@ -73,7 +85,6 @@
     }
 
     // --------------------子类执行以下方法
-    self.navigationBar.shadowImage = [UIImage createImageWithColor:UIColorFromHex( Color_Hex_NavShadow)];
     [self loadNavigationBar];
     [self loadContentView];
 }
@@ -86,10 +97,11 @@
 
 - (void)addContentView
 {
-    self.content = [[UIView alloc] initWithFrame:[self subviewFrame]];
+    self.content = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.content.frameHeight -= Height_NavigationBar;
     [self.view addSubview:self.content];
     self.content.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
-    if (self.hasTab)
+    if (self.hidesBottomBarWhenPushed)
     {
         self.content.frameHeight -= Height_Tabbar;
     }
@@ -113,13 +125,20 @@
     return self;
 }
 
-
 - (instancetype)initWithPageName:(NSString *)pageName listModel:(SNBaseListModel *)listModel
 {
-    if (self = [super initWithPageName:pageName])
+    if (self = [self initWithPageName:pageName])
     {
         self.listModel = listModel;
-        self.heightDictOfCells = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
+- (instancetype)initWithPageName:(NSString *)pageName
+{
+    if (self = [self init])
+    {
+        _pageName = pageName;
     }
     return self;
 }
@@ -128,12 +147,20 @@
 {
     [super viewWillAppear:animated];
     self.contentTableView.scrollsToTop = YES;
+    // TODO:为何总是设成YES？
+    //self.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     self.contentTableView.scrollsToTop = NO;
+    //self.hidesBottomBarWhenPushed = NO;
+
+//    ImgStr_BackBtn = @"navbar_back_button";
+//    Color_Hex_NavText_Normal = Color_Hex_Text_Normal;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -144,12 +171,7 @@
 - (void)loadNavigationBar
 {
     // 去掉导航的阴影
-//    self.navigationBar.shadowImage = [UIImage new];
-}
-
-- (void)setShouldHaveTab
-{
-    self.hasTab = NO;
+    //self.navigationController.navigationBar.shadowImage = [UIImage new];
 }
 
 - (void)removeFreshControl
@@ -184,11 +206,24 @@
     self.loadMoreControl.backgroundColor = [UIColor clearColor];
 }
 
+- (void)loadNoMoreFooterView
+{
+    UILabel *noDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+    noDataLabel.text = @"没有更多内容了";
+    noDataLabel.textAlignment = NSTextAlignmentCenter;
+    noDataLabel.textColor = kDarkGrayColor;
+    noDataLabel.font = [UIFont systemFontOfSize:15];
+    
+    _noMoreFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, noDataLabel.frameHeight + 10)];
+    _noMoreFooterView.backgroundColor = [UIColor clearColor];
+    [_noMoreFooterView addSubview:noDataLabel];
+}
+
 - (void)loadTableView
 {
     self.contentTableView = [[UITableView alloc] initWithFrame:self.contentView.bounds style:UITableViewStylePlain];
     self.contentTableView.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);;
-    self.contentTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.contentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.contentTableView.separatorColor = UIColorFromHex(Color_Hex_Tableview_Separator);
     self.contentTableView.rowHeight = kDefaultCellNormalHeight;
     self.contentTableView.delegate = self;
@@ -201,14 +236,34 @@
     // 空页面
     self.emptyView = [self listEmptyView];
     self.emptyView.hidden = YES;
-    [self.contentView addSubview:self.emptyView];
-    self.emptyView.centerY = self.emptyView.superview.frameHeight/2.0;
-    self.emptyView.centerX = self.emptyView.superview.frameWidth/2.0;
+    [self.contentTableView addSubview:self.emptyView];
+    self.emptyView.centerY = self.contentTableView.frameHeight/2.0;
+    self.emptyView.centerX = self.contentTableView.frameWidth/2.0;
     
+    // 空页面
+    self.errorView = [self listErrorView];
+    self.errorView.hidden = YES;
+    [self.contentTableView addSubview:self.errorView];
+    self.errorView.centerY = self.contentTableView.frameHeight/2.0;
+    self.errorView.centerX = self.contentTableView.frameWidth/2.0;
+    
+    // 返回顶部button
+    CGFloat btnSize = 40.0;
+    CGFloat btnPadding = 15.0;
+    self.scrollToTopButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.scrollToTopButton.frame = CGRectMake(kScreenWidth - btnSize - btnPadding, self.contentView.frameHeight - btnSize - btnPadding, btnSize, btnSize);
+    [self.scrollToTopButton setImage:[UIImage imageNamed:@"home_top_icon"] forState:UIControlStateNormal];
+    self.scrollToTopButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [self.scrollToTopButton addTarget:self action:@selector(scrollsToTop) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentTableView scrollsToTop];
+    [self.contentView addSubview:self.scrollToTopButton];
+    self.scrollToTopButton.hidden = YES;
 }
 
 - (void)emptyViewClicked
 {
+    self.emptyView.hidden = YES;
+    self.errorView.hidden = YES;
     [self triggerRefresh];
 }
 
@@ -218,50 +273,59 @@
 {
     [self showProgressView];
     self.listModel.isLoading = YES;
-    __block __weak CUListViewController * blockSelf = self;
+    __weak __block CUListViewController * blockSelf = self;
     [self.listModel gotoFirstPage:^(SNHTTPRequestOperation *request, SNServerAPIResultData *result) {
         
         blockSelf.listModel.isLoading = NO;
         [blockSelf hideProgressView];
+        
+        // 先隐藏，后判断显示
+        blockSelf.errorView.hidden = YES;
+        blockSelf.emptyView.hidden = YES;
+        
         if (!result.hasError)
         {
-            [self.freshControl refreshLastUpdatedTime:[NSDate date]];
+            [blockSelf.freshControl refreshLastUpdatedTime:[NSDate date]];
             [blockSelf.contentTableView reloadData];
-//            // 添加空页面
-//            if ([blockSelf.listModel.items count] == 0)
-//            {
-//                blockSelf.emptyView.hidden = NO;
-//            }
-//            else // 隐藏空页面
-//            {
-//                blockSelf.emptyView.hidden = YES;
-//            }
-
+            // 添加空页面
+            if ([blockSelf.listModel.items count] == 0)
+            {
+                blockSelf.emptyView.hidden = NO;
+            }
+            
             if ([blockSelf.listModel hasNext])
             {
-                blockSelf.contentTableView.tableFooterView = self.loadMoreControl;
+                blockSelf.contentTableView.tableFooterView = blockSelf.loadMoreControl;
             }
             else
             {
-                blockSelf.contentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-                ;
+                if (blockSelf.listModel.items.count && blockSelf.contentTableView.frameHeight < blockSelf.contentTableView.contentSize.height) {
+                    blockSelf.contentTableView.tableFooterView = blockSelf.noMoreFooterView;
+                }
+                else {
+                    blockSelf.contentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+                }
             }
         }
         else
         {
             [TipHandler showHUDText:[result.error.userInfo valueForKey:NSLocalizedDescriptionKey] inView:blockSelf.view];
             
+            // 添加错误页面
+            if ([blockSelf.listModel.items count] == 0)
+            {
+                blockSelf.errorView.hidden = NO;
+            }
         }
         
         if ([blockSelf.listModel.items count] == 0)
         {
-            blockSelf.emptyView.hidden = NO;
+            blockSelf.scrollToTopButton.hidden = YES;
         }
         else // 隐藏空页面
         {
-            blockSelf.emptyView.hidden = YES;
+            blockSelf.scrollToTopButton.hidden = NO;
         }
-
     }];
     
 }
@@ -271,46 +335,64 @@
     [self.freshControl beginRefreshing];
     [self.loadMoreControl endLoading];
     self.listModel.isLoading = YES;
-    __block __weak CUListViewController * blockSelf = self;
+    __weak __block CUListViewController * blockSelf = self;
     [self.listModel gotoFirstPage:^(SNHTTPRequestOperation *request, SNServerAPIResultData *result) {
         
         blockSelf.listModel.isLoading = NO;
         [blockSelf.freshControl endRefreshing];
+        // 先隐藏，后判断显示
+        blockSelf.errorView.hidden = YES;
+        blockSelf.emptyView.hidden = YES;
+        
         if (!result.hasError)
         {
             // height
-            [self.heightDictOfCells removeAllObjects];
+            [blockSelf.heightDictOfCells removeAllObjects];
             
-            [self.freshControl refreshLastUpdatedTime:[NSDate date]];
+            [blockSelf.freshControl refreshLastUpdatedTime:[NSDate date]];
             [blockSelf.contentTableView reloadData];
+            
+            // 添加空页面
+            if ([blockSelf.listModel.items count] == 0)
+            {
+                blockSelf.emptyView.hidden = NO;
+            }
             
             // footer
             if ([blockSelf.listModel hasNext])
             {
-                blockSelf.contentTableView.tableFooterView = self.loadMoreControl;
+                blockSelf.contentTableView.tableFooterView = blockSelf.loadMoreControl;
             }
             else
             {
-                blockSelf.contentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-;
+                if (blockSelf.listModel.items.count && blockSelf.contentTableView.frameHeight < blockSelf.contentTableView.contentSize.height) {
+                    blockSelf.contentTableView.tableFooterView = blockSelf.noMoreFooterView;
+                }
+                else {
+                    blockSelf.contentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+                }
             }
         }
         else
         {
-//            [TipHandler showHUDText:[result.error.userInfo valueForKey:NSLocalizedDescriptionKey] inView:blockSelf.view];
+            [TipHandler showHUDText:[result.error.userInfo valueForKey:NSLocalizedDescriptionKey] inView:blockSelf.view];
 
+            // 添加错误页面
+            if ([blockSelf.listModel.items count] == 0)
+            {
+                blockSelf.errorView.hidden = NO;
+            }
         }
         
-        // 添加空页面
-        if ([blockSelf.listModel.items count] == 0)
-        {
-            blockSelf.emptyView.hidden = NO;
-        }
-        else // 隐藏空页面
-        {
-            blockSelf.emptyView.hidden = YES;
-        }
-
+//        if ([blockSelf.listModel.items count] == 0)
+//        {
+//            blockSelf.scrollToTopButton.hidden = YES;
+//        }
+//        else
+//        {
+//            
+//        }
+        blockSelf.scrollToTopButton.hidden = NO;
     }];
 }
 
@@ -319,21 +401,23 @@
     [self.freshControl endRefreshing];
     self.listModel.isLoading = YES;
     [self.loadMoreControl beginLoading];
-    __block __weak CUListViewController * blockSelf = self;
+     __weak __block CUListViewController * blockSelf = self;
     [self.listModel gotoNextPage:^(SNHTTPRequestOperation *request, SNServerAPIResultData *result) {
-         blockSelf.listModel.isLoading = NO;
+        
+        blockSelf.listModel.isLoading = NO;
         [blockSelf.loadMoreControl endLoading];
+        
         if (!result.hasError)
         {
             [blockSelf.contentTableView reloadData];
             if ([blockSelf.listModel hasNext])
             {
-                blockSelf.contentTableView.tableFooterView = self.loadMoreControl;
+                blockSelf.contentTableView.tableFooterView = blockSelf.loadMoreControl;
             }
             else
             {
-                blockSelf.contentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-;
+                blockSelf.contentTableView.tableFooterView = blockSelf.noMoreFooterView;
+                //blockSelf.contentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
             }
         }
         else
@@ -378,34 +462,10 @@
     
 }
 
-@end
-
-@implementation CUListViewController (HUD)
-
-
-- (void)showProgressView
+- (void)scrollsToTop
 {
-    if (self.progressView == nil) {
-        self.progressView = [[MBProgressHUD alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-        self.progressView.center = CGPointMake(CGRectGetWidth(self.contentView.bounds)/2.0, CGRectGetHeight(self.contentView.bounds)/2.0);
-        self.progressView.dimBackground = NO;
-        [self.view addSubview:self.progressView];
-        self.progressView.opacity = 0.1;
-
-    }
-    
-    [self.progressView show:YES];
-    self.contentView.userInteractionEnabled = NO;
-    self.view.userInteractionEnabled = NO;
+    [self.contentTableView setContentOffset:CGPointZero animated:YES];
 }
-
-- (void)hideProgressView
-{
-    [self.progressView hide:NO];
-    self.contentView.userInteractionEnabled = YES;
-    self.view.userInteractionEnabled = YES;
-}
-
 
 @end
 
@@ -415,7 +475,7 @@
 /**集成后由子类实现**/
 - (UIView *)listEmptyView
 {
-    SNListEmptyView * view = [[SNListEmptyView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    SNListEmptyView * view = [[SNListEmptyView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 244)];
     view.delegate = self;
     return view;
 }
@@ -435,6 +495,18 @@
     rect.size.height += movedUpOffSet;
     self.contentView.frame = rect;
     [UIView commitAnimations];
+}
+
+@end
+
+@implementation CUListViewController (listErrorView)
+
+- (UIView *)listErrorView
+{
+    SNListEmptyView * view = [[SNListEmptyView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 244)];
+    view.type = SNListEmptyTypeDataError;
+    view.delegate = self;
+    return view;
 }
 
 @end

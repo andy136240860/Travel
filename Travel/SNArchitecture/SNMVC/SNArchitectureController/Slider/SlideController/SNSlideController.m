@@ -631,7 +631,7 @@
     
     UIViewController *controller = [self hitTest:point];
     if (controller == nil
-        || controller.modalViewController
+        || controller.presentedViewController
         || ([controller isKindOfClass:[UINavigationController class]]
             && [(UINavigationController *)controller viewControllers].count > 1)
         || (controller.navigationController && [controller.navigationController viewControllers].count > 1)
@@ -688,7 +688,7 @@
     BOOL shouldReceive = YES;
     
     if (self.isLayouting
-        || self.modalViewController
+        || self.presentedViewController
         || (self.navigationController && [self.navigationController viewControllers].count > 1)
         || (self.slideNavigationController && [self.slideNavigationController viewControllers].count > 1)) {
         shouldReceive = NO;

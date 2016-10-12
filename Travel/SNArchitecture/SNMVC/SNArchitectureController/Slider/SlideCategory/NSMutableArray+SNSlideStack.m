@@ -54,7 +54,7 @@
 - (NSArray *)popControllersToIndex:(NSInteger)index
 {
     NSMutableArray *arr = [[NSMutableArray alloc] initWithCapacity:1];
-    for (int i = self.count-1; i >= index; i--) {
+    for (int i = (int)self.count-1; i >= index; i--) {
         [arr addObject:[self objectAtIndex:i]];
     }
     

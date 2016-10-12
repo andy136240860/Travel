@@ -13,6 +13,7 @@
 #import "SubObjectHeaderViewForMeVC.h"
 #import "UIViewController+Login.h"
 #import "MyTravelViewController.h"
+#import "MyTravelDetailViewController.h"
 
 @interface MeViewController ()<EqualSpaceFlowLayoutDelegate,UICollectionViewDelegate,UICollectionViewDataSource,CollectionHeaderViewForMeVCDelegate>
 
@@ -27,6 +28,17 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)loadContentView{
@@ -69,6 +81,9 @@
             break;
         case CollectionHeaderViewModel_myTravel:{
             NSLog(@"我的旅程");
+            MyTravelDetailViewController *vc = [[MyTravelDetailViewController alloc]init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case CollectionHeaderViewModel_myRequest:{

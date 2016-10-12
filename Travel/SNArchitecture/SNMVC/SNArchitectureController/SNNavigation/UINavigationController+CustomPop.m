@@ -21,9 +21,11 @@
         [self.topViewController performSelector:@selector(navigationController:willPopViewController:) withObject:self withObject:self.topViewController];
     }
     
-    if (self.topViewController.modalViewController)
+    if (self.topViewController.presentedViewController)
     {
-        [self.topViewController dismissModalViewControllerAnimated:NO];
+        [self.topViewController dismissViewControllerAnimated:NO completion:^{
+            
+        }];
     }
     
     return [self popViewControllerAnimated:animated];
@@ -31,16 +33,18 @@
 
 - (NSArray *)customPopToRootViewControllerAnimated:(BOOL)animated
 {
-    for (int index = [self.viewControllers count]-1; index > 0; index--)
+    for (int index = (int)[self.viewControllers count]-1; index > 0; index--)
     {
         UIViewController *controller = [self.viewControllers objectAtIndex:index];
         if ([controller respondsToSelector:@selector(navigationController:willPopViewController:)])
         {
             [controller performSelector:@selector(navigationController:willPopViewController:) withObject:self withObject:controller];
         }
-        if (controller.modalViewController)
+        if (controller.presentedViewController)
         {
-            [controller dismissModalViewControllerAnimated:NO];
+            [controller dismissViewControllerAnimated:NO completion:^{
+                
+            }];
         }
     }
     
@@ -49,7 +53,7 @@
 
 - (void)cleanAllViewControllers
 {
-    for (int index = [self.viewControllers count]-1; index >= 0; index--)
+    for (int index = (int)[self.viewControllers count]-1; index >= 0; index--)
     {
         UIViewController *controller = [self.viewControllers objectAtIndex:index];
         if ([controller respondsToSelector:@selector(navigationController:willPopViewController:)])

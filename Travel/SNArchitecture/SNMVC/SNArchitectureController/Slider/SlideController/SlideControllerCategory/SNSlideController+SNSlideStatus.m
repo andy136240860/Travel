@@ -210,7 +210,7 @@
             || status == SNSlideStatusRightOutOfScreen) {
             float duration = (status == SNSlideStatusLeftOutOfScreen || status == SNSlideStatusRightOutOfScreen) ? kOutOfScreenAnimationDuration : kSlideAnimationDuration;
             
-            [UIView animateWithDuration:duration delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
+            [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 controller.view.frame = frame;
 #ifdef kUseTransformEffect
                 self.rightController.view.transform = CGAffineTransformMakeScale(rscale, rscale);
@@ -230,7 +230,7 @@
             }];
         }
         else {
-            [UIView animateWithDuration:kSlideAnimationDuration delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
+            [UIView animateWithDuration:kSlideAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 controller.view.frame = bounceFrame;
 #ifdef kUseTransformEffect
                 self.rightController.view.transform = CGAffineTransformMakeScale(rbscale, rbscale);
@@ -241,7 +241,7 @@
                 self.leftController.maskView.alpha = lbalpha;
             } completion:^(BOOL finished) {
                 if (finished) {
-                    [UIView animateWithDuration:kBounceAnimationDuration delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
+                    [UIView animateWithDuration:kBounceAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                         controller.view.frame = frame;
 #ifdef kUseTransformEffect
                         self.rightController.view.transform = CGAffineTransformMakeScale(rscale, rscale);

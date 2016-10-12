@@ -21,6 +21,14 @@
 
 - (void)useDefaultNavBarTitleColor{
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    UIColor * color = [UIColor whiteColor];
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+}
+
+- (void)useDefaultNavBarBackgroudColor {
+    self.navigationController.navigationBar.barTintColor = kGreenColor;
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)addRightButtonWithTitle:(NSString *)title seletor:(SEL)selector{

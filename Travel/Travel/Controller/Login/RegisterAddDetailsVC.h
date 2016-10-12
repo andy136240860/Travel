@@ -6,10 +6,10 @@
 //  Copyright © 2016年 li na. All rights reserved.
 //
 
-#import "CUViewController.h"
+#import "XWViewController.h"
 #import "XWUser.h"
 
-@interface RegisterAddDetailsVC : CUViewController
+@interface RegisterAddDetailsVC : XWViewController
 
 @property (nonatomic,strong) XWUser *user;
 

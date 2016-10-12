@@ -67,8 +67,9 @@
     else {
         if ([currentViewController respondsToSelector:@selector(slideNavigationController:willPopViewController:)]) {
             [currentViewController slideNavigationController:self willPopViewController:currentViewController];
-            if (currentViewController.modalViewController) {
-                [currentViewController dismissModalViewControllerAnimated:NO];
+            if (currentViewController.presentedViewController) {
+                [currentViewController dismissViewControllerAnimated:NO completion:^{
+                }];
             }
         }
         
@@ -107,8 +108,10 @@
     if (status == SNSlideStatusRightOutOfScreen) {
         if ([currentViewController respondsToSelector:@selector(slideNavigationController:willPopViewController:)]) {
             [currentViewController slideNavigationController:self willPopViewController:currentViewController];
-            if (currentViewController.modalViewController) {
-                [currentViewController dismissModalViewControllerAnimated:NO];
+            if (currentViewController.presentedViewController) {
+                [currentViewController dismissViewControllerAnimated:NO completion:^{
+                    
+                }];
             }
         }
         

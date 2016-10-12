@@ -9,8 +9,7 @@
 #import "SNTopTabViewController.h"
 #import "SNTopTabBar.h"
 #import "UIViewController+ViewControllerContainerment.h"
-#import "SNSlideNavigationController+SNSlideStack.h"
-#import "UIImage+Color.h"
+#import "UIViewController+SNExtension.h"
 
 #define kTabBarHeight 44.0f
 
@@ -29,16 +28,13 @@
 @implementation SNTopTabViewController
 
 #pragma mark life cycle
+
 - (instancetype)initWithHeight:(NSInteger)height
 {
     if (self = [super init])
     {
-       
-        self.hasNavigationBar = NO;
-        self.hasRightViewController = NO;
         self.tabBarHeight = height;
-        _selectedIndex = NSNotFound;        //do not use self.selectedIndex, which will invoke a method call
-        self.releaseViewWhileMemoryWarning = NO;
+        _selectedIndex = NSNotFound;
       
     }
     return self;
@@ -49,12 +45,8 @@
 {
     if (self = [super init])
     {
-        
-        self.hasNavigationBar = NO;
-        self.hasRightViewController = NO;
         self.tabBarHeight = kTabBarHeight;
-        _selectedIndex = NSNotFound;        //do not use self.selectedIndex, which will invoke a method call
-        self.releaseViewWhileMemoryWarning = NO;
+        _selectedIndex = NSNotFound;
         
     }
     return self;
@@ -65,12 +57,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        self.hasNavigationBar = NO;
-        self.hasRightViewController = NO;
         self.tabBarHeight = kTabBarHeight;
-        _selectedIndex = NSNotFound;        //do not use self.selectedIndex, which will invoke a method call
-        self.releaseViewWhileMemoryWarning = NO;
+        _selectedIndex = NSNotFound;
     }
     return self;
 }
@@ -88,66 +76,53 @@
 
 #pragma mark view life cycle
 
-- (void)loadView
-{
-    [super loadView];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	
+    self.view.autoresizingMask = UIViewAutoresizingNone;
     
-    CGRect tabBarFrame = CGRectMake(0, 64.5, CGRectGetWidth(self.view.bounds), self.tabBarHeight);
+    CGRect tabBarFrame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), self.tabBarHeight);
     self.customTabBar = [[[SNTopTabBar alloc] initWithFrame:tabBarFrame] autorelease];
-    _customTabBar.animateSelection = NO;
-    _customTabBar.delegate = self;
-    _customTabBar.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    _customTabBar.showBottomLine = self.showBottomLine;
-    _customTabBar.bottomLineWidth = self.bottomLineWidth;
-    _customTabBar.backgroundColor = [UIColor whiteColor];
-    _customTabBar.shadowImage = [UIImage createImageWithColor:UIColorFromHex(0xdddddd)];
+    self.customTabBar.animateSelection = NO;
+    self.customTabBar.delegate = self;
+    self.customTabBar.showBottomLine = self.showBottomLine;
+    self.customTabBar.bottomLineWidth = self.bottomLineWidth;
+    self.customTabBar.backgroundImage = [[UIImage imageNamed:@"seperatorline_background"] stretchableImageByCenter];
     [self.view addSubview:self.customTabBar];
+    
+    CGRect rect = self.view.bounds;
+    rect.origin.y = CGRectGetMaxY(self.customTabBar.frame);
+    rect.size.height = CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(self.customTabBar.frame) - Height_NavigationBar - Height_Tabbar;
+    self.contentRect = rect;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    if ([self.slideNavigationController currentViewController] == self)
-    {
-        [self.selectedViewController beginAppearanceTransition:YES animated:animated];
-    }
+        
+    [self.selectedViewController beginAppearanceTransition:YES animated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    if ([self.slideNavigationController currentViewController] == self)
-    {
-        [self.selectedViewController beginAppearanceTransition:NO animated:animated];
-    }
+    [self.selectedViewController beginAppearanceTransition:NO animated:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    if ([self.slideNavigationController currentViewController] == self)
-    {
-        [self.selectedViewController endAppearanceTransition];
-    }
+    [self.selectedViewController endAppearanceTransition];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     
-    if ([self.slideNavigationController currentViewController] == self)
-    {
-        [self.selectedViewController endAppearanceTransition];
-    }
+    [self.selectedViewController endAppearanceTransition];
 }
 
 - (void)didReceiveMemoryWarning
@@ -174,14 +149,14 @@
         if ([viewControllers count] > 0)
         {
             NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:5];
-            for (SNViewController *viewController in _viewControllers)
+            for (UIViewController *viewController in _viewControllers)
             {
                 [self sn_addChildViewController:viewController];
                 [viewController didMoveToParentViewController:self];
                 
-                if ([viewController isKindOfClass:[SNViewController class]])
+                if ([viewController respondsToSelector:@selector(customTabBarItem)] && [viewController customTabBarItem])
                 {
-                    [items addObject:viewController.customTabBarItem];
+                    [items addObject:[viewController customTabBarItem]];
                 }
             }
             [self.customTabBar setItems:items animated:NO];
@@ -220,18 +195,17 @@
         UIViewController * selectedController = [_viewControllers objectAtIndexSafely:selectedIndex];
         
         _selectedIndex = selectedIndex;
-        
-        // set frame
-        selectedController.view.frame = self.view.bounds;
-        
-        BOOL inWindow = self.view.window != nil;
+                
+        selectedController.view.frame = self.contentRect;
+
+        BOOL inWindow = YES;//self.view.window != nil;
         if (inWindow)
         {
             [selectedController beginAppearanceTransition:YES animated:NO];
             [lastSelectedController beginAppearanceTransition:NO animated:NO];
         }
         
-        [self.view insertSubview:selectedController.view belowSubview:self.customTabBar];
+        [self.view insertSubview:selectedController.view atIndex:0];
         [lastSelectedController.view removeFromSuperview];
         
         if (inWindow)
@@ -241,19 +215,6 @@
         }
         
         [self.view setNeedsLayout];
-    }
-}
-
-- (void)setSlideNavigationController:(SNSlideNavigationController *)slideNavigationController
-{
-    _slideNavigationController = slideNavigationController;
-    
-    for (SNViewController *viewController in self.viewControllers)
-    {
-        if ([viewController respondsToSelector:@selector(setSlideNavigationController:)])
-        {
-            viewController.slideNavigationController = slideNavigationController;
-        }
     }
 }
 
@@ -272,7 +233,7 @@
 }
 
 #pragma mark - SNTabBarDelegate
-- (void)tabBar:(SNTopTabBar *)tabBar didSelectItemAtIndex:(NSUInteger)index tabBarItem:(SNTabBarItem *)item
+- (void)tabBar:(SNTopTabBar *)tabBar didSelectItemAtIndex:(NSUInteger)index tabBarItem:(SNTopTabBarItem *)item
 {
     id viewController = [self.viewControllers objectAtIndexSafely:index];
     if (index == _selectedIndex)
@@ -323,7 +284,6 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kSNTabViewControllerDidChangeNotification object:self];
     }
-    
 }
 
 @end

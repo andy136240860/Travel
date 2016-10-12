@@ -14,7 +14,7 @@
 #define kNavigationBarTranslucentBackgroundImageTag                 2003
 
 
-@interface SNNavigationBar (Background)
+@interface UINavigationBar (Background)
 
 - (void)useCustomBackgroundImage;
 

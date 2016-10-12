@@ -83,7 +83,8 @@
 	}
 	else if (self.image)
 	{
-        CGSize size = [self.title sizeWithFont:[UIFont systemFontOfSize:kSNTabBarItemTitleFontSize]];
+//        CGSize size = [self.title sizeWithFont:[UIFont systemFontOfSize:kSNTabBarItemTitleFontSize]];
+        CGSize size = [self.title sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kSNTabBarItemTitleFontSize]}];
         titleRect = CGRectMake(0, CGRectGetHeight(titleRect) - size.height - 1, CGRectGetWidth(titleRect), size.height);
 	}
 	

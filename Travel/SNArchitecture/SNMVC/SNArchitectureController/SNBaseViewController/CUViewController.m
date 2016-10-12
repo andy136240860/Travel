@@ -8,9 +8,9 @@
 
 #import "CUViewController.h"
 #import "CUUIContant.h"
-#import "SNNavigationBar.h"
 #import "UIView+Extension.h"
 #import "UIImage+Color.h"
+#import "UIViewController+SNExtension.h"
 
 @interface CUViewController ()
 
@@ -22,10 +22,21 @@
 
 @implementation CUViewController
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    return self;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -37,15 +48,23 @@
 {
     [super viewDidLoad];
     
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(IOS_7_0)) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    }
+    
+    //[self.navigationController.navigationBar setBackgroundImage:[UIImage createImageWithColor:UIColorFromHex(Color_Hex_NavBackground)] forBarMetrics:UIBarMetricsDefault];
+    
+    //[self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"navigationbar_background_shadow"]];
+    //[self.navigationController.navigationBar setShadowImage:[UIImage createImageWithColor:UIColorFromHex(Color_Hex_NavShadow) size:CGSizeMake(kDefaultLintWidth,kDefaultLintWidth)]];
+    
     self.keybordHeight = 220;
     self.view.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
     
-    [self setShouldHaveTab];
+//    [self setShouldHaveTab];
     
     // --------------------如果有nav则重新生成一个可视的view,跟loadContentView的顺序不可以改
     [self addContentView];
     // --------------------子类执行以下方法
-    self.navigationBar.shadowImage = [UIImage createImageWithColor:UIColorFromHex( Color_Hex_NavShadow)];
     [self loadNavigationBar];
     [self loadContentView];
 }
@@ -62,11 +81,11 @@
 
 - (void)addContentView
 {
-//    CGRect contentFrame = (self.navigationBar.hidden == YES)?CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-self.toolbarHeight):[self subviewFrame];
-    self.content = [[UIView alloc] initWithFrame:[self subviewFrame]];
+    self.content = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.content.frameHeight -= Height_NavigationBar;
     [self.view addSubview:self.content];
-//    self.content.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
-    if (self.hasTab)
+    self.content.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
+    if (self.hidesBottomBarWhenPushed)
     {
         self.content.frameHeight -= Height_Tabbar;
     }
@@ -83,7 +102,8 @@
 
 - (void)loadNavigationBar
 {
-    
+    // 去掉导航的阴影
+//    self.navigationBar.shadowImage = [UIImage new];
 }
 - (void)loadContentView
 {
@@ -93,62 +113,6 @@
 @end
 
 
-@implementation CUViewController (HUD)
-
-//- (void)showSMS:(NSString*)message cellPhone:(NSString *)cellPhone
-//{
-//    
-//    if(![MFMessageComposeViewController canSendText])
-//    {
-//        UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your device doesn't support SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        [warningAlert show];
-//        return;
-//    }
-//    
-//
-//    NSArray *recipents = @[cellPhone];
-//   
-//    
-//    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
-//    messageController.messageComposeDelegate = self;
-//    [messageController setRecipients:recipents];
-//    [messageController setBody:message];
-//    
-//    // Present message view controller on screen
-//    [self presentViewController:messageController animated:YES completion:nil];
-//    
-//    
-//}
-//
-//- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
-//                 didFinishWithResult:(MessageComposeResult)result {
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//}
-
-- (void)showProgressView
-{
-    if (self.progressView == nil) {
-        self.progressView = [[MBProgressHUD alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-        self.progressView.center = CGPointMake(CGRectGetWidth(self.contentView.bounds)/2.0, CGRectGetHeight(self.contentView.bounds)/2.0);
-        [self.view addSubview:self.progressView];
-        self.progressView.dimBackground = NO;
-    }
-    
-    [self.view bringSubviewToFront:self.progressView];
-    [self.progressView show:YES];
-    self.contentView.userInteractionEnabled = NO;
-    self.view.userInteractionEnabled = NO;
-}
-
-- (void)hideProgressView
-{
-    [self.progressView hide:NO];
-    self.contentView.userInteractionEnabled = YES;
-    self.view.userInteractionEnabled = YES;
-}
-
-
-@end
 
 
 @implementation CUViewController (keybord)

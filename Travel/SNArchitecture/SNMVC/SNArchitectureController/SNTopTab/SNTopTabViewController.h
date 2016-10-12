@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SNViewController.h"
 
 #define SNTabBarDefaultSelctedIndex      0
 
 #define kSNTabViewControllerDidChangeNotification    @"SNTabViewControllerDidChangeNotification"
 
 @protocol SNTopTabBarTapDelegate;
-@interface SNTopTabViewController : SNViewController
+@interface SNTopTabViewController : UIViewController
 
 @property(nonatomic, assign) NSUInteger selectedIndex;
 @property(nonatomic, copy) NSArray *viewControllers;
@@ -22,6 +21,7 @@
 @property (nonatomic, assign,readonly) CGFloat  tabBarHeight;
 @property (nonatomic) BOOL showBottomLine;
 @property (nonatomic) CGFloat bottomLineWidth;
+@property (nonatomic) CGRect contentRect;
 
 - (instancetype)initWithHeight:(NSInteger)height;
 

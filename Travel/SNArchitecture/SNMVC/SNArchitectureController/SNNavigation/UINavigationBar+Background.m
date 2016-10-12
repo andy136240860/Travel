@@ -7,11 +7,11 @@
 //
 
 #import "UINavigationBar+Background.h"
-#import "UIImage+Color.h"
+#import "UIImage+SNColor.h"
 #import "SNControllerUIConstant.h"
 #import "CUUIContant.h"
 
-@implementation SNNavigationBar (Background)
+@implementation UINavigationBar (Background)
 
 - (void)useCustomBackgroundImage
 {
@@ -20,7 +20,7 @@
 
 - (void)useTranslucentBackgroundImage
 {
-//    [self setBackgroundImage:[UIImage createImageWithColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]] forBarMetrics:UIBarMetricsDefault];
+    [self setBackgroundImage:[UIImage createImageWithColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]] forBarMetrics:UIBarMetricsDefault];
     [self setBackgroundImage:[UIImage new]
                              forBarMetrics:UIBarMetricsDefault];
     self.shadowImage = [UIImage new];

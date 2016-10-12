@@ -23,6 +23,7 @@
 @property (nonatomic) NSUInteger           selectedIndex;
 @property (nonatomic) BOOL showBottomLine;
 @property (nonatomic) CGFloat bottomLineWidth;
+@property (nonatomic, strong) UIColor             *bottomLineColor;
 
 - (void)setItems:(NSArray *)items animated:(BOOL)animated;
 

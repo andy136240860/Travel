@@ -14,6 +14,8 @@
 
 - (void)useDefaultNavBarTitleColor;  //使用自定义的tintColor
 
+- (void)useDefaultNavBarBackgroudColor;
+
 - (void)addRightButtonWithTitle:(NSString *)title seletor:(SEL)selector;
 
 @end

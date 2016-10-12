@@ -9,7 +9,7 @@
 #ifndef CollegeUnion_SNControllerUIConstant_h
 #define CollegeUnion_SNControllerUIConstant_h
 
-
-#define Image_navbarBackground @"navbar_background"
+// navbar_background
+#define Image_navbarBackground @"na"
 
 #endif

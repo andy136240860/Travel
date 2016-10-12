@@ -55,7 +55,7 @@ CGFloat CGRectGetRightMaxX(CGRect rect)
 {
     return 1;
     
-    CGFloat factor = 0.0;
+    /*CGFloat factor = 0.0;
     
     if (frame.origin.x < 0) {
         if ([controller isEqual:self.rightController]) {
@@ -73,14 +73,14 @@ CGFloat CGRectGetRightMaxX(CGRect rect)
     {
         scale = 1;
     }
-    return scale;
+    return scale;*/
 }
 
 - (CGFloat)alphaForController:(SNViewController *)controller withFrame:(CGRect)frame
 {
     return 0;
     
-    CGFloat factor = 0.0;
+    /*CGFloat factor = 0.0;
     
     if (frame.origin.x < 0) {
         if ([controller isEqual:self.rightController]) {
@@ -101,7 +101,7 @@ CGFloat CGRectGetRightMaxX(CGRect rect)
         alpha = 1.0;
     }
     
-    return alpha;
+    return alpha;*/
 }
 
 @end

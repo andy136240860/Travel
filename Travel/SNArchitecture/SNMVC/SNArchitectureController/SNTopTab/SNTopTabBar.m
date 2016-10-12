@@ -73,7 +73,7 @@
     
     if (shadowImage) {
         if (!_shadowView) {
-            _shadowView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.bounds) - shadowImage.size.height, CGRectGetWidth(self.bounds), shadowImage.size.height)];
+            _shadowView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -shadowImage.size.height, CGRectGetWidth(self.bounds), shadowImage.size.height)];
             [self addSubview:_shadowView];
         }
         
@@ -186,10 +186,6 @@
         }
     }
     
-    if (_shadowView) {
-        [self bringSubviewToFront:_shadowView];
-    }
-    
     if (self.showBottomLine) {
         _bottemLine = [[UIView alloc] init];
         _bottemLine.hidden = YES;
@@ -199,7 +195,12 @@
         if (self.items.count) {
             SNTopTabBarItem *item = [self.items objectAtIndex:0];
             
-            _bottemLine.backgroundColor = item.selectedTitleColor ? item.selectedTitleColor : item.titleColor;
+            if (self.bottomLineColor) {
+                _bottemLine.backgroundColor = self.bottomLineColor;
+            }
+            else {
+                _bottemLine.backgroundColor = item.titleColor;
+            }
             [self moveBottomLineWithItem:item animated:NO];
         }
     }
@@ -236,6 +237,13 @@
     if ([self.delegate respondsToSelector:@selector(tabBar:didSelectItemAtIndex:tabBarItem:)]) {
         [self.delegate tabBar:self didSelectItemAtIndex:[self.items indexOfObject:item] tabBarItem:item];
     }
+}
+
+- (void)setBottomLineColor:(UIColor *)bottomLineColor
+{
+    _bottomLineColor = bottomLineColor;
+    
+    _bottemLine.backgroundColor = bottomLineColor;
 }
 
 @end

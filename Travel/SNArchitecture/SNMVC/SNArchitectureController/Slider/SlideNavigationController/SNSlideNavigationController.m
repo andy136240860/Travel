@@ -187,8 +187,10 @@
     
     if ([controllerToPop respondsToSelector:@selector(slideNavigationController:willPopViewController:)]) {
         [controllerToPop slideNavigationController:self willPopViewController:controllerToPop];
-        if (controllerToPop.modalViewController) {
-            [controllerToPop dismissModalViewControllerAnimated:NO];
+        if (controllerToPop.presentedViewController) {
+            [controllerToPop dismissViewControllerAnimated:NO completion:^{
+                
+            }];
         }
     }
     
@@ -239,8 +241,10 @@
         
         if ([controllerToPop respondsToSelector:@selector(slideNavigationController:willPopViewController:)]) {
             [controllerToPop slideNavigationController:self willPopViewController:controllerToPop];
-            if (controllerToPop.modalViewController) {
-                [controllerToPop dismissModalViewControllerAnimated:NO];
+            if (controllerToPop.presentedViewController) {
+                [controllerToPop dismissViewControllerAnimated:NO completion:^{
+                    
+                }];
             }
         }
         
@@ -279,8 +283,8 @@
 
 - (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    int index = [self.viewControllers indexOfObject:viewController];
-    return [self popToViewControllerAtIndex:index animated:animated];
+    int index = (int)[self.viewControllers indexOfObject:viewController];
+    return [self popToViewControllerAtIndex:index animated:YES];
 }
 
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated
@@ -290,13 +294,15 @@
 
 - (void)clearAllViewControllers
 {
-    for (int index = [self.viewControllers count]-1; index >= 0; index--)
+    for (int index = (int)[self.viewControllers count]-1; index >= 0; index--)
     {
         SNViewController *controller = [self.viewControllers objectAtIndex:index];
         if ([controller respondsToSelector:@selector(slideNavigationController:willPopViewController:)]) {
             [controller slideNavigationController:self willPopViewController:controller];
-            if (controller.modalViewController) {
-                [controller dismissModalViewControllerAnimated:NO];
+            if (controller.presentedViewController) {
+                [controller dismissViewControllerAnimated:NO completion:^{
+                    
+                }];
             }
         }
     }
@@ -465,7 +471,7 @@
     
     SNViewController *controller = [self currentViewController];
     if (controller == nil
-        || controller.modalViewController
+        || controller.presentedViewController
         || (controller.navigationController && [controller.navigationController viewControllers].count > 1)
         || !controller.isPanValid) {
         shouldBegin = NO;
@@ -503,7 +509,7 @@
     BOOL shouldReceive = YES;
     
     if (self.isLayouting
-        || self.modalViewController
+        || self.presentedViewController
         || (self.navigationController && [self.navigationController viewControllers].count > 1)) {
         shouldReceive = NO;
     }

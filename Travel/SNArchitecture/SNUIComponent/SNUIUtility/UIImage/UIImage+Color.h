@@ -7,5 +7,6 @@
 @interface UIImage (Color)
 
 + (UIImage *)createImageWithColor:(UIColor *)color;
++ (UIImage *)createImageWithColor:(UIColor *)color size:(CGSize)size;
 
 @end

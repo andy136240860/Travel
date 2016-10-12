@@ -7,7 +7,6 @@
 //
 #import <dlfcn.h>
 #import "AppDelegate.h"
-#import "SNTabViewController.h"
 #import "AppCore.h"
 #import "CUUIContant.h"
 #import "BMapKit.h"
@@ -23,13 +22,11 @@
 #import "MobClick.h"
 #import "CUShareConstant.h"
 
-#import "SNTabBarItem.h"
 #import "UIConstants.h"
 
 #import "SNIntroduceView.h"
 #import "CUPlatFormManager.h"
 
-#import "UserViewController.h"
 #import "OrderManager+ThirdPay.h"
 #import "Pingpp.h"
 
@@ -43,8 +40,6 @@
 #import "XWTabBarController.h"
 
 @interface AppDelegate () <BMKGeneralDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
-
-@property (nonatomic,strong)SNTabViewController * tabController;
 
 @end
 

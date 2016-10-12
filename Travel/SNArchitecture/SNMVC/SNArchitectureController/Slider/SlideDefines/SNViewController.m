@@ -358,14 +358,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.view.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
+    self.view.backgroundColor = UIColorFromHex(Color_Hex_NavBackground);
 //    [self setNeedsStatusBarAppearanceUpdate];
     if (self.hasNavigationBar)
     {

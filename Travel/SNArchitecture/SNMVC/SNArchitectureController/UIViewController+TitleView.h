@@ -11,5 +11,6 @@
 @interface UIViewController (TitleView)
 
 - (void)changeNaigationTitle:(NSString *)title;
+- (void)changeNaigationTitleColor:(UIColor *)titleColor;
 
 @end

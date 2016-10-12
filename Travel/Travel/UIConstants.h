@@ -46,6 +46,7 @@
 #define kAnnotationFont [UIFont systemFontOfSize:kAnnotationFontSize]
 
 #define SystemFont_10 [UIFont systemFontOfSize:10]
+#define SystemFont_11 [UIFont systemFontOfSize:11]
 #define SystemFont_12 [UIFont systemFontOfSize:12]
 #define SystemFont_13 [UIFont systemFontOfSize:13]
 #define SystemFont_14 [UIFont systemFontOfSize:14]
@@ -79,6 +80,9 @@
 #define kLoadMoreCellHeigth                     55
 
 #define kDefaultLineHeight       (1.0 / [UIScreen mainScreen].scale)
+
+#define kPaddingLeft             15
+#define kPaddingTop              12
 
 #define kControllerContentRect              (CGRectMake(0, kNavigationHeight, kScreenWidth, CGRectGetHeight(self.view.bounds) - kNavigationHeight))
 

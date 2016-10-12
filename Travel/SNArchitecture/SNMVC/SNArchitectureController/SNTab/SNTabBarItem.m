@@ -63,16 +63,16 @@
     }
 }
 
-//- (CGRect)imageRectForContentRect:(CGRect)contentRect
-//{
-//    CGRect imageRect = contentRect;
-//    
-//    imageRect.origin.x = (imageRect.size.width - self.image.size.width) * 0.5;
-//    imageRect.origin.y = vPadding_Top_TabbarItemImg ? vPadding_Top_TabbarItemImg : (imageRect.size.height - self.image.size.height) * 0.5;
-//    imageRect.size = self.image.size;
-//    
-//    return imageRect;
-//}
+- (CGRect)imageRectForContentRect:(CGRect)contentRect
+{
+    CGRect imageRect = contentRect;
+
+    imageRect.origin.x = (imageRect.size.width - self.image.size.width) * 0.5;
+    imageRect.origin.y = vPadding_Top_TabbarItemImg;
+    imageRect.size = self.image.size;
+    
+    return imageRect;
+}
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect
 {
@@ -83,8 +83,8 @@
 	}
 	else if (self.image)
 	{
-        CGSize size = [self.title sizeWithFont:[UIFont systemFontOfSize:FontSize_TabbarItemTitle]];
-        titleRect = CGRectMake(0, CGRectGetHeight(titleRect) - size.height - vPadding_Bottom_TabbarItemTitle, CGRectGetWidth(titleRect), size.height);
+        CGSize size = [self.title sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:FontSize_TabbarItemTitle]}];
+        titleRect = CGRectMake(0, CGRectGetHeight(titleRect) - size.height - vPadding_Bottom_TabbarItemTitle+vSpace_TabbarItemImg_Title, CGRectGetWidth(titleRect), size.height);
 	}
 	
 	return CGRectIntegral(titleRect);

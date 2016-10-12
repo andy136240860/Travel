@@ -15,7 +15,6 @@
 #import "AVUser.h"
 
 #import "RegisterAddDetailsVC.h"
-#import "UINavigationBar+Background.h"
 
 #import "TSMessage.h"
 

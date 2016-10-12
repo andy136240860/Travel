@@ -98,7 +98,7 @@
         belowController.maskView.alpha = oalpha;
         
         if (bounce == NO || status == SNSlideStatusRightOutOfScreen) {
-            [UIView animateWithDuration:kSlideNaviAnimationDuration delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
+            [UIView animateWithDuration:kSlideNaviAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 controller.view.frame = frame;
                 
 #ifdef kUseTransformEffect
@@ -114,7 +114,7 @@
             }];
         }
         else {
-            [UIView animateWithDuration:kSlideNaviAnimationDuration delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
+            [UIView animateWithDuration:kSlideNaviAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 controller.view.frame = bounceFrame;
                 
 #ifdef kUseTransformEffect
@@ -124,7 +124,7 @@
                 belowController.maskView.alpha = balpha;
             } completion:^(BOOL finished) {
                 if (finished) {
-                    [UIView animateWithDuration:kBounceAnimationDuration delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
+                    [UIView animateWithDuration:kBounceAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                         controller.view.frame = frame;
                         
 #ifdef kUseTransformEffect

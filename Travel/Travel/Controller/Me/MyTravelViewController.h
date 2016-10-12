@@ -6,8 +6,8 @@
 //  Copyright © 2016年 li na. All rights reserved.
 //
 
-#import "CUViewController.h"
+#import "XWViewController.h"
 
-@interface MyTravelViewController : CUViewController
+@interface MyTravelViewController : XWViewController
 
 @end

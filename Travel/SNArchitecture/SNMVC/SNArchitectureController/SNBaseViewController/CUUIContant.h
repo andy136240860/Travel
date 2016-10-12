@@ -11,9 +11,9 @@
 
 #import "UIColor+SNExtension.h"
 
-
-#define Height_AdaptedFactor ([UIScreen mainScreen].bounds.size.height/568.0)
-#define Width_AdaptedFactor ([UIScreen mainScreen].bounds.size.width/320.0)
+// 均已6的分辨率为基准
+#define Height_AdaptedFactor ([UIScreen mainScreen].bounds.size.height/(1334.0/2))
+#define Width_AdaptedFactor ([UIScreen mainScreen].bounds.size.width/(750.0/2))
 
 //--------------------rect---------------------
 
@@ -21,7 +21,7 @@
 #define ScreenHeight            ([UIScreen mainScreen].bounds.size.height)
 #define Height_NavigationBar    (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(IOS_7_0) ? 64.0 : 44.0)
 #define Height_StatusBar        (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(IOS_7_0) ? 20.0 : 0.0)
-#define Height_Tabbar           49.0
+#define Height_Tabbar           50
 
 
 /**--------------navigation----------------------**/
@@ -43,7 +43,6 @@ extern NSInteger Color_Hex_Text_Normal;
 extern NSInteger Color_Hex_Text_Selected;
 extern NSInteger Color_Hex_Text_Readed;
 extern NSInteger Color_Hex_Text_Highlighted;
-extern NSInteger Color_Hex_Text_gray;
 extern NSInteger Color_Hex_ImageDefault;
 
 /**--------------tableview ----------------------**/
@@ -57,6 +56,10 @@ extern CGFloat vPadding_Bottom_TabbarItemTitle;
 extern CGFloat vSpace_TabbarItemImg_Title; // kSNTabBarItemImgTitleInterval 0.5
 extern CGFloat vPadding_Top_TabbarItemImg;
 
+/**
+ *  image default
+ */
+extern NSString * ImgStr_Default;
 
 
 

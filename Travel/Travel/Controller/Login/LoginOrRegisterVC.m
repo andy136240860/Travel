@@ -7,7 +7,6 @@
 //
 
 #import "LoginOrRegisterVC.h"
-#import "UINavigationBar+Background.h"
 #import "LoginVC.h"
 #import "XWBannerView.h"
 

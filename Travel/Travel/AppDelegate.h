@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SNSlideNavigationController.h"
 #import "XWTabBarController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

@@ -7,30 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SNViewController.h"
-#import "SNViewController+Nav.h"
+#import "UIViewController+SNExtension.h"
 #import "MBProgressHUD.h"
 
-@interface CUViewController : SNViewController
+@interface CUViewController : UIViewController
 
 @property (nonatomic,strong,readonly) UIView * contentView;
-@property (nonatomic,assign)BOOL hasTab;
-@property (nonatomic,strong)MBProgressHUD   * progressView;
+//@property (nonatomic,assign)BOOL hasTab;
 @property (nonatomic,assign,readonly)CGFloat keybordHeight;
+//@property (nonatomic,strong)NSString * pageName;
 
-- (void)setShouldHaveTab;
+//- (void)setShouldHaveTab;
 - (void)loadNavigationBar;
 - (void)loadContentView;
 - (void)removeContentView;
+//- (instancetype)initWithPageName:(NSString *)pageName;
 
 @end
 
-@interface CUViewController (HUD)
-
-- (void)showProgressView;
-- (void)hideProgressView;
-
-@end
 
 @interface CUViewController (keybord)
 

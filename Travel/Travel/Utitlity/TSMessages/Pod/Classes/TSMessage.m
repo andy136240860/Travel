@@ -8,7 +8,6 @@
 
 #import "TSMessage.h"
 #import "TSMessageView.h"
-#import "CUViewController.h"
 
 #define kTSMessageDisplayTime 1.5
 #define kTSMessageExtraDisplayTimePerPixel 0.04
@@ -226,7 +225,8 @@ __weak static UIViewController *_defaultViewController;
         }
         else
         {
-            [currentView.viewController.view addSubview:currentView];
+//            [currentView.viewController.view addSubview:currentView];
+            [[UIApplication sharedApplication].keyWindow addSubview:currentView];
             if ([TSMessage iOS7StyleEnabled] || isViewIsUnderStatusBar) {
                 addStatusBarHeightToVerticalOffset();
             }
@@ -234,7 +234,8 @@ __weak static UIViewController *_defaultViewController;
     }
     else
     {
-        [currentView.viewController.view addSubview:currentView];
+//        [currentView.viewController.view addSubview:currentView];
+        [[UIApplication sharedApplication].keyWindow addSubview:currentView];
         if ([TSMessage iOS7StyleEnabled]) {
             addStatusBarHeightToVerticalOffset();
         }
@@ -332,14 +333,6 @@ __weak static UIViewController *_defaultViewController;
 
 - (void)fadeOutNotification:(TSMessageView *)currentView animationFinishedBlock:(void (^)())animationFinished
 {
-    if (currentView.messagePosition == TSMessageNotificationPositionNavBarOverlay) {
-        UIViewController *vc = currentView.viewController;
-        vc.navigationController.navigationBarHidden = NO;
-        if([currentView.viewController isKindOfClass:[CUViewController class]]){
-            CUViewController *CUvc = (CUViewController *)vc;
-            CUvc.navigationBar.hidden = NO;
-        }
-    }
     currentView.messageIsFullyDisplayed = NO;
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(fadeOutNotification:)
