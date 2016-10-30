@@ -19,5 +19,8 @@ pod 'SDWebImage','>=3.8.1'
 pod 'HYBMasonryAutoCellHeight'
 pod 'ZFPlayer'
 pod 'YYKit'
+pod 'KVOController'
+pod 'TSUIKit'
+pod 'TSMessages'
 
 end

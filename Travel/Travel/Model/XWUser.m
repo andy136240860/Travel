@@ -9,5 +9,11 @@
 #import "XWUser.h"
 
 @implementation XWUser
+@dynamic avatar;
+
++ (NSString *)parseClassName {
+    return @"_User";
+}
+
 
 @end

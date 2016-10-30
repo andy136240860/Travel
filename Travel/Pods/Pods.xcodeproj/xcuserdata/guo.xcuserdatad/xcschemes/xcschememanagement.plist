@@ -34,6 +34,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>HexColors.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>KVOController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -74,6 +84,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TSMessages.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>TSUIKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>TWMessageBarManager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -97,17 +117,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>00E3C18C87BE9FA629395BEAB09A93A3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00EDD73D7A035395DAA81E911194EC75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>062EE6E51BFCDBDE303E5C4729F369CF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0C1D89EAE68EF4D4ABEDB611EC44AAB0</key>
+		<key>091678A46EC9D72AFD821ED0A59A2522</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>15FA004BC8B0E52E78D5B240EFB597A5</key>
+		<key>0C1D89EAE68EF4D4ABEDB611EC44AAB0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -122,12 +152,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5BC7DE11C15229B83B1DD57829AA161E</key>
+		<key>625225DB194C2C53ADE11A7065063055</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>625225DB194C2C53ADE11A7065063055</key>
+		<key>65E86FC8F874CD855F1291330BDE16D1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>692A3658FA35EC636423261D8C35F051</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -138,11 +173,6 @@
 			<true/>
 		</dict>
 		<key>9775596B3CA16905FC8F66DA8E2A3C67</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>AABE54867690F7258FD1C245FFFA0ADC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -167,12 +197,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>CAED8D55B70FF9B645496CB34EC7C77E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D058B89EB3B3DF45457A2DCD3971AFFE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E4F1F58BD5A93BFFC5BAFB50B065400A</key>
+		<key>E4DABB198B137015E3354596710EEEF3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E9EF397B95762DDB254C71DDCB4B1381</key>
 		<dict>
 			<key>primary</key>
 			<true/>

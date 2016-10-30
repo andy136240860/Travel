@@ -23,3 +23,7 @@
 @implementation TravelVideo
 
 @end
+
+@implementation TravelTogether
+
+@end

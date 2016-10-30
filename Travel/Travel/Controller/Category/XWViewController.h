@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "UIViewController+NavBarTool.h"
 #import "UIViewController+SNExtension.h"
+#import "UIViewController+TSMessageHandler.h"
 //#import "UIViewController+TitleView.h"
 
 @interface XWViewController : UIViewController
 
+@property (nonatomic,strong,readonly) UIView * contentView;
+
+- (void)loadContentView;
+
++ (UIViewController*)currentViewController;
 @end

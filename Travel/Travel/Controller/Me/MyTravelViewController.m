@@ -7,7 +7,24 @@
 //
 
 #import "MyTravelViewController.h"
+#import "AVOSCloud.h"
 
 @implementation MyTravelViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    AVUser *user = [AVUser currentUser];
+    
+    AVQuery *query = [AVQuery queryWithClassName:@"TravelTogether"];
+    
+    [query whereKey:@"TravelTogetherCompanions" equalTo:user];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            
+        }
+    }];
+    
+}
 
 @end

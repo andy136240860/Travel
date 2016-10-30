@@ -38,6 +38,7 @@
 #import "TipHandler+HUD.h"
 
 #import "XWTabBarController.h"
+#import "XWUser.h"
 
 @interface AppDelegate () <BMKGeneralDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
 
@@ -61,6 +62,7 @@
     //加载各引擎类
     [[AppCore sharedInstance] load];
     
+    [XWUser registerSubclass];
     [AVOSCloud setApplicationId:@"YpRaRTRbziVSjxPDLoW3jMH9-gzGzoHsz" clientKey:@"hzNWspVOq52ocxjySeXqHrGo"];
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [AVOSCloud setAllLogsEnabled:YES];

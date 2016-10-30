@@ -9,7 +9,6 @@
 #import "MyTravelDetailViewController.h"
 #import "MyTravelDetailHeaderView.h"
 #import "AVOSCloud.h"
-#import "NSDictionary+SNExtension.h"
 
 @interface MyTravelDetailViewController () {
 
@@ -46,8 +45,8 @@
 }
 
 - (void)loadContentView {
-    _contentTabelView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    [self.view addSubview:_contentTabelView];
+    _contentTabelView = [[UITableView alloc]initWithFrame:self.contentView.bounds style:UITableViewStylePlain];
+    [self.contentView addSubview:_contentTabelView];
     _contentTabelView.tableHeaderView = self.tableHeaderView;
 }
 

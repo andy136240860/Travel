@@ -43,6 +43,7 @@
     [self addSubview:backgroundImageView];
     
     avatarImageView = [[UIImageView alloc]initWithFrame:CGRectMake(kPaddingLeft, self.frameHeight - avatarImageViewDiameter - kPaddingTop, avatarImageViewDiameter, avatarImageViewDiameter)];
+    avatarImageView.clipsToBounds = YES;
     avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
     avatarImageView.layer.borderWidth = 2.f;
     avatarImageView.layer.borderColor = UIColorFromHex(0xbbc1c0).CGColor;

@@ -11,15 +11,15 @@
 @implementation UIViewController (TSMessageHandler)
 
 - (void)showWarningWithTitle:(NSString *)title{
-    [self showMessageWithTitle:title type:TSMessageNotificationTypeWarning];
+    [TSMessage showNotificationWithTitle:title type:TSMessageNotificationTypeWarning];
 }
 
 - (void)showErrorWithTitle:(NSString *)title{
-    [self showMessageWithTitle:title type:TSMessageNotificationTypeError];
+    [TSMessage showNotificationWithTitle:title type:TSMessageNotificationTypeError];
 }
 
 - (void)showMessageWithTitle:(NSString *)title type:(TSMessageNotificationType)type{
-    [self showMessageWithTitle:title subTitle:nil type:type];
+    [TSMessage showNotificationWithTitle:title type:type];
 }
 
 - (void)showMessageWithTitle:(NSString *)title subTitle:(NSString *)subTitle type:(TSMessageNotificationType)type{

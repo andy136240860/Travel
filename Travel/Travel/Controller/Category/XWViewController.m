@@ -7,8 +7,11 @@
 //
 
 #import "XWViewController.h"
+#import "EditTravelTogetherHeaderView.h"
 
 @interface XWViewController ()
+
+@property (nonatomic,strong) UIView * content;
 
 @end
 
@@ -16,13 +19,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self addContentView];
     [self loadContentView];
     [self useDefaultNavBarTitleColor];
     [self useDefaultNavBarBackgroudColor];
-
 }
 
-- (void)loadContentView{
+- (UIView *)contentView
+{
+    if (self.content != nil)
+    {
+        return self.content;
+    }
+    return self.view;
+}
+
+- (void)addContentView
+{
+    self.content = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.content.frameHeight -= Height_NavigationBar;
+    [self.view addSubview:self.content];
+//    self.content.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
+    if (self.hidesBottomBarWhenPushed)
+    {
+        self.content.frameHeight -= Height_Tabbar;
+    }
+}
+
+- (void)loadContentView {
 
 }
 
@@ -30,6 +55,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
++ (UIViewController*) topMostController {
+    UIViewController *topController = [[UIApplication sharedApplication].keyWindow rootViewController];
+    
+    //  Getting topMost ViewController
+    while ([topController presentedViewController])	topController = [topController presentedViewController];
+    
+    //  Returning topMost ViewController
+    return topController;
+}
+
++ (UIViewController*)currentViewController {
+    UIViewController *currentViewController = [[self class] topMostController];
+    
+    while ([currentViewController isKindOfClass:[UINavigationController class]] && [(UINavigationController*)currentViewController topViewController])
+        currentViewController = [(UINavigationController*)currentViewController topViewController];
+    
+    return currentViewController;
+}
+
 
 /*
 #pragma mark - Navigation

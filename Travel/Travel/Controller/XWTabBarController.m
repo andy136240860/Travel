@@ -12,6 +12,7 @@
 
 #import "MeViewController.h"
 #import "HomeViewController.h"
+#import "EditTravelTogetherVC.h"
 #define RGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define kOneUnitForPublish kScreenWidth/6.9282032302756f * 1.2
 
@@ -198,7 +199,10 @@
 }
 
 - (void)button4_travelTogetherAction{
-    
+    [self closeEffectView];
+    EditTravelTogetherVC *vc = [[EditTravelTogetherVC alloc]init];
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:vc];
+    [self presentViewController:navVC animated:YES completion:nil];
 }
 
 - (UIButton *)button5_guide{

@@ -7,7 +7,12 @@
 //
 
 #import "AVUser.h"
+#import "AVObject+Subclass.h"
 
-@interface XWUser : AVUser
+@interface XWUser : AVUser<AVSubclassing>
+
+@property (nonatomic, strong) NSString *avatar;
+
++ (NSString *)parseClassName;
 
 @end

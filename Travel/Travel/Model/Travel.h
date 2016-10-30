@@ -47,3 +47,24 @@ typedef NS_ENUM(NSInteger, TravelDataType) {
 @property (nonatomic, strong) NSString *videoImageURL;
 
 @end
+
+@interface TravelTogether : TravelBaseData
+
+@property (nonatomic, strong) XWUser    *publisher;
+@property (nonatomic, strong) NSString  *headerViewBackgroundImageURL;
+@property (nonatomic, strong) NSString  *title;  //标题
+@property (nonatomic, strong) NSString  *destinatin; //地区
+@property (nonatomic, assign) NSInteger startTime; //开始时间
+@property (nonatomic, assign) NSInteger endTime;  //结束时间
+@property (nonatomic, assign) NSInteger peopleNumber; //人数
+@property (nonatomic, assign) BOOL      peopleNumberCanExceed; //人数可超
+@property (nonatomic, assign) NSInteger price;  //钱数
+@property (nonatomic, strong) NSString  *priceType; //钱的单位（美元或者元XXXX）
+@property (nonatomic, strong) NSString  *traffic;
+@property (nonatomic, strong) NSString  *language; //NSString，ISOLanguageCodes，有逗号分隔
+@property (nonatomic, strong) AVRelation   *TravelTogetherCompanions; //同伴ralation，为各个user,key:TravelTogetherCompanions
+@property (nonatomic, strong) AVRelation   *TravelTogetherGuides;  //导游ralation，给各个user,key:TravelTogetherCompanionsGuides
+
+@property (nonatomic, strong) NSString  *detail; //旅游详情的html字符串
+
+@end

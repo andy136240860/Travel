@@ -17,8 +17,10 @@ PODS:
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
+  - HexColors (2.2.1)
   - HYBMasonryAutoCellHeight (2.0.1):
     - Masonry (~> 0.6)
+  - KVOController (1.2.0)
   - Masonry (0.6.4)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.10)
@@ -32,6 +34,9 @@ PODS:
   - SDWebImage (3.8.1):
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
+  - TSMessages (0.9.12):
+    - HexColors (~> 2.2.0)
+  - TSUIKit (0.1)
   - TWMessageBarManager (1.8.1)
   - UITableView+FDTemplateLayoutCell (1.4)
   - YYKit (1.0.7):
@@ -44,10 +49,13 @@ DEPENDENCIES:
   - ChatKit
   - CYLTabBarController
   - HYBMasonryAutoCellHeight
+  - KVOController
   - MBProgressHUD
   - MLPAutoCompleteTextField
   - MWPhotoBrowser
   - SDWebImage (>= 3.8.1)
+  - TSMessages
+  - TSUIKit
   - TWMessageBarManager
   - YYKit
   - ZFPlayer
@@ -60,7 +68,9 @@ SPEC CHECKSUMS:
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   FDStackView: 3a4bbe0ce9c35e974246a585168b9da8c32213f1
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  HexColors: abfd172e329dab59888614ccba6f216cec59289d
   HYBMasonryAutoCellHeight: 9296583777080d32ba6257f55e52b7334dd481fc
+  KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: bb72948c985914b0b5cecac573a2c69a8915fb02
@@ -68,11 +78,13 @@ SPEC CHECKSUMS:
   MWPhotoBrowser: 7087b4c828297ef34ff2b0892c8e967034a86842
   PSTCollectionView: 6749df92885353521f55279a7ce2b293762e2be4
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  TSMessages: c8cc7b80f2a833af533872cd02010cac061532cc
+  TSUIKit: 8b4ad3cf1f0ddad89db5411ed54458ffbb1a23d6
   TWMessageBarManager: fd84e7948ba7968a2b5d9454859135761214ec56
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
   YYKit: 843d1b26e20b82c695790c9a89907eaa1e99907f
   ZFPlayer: 326ce3f64be0be583d0a9e5e334659ba2e3c5e7f
 
-PODFILE CHECKSUM: 39eac12affbf2cb9fb89075f51609f2254fbe07b
+PODFILE CHECKSUM: 0edeaa928fd8c2f94df34ae7662af2c6fa0f1dc1
 
 COCOAPODS: 1.0.1
