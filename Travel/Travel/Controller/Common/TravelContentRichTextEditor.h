@@ -17,7 +17,7 @@
 
 @interface TravelContentRichTextEditor : ZSSRichTextEditor
 
-@property (nonatomic, retain) id <TravelContentRichTextEditorDelegate> delegate;
+@property (nonatomic, weak) id <TravelContentRichTextEditorDelegate> delegate;
 
 @property (nonatomic, strong) NSString *contentString;
 

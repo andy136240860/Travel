@@ -39,8 +39,14 @@
 
 @end
 
-#define kTitleColor  UIColorFromHex(0x008aff)
-#define kLineColor   [UIColor colorWithWhite:198.0/255.0 alpha:1]
+#define kTitleColorNormal                   UIColorFromHex(0x434343)
+#define kTitleColorHighlighted              UIColorFromHex(0x434343)
+
+#define kButtonBackgroundColorNormal        [UIColor whiteColor]
+#define kButtonBackgroundColorHighlighted   [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:0.8]
+
+#define kLineColor                          UIColorFromHex(0xe5e5e5)
+#define kTitleFont                          [UIFont systemFontOfSize:16]
 
 const static CGFloat kCustomIOS7AlertViewDefaultButtonHeight       = 50;
 const static CGFloat kCustomIOS7AlertViewDefaultButtonSpacerHeight = 1;
@@ -80,6 +86,13 @@ CGFloat buttonSpacerHeight = 0;
 //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        
+        self.buttonTextColorNormal = kTitleColorNormal;
+        self.buttonTextColorHighlighted = kTitleColorHighlighted;
+        self.buttonBackgroundColorNormal = kButtonBackgroundColorNormal;
+        self.buttonBackgroundColorHighlighted = kButtonBackgroundColorHighlighted;
+        self.buttonLineColor = kLineColor;
+        self.buttonTextFontSize = 16;
     }
     return self;
 }
@@ -233,8 +246,15 @@ CGFloat buttonSpacerHeight = 0;
     dialogContainer.layer.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.97].CGColor;
 
     dialogContainer.layer.cornerRadius = cornerRadius;
-    dialogContainer.layer.borderColor = [kLineColor CGColor];
-    dialogContainer.layer.borderWidth = 1;
+//    if (_buttonLineColor)
+//    {
+//        dialogContainer.layer.borderColor = [_buttonLineColor CGColor];
+//    }
+//    else
+//    {
+//        dialogContainer.layer.borderColor = [kLineColor CGColor];
+//    }
+//    dialogContainer.layer.borderWidth = 1;
     dialogContainer.layer.shadowRadius = cornerRadius + 5;
     dialogContainer.layer.shadowOpacity = 0.1f;
     dialogContainer.layer.shadowOffset = CGSizeMake(0 - (cornerRadius+5)/2, 0 - (cornerRadius+5)/2);
@@ -243,12 +263,15 @@ CGFloat buttonSpacerHeight = 0;
 
     // There is a line above the button
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, dialogContainer.bounds.size.height - buttonHeight - buttonSpacerHeight, dialogContainer.bounds.size.width, buttonSpacerHeight)];
-    lineView.backgroundColor = kLineColor;
+    lineView.backgroundColor = _buttonLineColor;
+    
     [dialogContainer addSubview:lineView];
     // ^^^
 
     // Add the custom container if there is any
+    dialogContainer.clipsToBounds = YES;
     [dialogContainer addSubview:containerView];
+
 
     // Add the buttons too
     [self addButtonsToView:dialogContainer];
@@ -263,9 +286,13 @@ CGFloat buttonSpacerHeight = 0;
 
     CGFloat buttonWidth = container.bounds.size.width / [buttonTitles count];
 
-    UIImage *hilightImage = [UIImage imageWithColor:UIColorFromRGB(217, 217, 217) size:CGSizeMake(1, 1)];
-    
+    UIImage * normalImage = [UIImage imageWithColor:_buttonBackgroundColorNormal size:CGSizeMake(1, 1)];
+
+    UIImage * hilightImage = [UIImage imageWithColor:_buttonBackgroundColorHighlighted size:CGSizeMake(1, 1)];
+ 
     for (int i=0; i<[buttonTitles count]; i++) {
+        
+        //add lines at the interval of buttons
 
         UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
 
@@ -273,19 +300,27 @@ CGFloat buttonSpacerHeight = 0;
 
         [closeButton addTarget:self action:@selector(customIOS7dialogButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
         [closeButton setTag:i];
-        
         [closeButton setTitle:[buttonTitles objectAtIndex:i] forState:UIControlStateNormal];
-        [closeButton setTitleColor:UIColorFromHex(0x333333) forState:UIControlStateNormal];
-        [closeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        [closeButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
+        [closeButton setTitleColor:_buttonTextColorNormal forState:UIControlStateNormal];
+        [closeButton setTitleColor:_buttonTextColorHighlighted forState:UIControlStateHighlighted];
+        [closeButton.titleLabel setFont:[UIFont systemFontOfSize:_buttonTextFontSize]];
+        [closeButton setBackgroundImage:[normalImage stretchableImageByCenter] forState:UIControlStateNormal];
         [closeButton setBackgroundImage:[hilightImage stretchableImageByCenter] forState:UIControlStateHighlighted];
-        //[closeButton.layer setCornerRadius:kCustomIOS7AlertViewCornerRadius];
+        
+        if ([_buttonTitlesTextColerNormal objectAtIndexSafely:i]) {
+            [closeButton setTitleColor:[_buttonTitlesTextColerNormal objectAtIndexSafely:i] forState:UIControlStateNormal];
+        }
+        
+        if ([_buttonTitlesTextColerHighlighted objectAtIndexSafely:i]) {
+            [closeButton setTitleColor:[_buttonTitlesTextColerHighlighted objectAtIndexSafely:i] forState:UIControlStateHighlighted];
+        }
 
         [container addSubview:closeButton];
         
         if (i < [buttonTitles count] - 1) {
-            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(closeButton.frame) - 1, CGRectGetMinY(closeButton.frame), 1, CGRectGetHeight(closeButton.frame))];
-            lineView.backgroundColor = kLineColor;
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(closeButton.frame) - (1.0 / [UIScreen mainScreen].scale), CGRectGetMinY(closeButton.frame), (1.0 / [UIScreen mainScreen].scale), CGRectGetHeight(closeButton.frame))];
+            lineView.backgroundColor = _buttonLineColor;
+
             [container addSubview:lineView];
         }
     }

@@ -199,8 +199,11 @@
 
 - (void)nextButtonAction{
     if (phoneLoginView.hidden == NO){
-        [AVUser logInWithMobilePhoneNumberInBackground:phoneNumberTextFeildView.contentTextField.text password:phonePasswordTextFeildView.contentTextField.text block:^(AVUser *user, NSError *error) {
+        [XWUser logInWithMobilePhoneNumberInBackground:phoneNumberTextFeildView.contentTextField.text password:phonePasswordTextFeildView.contentTextField.text block:^(AVUser *user, NSError *error) {
             if (user != nil) {
+                XWUser *myUser = [XWUser currentUser];
+                myUser.avatarURL = [user objectForKey:@"avatarURL"];
+                myUser.nickName = [user objectForKey:@"nickName"];
                 [self showMessageWithTitle:@"登录成功" subTitle:nil type:TSMessageNotificationTypeSuccess];
                 [self performSelector:@selector(dismissView) withObject:self afterDelay:1];
             } else {
@@ -209,7 +212,10 @@
         }];
     }
     if (userNameLoginView.hidden == NO) {
-        [AVUser logInWithUsernameInBackground:userNameTextFeildView.contentTextField.text password:userPasswordTextFeildView.contentTextField.text block:^(AVUser *user, NSError *error) {
+        [XWUser logInWithUsernameInBackground:userNameTextFeildView.contentTextField.text password:userPasswordTextFeildView.contentTextField.text block:^(AVUser *user, NSError *error) {
+            XWUser *myUser = [XWUser currentUser];
+            myUser.avatarURL = [user objectForKey:@"avatarURL"];
+            myUser.nickName = [user objectForKey:@"nickName"];
             if (user != nil) {
                 [self showMessageWithTitle:@"登录成功" subTitle:nil type:TSMessageNotificationTypeSuccess];
                 [self performSelector:@selector(dismissView) withObject:self afterDelay:1];

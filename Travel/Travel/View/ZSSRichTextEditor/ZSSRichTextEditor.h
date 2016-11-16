@@ -52,18 +52,12 @@ static NSString * const ZSSRichTextEditorToolbarFonts = @"com.zedsaid.toolbarite
 
 @class ZSSBarButtonItem;
 
-
-//@protocol ZSSRichTextEditorDelegate <NSObject>
-//
-//- (void)didSelectImage:(UIImage *)image;
-//
-//@end
 /**
  *  The viewController used with ZSSRichTextEditor
  */
 @interface ZSSRichTextEditor : UIViewController <UIWebViewDelegate, HRColorPickerViewControllerDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,ZSSFontsViewControllerDelegate>
 
-//@property (nonatomic, retain) id <ZSSRichTextEditorDelegate> delegate;
+
 /**
  *  The base URL to use for the webView
  */

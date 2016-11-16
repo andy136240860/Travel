@@ -10,10 +10,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class CustomIOS7AlertView;
 
 @protocol CustomIOS7AlertViewDelegate
 
-- (void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+- (void)customIOS7dialogButtonTouchUpInside:(CustomIOS7AlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 
 @end
 
@@ -25,7 +26,16 @@
 
 @property (nonatomic, assign) id<CustomIOS7AlertViewDelegate> delegate;
 @property (nonatomic, retain) NSArray *buttonTitles;
+@property (nonatomic, retain) NSArray *buttonTitlesTextColerNormal;
+@property (nonatomic, retain) NSArray *buttonTitlesTextColerHighlighted;
 @property (nonatomic, assign) BOOL useMotionEffects;
+
+@property (nonatomic, strong) UIColor *buttonTextColorNormal;
+@property (nonatomic, strong) UIColor *buttonTextColorHighlighted;
+@property (nonatomic, strong) UIColor *buttonBackgroundColorNormal;
+@property (nonatomic, strong) UIColor *buttonBackgroundColorHighlighted;
+@property (nonatomic, strong) UIColor *buttonLineColor;
+@property (nonatomic)         CGFloat buttonTextFontSize;
 
 @property (copy) void (^onButtonTouchUpInside)(CustomIOS7AlertView *alertView, int buttonIndex) ;
 

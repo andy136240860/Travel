@@ -39,7 +39,6 @@
     HomeViewController *asdkHomeFeedVC      = [[HomeViewController alloc] init];
     UINavigationController *asdkHomeFeedNavCtrl  = [[UINavigationController alloc] initWithRootViewController:asdkHomeFeedVC];
     asdkHomeFeedNavCtrl.tabBarItem               = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"tabbar_home_nor"] tag:0];
-    asdkHomeFeedNavCtrl.hidesBarsOnSwipe         = YES;
     
     // ASDK Home Feed viewController & navController
     MeViewController *uikitHomeFeedVC     = [[MeViewController alloc] init];

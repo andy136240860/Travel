@@ -27,8 +27,8 @@
 
 @interface XWBannerView : UIView <UIScrollViewDelegate>
 
-@property (nonatomic, retain) id <XWBannerViewDataSource> dataSource;
-@property (nonatomic, retain) id <XWBannerViewDelegate> delegate;
+@property (nonatomic, weak) id <XWBannerViewDataSource> dataSource;
+@property (nonatomic, weak) id <XWBannerViewDelegate> delegate;
 
 @property (strong,nonatomic) XWPageControl      *pageControl;  //pageControl，可自定义小圆点样式
 @property (assign,nonatomic) NSInteger          currentPage;

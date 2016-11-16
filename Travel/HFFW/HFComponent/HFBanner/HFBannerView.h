@@ -27,8 +27,8 @@
 
 @interface HFBannerView : UIView <UIScrollViewDelegate>
 
-@property (nonatomic, retain) id <HFBannerViewDataSource> dataSource;
-@property (nonatomic, retain) id <HFBannerViewDelegate> delegate;
+@property (nonatomic, weak) id <HFBannerViewDataSource> dataSource;
+@property (nonatomic, weak) id <HFBannerViewDelegate> delegate;
 
 @property (strong,nonatomic) HFPageControl      *pageControl;  //pageControl，可自定义小圆点样式
 @property (assign,nonatomic) NSInteger          currentPage;

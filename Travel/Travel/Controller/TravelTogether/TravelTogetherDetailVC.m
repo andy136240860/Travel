@@ -11,9 +11,35 @@
 #import "TravelTogetherDetailHeaderView.h"
 #import "TravelDetailHeaderView.h"
 
-@interface TravelTogetherDetailVC () <UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+@protocol XWTableViewDelegate <NSObject>
 
-@property (nonatomic, strong) UITableView *contentTabelView;
+- (void) touchesMoved;
+
+@end
+
+@interface XWTableView : UITableView
+
+@property (weak, nonatomic) id <XWTableViewDelegate> XWdelegate;
+
+@end
+
+@implementation XWTableView
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event{
+    NSLog(@"touchesMoved....");
+    if (self.XWdelegate) {
+        [self.XWdelegate touchesMoved];
+    }
+}
+
+@end
+
+
+@interface TravelTogetherDetailVC () <UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,XWSegmentBarDelegate,XWTableViewDelegate> {
+    BOOL touchedSegmentByUser;
+}
+
+@property (nonatomic, strong) XWTableView *contentTabelView;
 @property (nonatomic, strong) TravelTogetherDetailHeaderView *tableHeaderView;
 //@property (nonatomic, strong) 
 
@@ -26,14 +52,22 @@
     [self addRightButtonWithTitle:@"发布" seletor:@selector(publish)];
     // Do any additional setup after loading the view.
     [self loadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableHeaderViewFrameChangeAction) name:kNotification_TableHeaderViewFrameChange object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.contentTabelView.tableHeaderView = self.tableHeaderView;
 }
 
 - (void)loadContentView {
-    _contentTabelView = [[UITableView alloc]initWithFrame:self.contentView.bounds style:UITableViewStylePlain];
+    _contentTabelView = [[XWTableView alloc]initWithFrame:self.contentView.bounds style:UITableViewStylePlain];
     _contentTabelView.delegate = self;
     _contentTabelView.tableFooterView = [UIView new];
     _contentTabelView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _contentTabelView.dataSource = self;
+    _contentTabelView.XWdelegate = self;
     [self.contentView addSubview:_contentTabelView];
     _contentTabelView.tableHeaderView = self.tableHeaderView;
 }
@@ -41,13 +75,27 @@
 - (void)loadData {
     if (self.travelTogether) {
         self.tableHeaderView.travelTogether = self.travelTogether;
+        self.contentTabelView.tableHeaderView = self.tableHeaderView;
     }
+}
+
+- (void)tableHeaderViewFrameChangeAction {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.contentTabelView.tableHeaderView = self.tableHeaderView;
+    }];
 }
 
 - (TravelTogetherDetailHeaderView *)tableHeaderView {
     if (_tableHeaderView == nil) {
         _tableHeaderView = [[TravelTogetherDetailHeaderView alloc]init];
+        _tableHeaderView.segmentBar.delegate = self;
     }
+    CGFloat height = [_tableHeaderView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    CGRect frame = _tableHeaderView.frame;
+    frame.size.height = height;
+    
+    _tableHeaderView.frame = frame;
+    
     return _tableHeaderView;
 }
 
@@ -61,10 +109,69 @@
     }
     else{
         if ([self.contentView.subviews containsObject:_tableHeaderView.segmentBar]) {
+            NSLog(@"%f",scrollView.contentOffset.y);
             [_tableHeaderView.segmentBar removeFromSuperview];
             _tableHeaderView.segmentBar.frameY = [TravelDetailHeaderView defaultHeight];
             [_tableHeaderView addSubview:_tableHeaderView.segmentBar];
         }
+    }
+    
+    if (touchedSegmentByUser) {
+        return;
+    }
+
+    if (scrollView.contentOffset.y < (_tableHeaderView.travelTiTleAndDetailView.maxY - [XWSegmentBar defaultHeight] - 18)) {
+        [_tableHeaderView.segmentBar selectSegmentIndex:0];
+    }
+    
+    if (scrollView.contentOffset.y < (_tableHeaderView.travelMatesView.maxY - [XWSegmentBar defaultHeight] - 18) && scrollView.contentOffset.y > (_tableHeaderView.travelMatesView.frameY - [XWSegmentBar defaultHeight] - 18)) {
+        [_tableHeaderView.segmentBar selectSegmentIndex:1];
+    }
+    
+    if (scrollView.contentOffset.y < (_tableHeaderView.travelTextAndImageDetailWebView.maxY - [XWSegmentBar defaultHeight] - 18) && scrollView.contentOffset.y > (_tableHeaderView.travelTextAndImageDetailWebView.frameY - [XWSegmentBar defaultHeight] - 18)) {
+        [_tableHeaderView.segmentBar selectSegmentIndex:2];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    touchedSegmentByUser = NO;
+}
+
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    touchedSegmentByUser = NO;
+}
+
+- (void)touchesMoved {
+    touchedSegmentByUser = NO;
+}
+
+- (void)didSelectedTitleWithIndex:(NSInteger)index {
+    touchedSegmentByUser = YES;
+    switch (index) {
+        case 0:
+        {
+            if (!(self.contentTabelView.contentOffset.y < (_tableHeaderView.travelTiTleAndDetailView.maxY - [XWSegmentBar defaultHeight] - 18))) {
+                [self.contentTabelView setContentOffset:CGPointMake(0, _tableHeaderView.travelTiTleAndDetailView.frameY - [XWSegmentBar defaultHeight] - 18) animated:YES];
+            }
+        }
+            break;
+        case 1:
+        {
+            if (!(self.contentTabelView.contentOffset.y < (_tableHeaderView.travelMatesView.maxY - [XWSegmentBar defaultHeight] - 18) && self.contentTabelView.contentOffset.y > (_tableHeaderView.travelMatesView.frameY - [XWSegmentBar defaultHeight] - 18))) {
+                [self.contentTabelView setContentOffset:CGPointMake(0, _tableHeaderView.travelMatesView.frameY - [XWSegmentBar defaultHeight] - 18) animated:YES];
+            }
+        }
+            break;
+        case 2:
+        {
+            if (!(self.contentTabelView.contentOffset.y < (_tableHeaderView.travelTextAndImageDetailWebView.maxY - [XWSegmentBar defaultHeight] - 18) && self.contentTabelView.contentOffset.y > (_tableHeaderView.travelTextAndImageDetailWebView.frameY - [XWSegmentBar defaultHeight] - 18))) {
+                [self.contentTabelView setContentOffset:CGPointMake(0, _tableHeaderView.travelTextAndImageDetailWebView.frameY - [XWSegmentBar defaultHeight] - 18) animated:YES];
+            }
+        }
+            break;
+        default:
+            break;
     }
 }
 
@@ -135,3 +242,5 @@
 */
 
 @end
+
+

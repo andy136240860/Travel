@@ -9,17 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "Travel.h"
 #import "XWSegmentBar.h"
+#import "TravelTiTleAndDetailView.h"
+#import "TravelMatesView.h"
+#import "TravelTextAndImageDetailWebView.h"
 
 @interface TravelTogetherDetailHeaderView : UIView
 
-@property (nonatomic, strong) XWSegmentBar      *segmentBar;
-
 @property (nonatomic, strong) TravelTogether    *travelTogether;
 
-- (instancetype)init;
-- (instancetype)initWithFrame:(CGRect)frame;
+@property (nonatomic, strong) XWSegmentBar      *segmentBar;
+@property (nonatomic, strong) TravelTiTleAndDetailView *travelTiTleAndDetailView;
+@property (nonatomic, strong) TravelMatesView *travelMatesView;
+@property (nonatomic, strong) TravelTextAndImageDetailWebView *travelTextAndImageDetailWebView;
 
-+ (CGFloat)defaulHeight;
+- (instancetype)init;
 
 
 @end

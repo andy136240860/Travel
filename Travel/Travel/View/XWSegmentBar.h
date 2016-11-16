@@ -16,7 +16,7 @@
 
 @interface XWSegmentBar : UIView
 
-@property (nonatomic, retain) id <XWSegmentBarDelegate> delegate;
+@property (nonatomic, weak) id <XWSegmentBarDelegate> delegate;
 
 - (instancetype)init;
 - (instancetype)initWithFrame:(CGRect)frame;
@@ -25,5 +25,7 @@
 - (void)loadTitles:(NSString *)title,...NS_REQUIRES_NIL_TERMINATION;
 
 + (CGFloat)defaultHeight;
+
+- (void)selectSegmentIndex:(NSInteger)index;
 
 @end

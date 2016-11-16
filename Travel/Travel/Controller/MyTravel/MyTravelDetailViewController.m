@@ -35,13 +35,17 @@
 //    [AVCloud callFunctionInBackground:@"Home" withParameters:dic block:^(id object, NSError *error) {
 //        
 //    }];
-    AVObject *GuideService =[AVObject objectWithClassName:@"GuideService" objectId:@"57b554e8c4c971005f909151"];
-    [GuideService fetchInBackgroundWithBlock:^(AVObject *avObject, NSError *error) {
-        if (!error) {
-            
-        }
-    }];
-    
+//    AVSearchQuery
+//    AVObject *GuideService =[AVObject objectWithClassName:@"GuideService" objectId:@"57b554e8c4c971005f909151"];
+//    [GuideService fetchInBackgroundWithBlock:^(AVObject *avObject, NSError *error) {
+//        if (!error) {
+//            [GuideService incrementKey:nil ];
+//        }
+//    }];
+//    AVQuery *queue;
+//    [queue includeKey:nil];
+//    AVStatus *status;
+//    [AVStatus sendStatusToFollowers:<#(AVStatus *)#> andCallback:<#^(BOOL succeeded, NSError *error)callback#>]
 }
 
 - (void)loadContentView {

@@ -41,7 +41,7 @@
     self.content.frameHeight -= Height_NavigationBar;
     [self.view addSubview:self.content];
 //    self.content.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);
-    if (self.hidesBottomBarWhenPushed)
+    if (!self.hidesBottomBarWhenPushed)
     {
         self.content.frameHeight -= Height_Tabbar;
     }

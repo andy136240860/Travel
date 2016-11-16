@@ -37,6 +37,6 @@ typedef NS_ENUM(int16_t, ZSSFontFamily) {
 
 - (id)initWithFontFamily:(ZSSFontFamily)fontFamily;
 
-@property (weak) id<ZSSFontsViewControllerDelegate> delegate;
+@property (nonatomic,weak) id<ZSSFontsViewControllerDelegate> delegate;
 
 @end

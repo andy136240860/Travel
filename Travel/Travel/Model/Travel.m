@@ -10,6 +10,12 @@
 
 @implementation Forward
 
+- (id)copyWithZone:(nullable NSZone *)zone {
+    Forward *forword = [[Forward alloc]init];
+    forword.context = [self.context copy];
+    return forword;
+}
+
 @end
 
 @implementation TravelBaseData

@@ -91,6 +91,7 @@
     }
     self.user.username = userTextFeildView.contentTextField.text;
     self.user.password = passwordTextFeildView.contentTextField.text;
+    self.user.nickName = nameTextFeild.contentTextField.text;
     
     __weak __block typeof(self) blockSelf = self;
     [self.user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -101,6 +102,7 @@
             // 失败的原因可能有多种，常见的是用户名已经存在。
         }
     }];
+    [self.user saveInBackground];
 }
 
 - (void)dismissAction{

@@ -20,7 +20,7 @@
 @property (nonatomic, strong) UIImageView   *backgroundImageView;
 @property (nonatomic, strong) UITextField   *titleTextField;
 
-@property (nonatomic, retain) id <EditTravelTogetherHeaderViewDelegate> delegate;
+@property (nonatomic, weak) id <EditTravelTogetherHeaderViewDelegate> delegate;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 - (instancetype)init;

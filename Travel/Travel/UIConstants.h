@@ -6,7 +6,7 @@
 
 #define kTableViewSeparatorColor [UIColor colorWithWhite:230.0/255.0 alpha:1.0f]
 
-#define kTableViewGrayColor      UIColorFromHex(0xf6f6f6)
+#define kTableViewGrayColor      UIColorFromHex(0xf7f8f9)
 #define kCommonBackgroundColor   UIColorFromRGB(248,248,248)
 #define kTableViewCellGrayColor  UIColorFromRGB(239,239,239)
 
@@ -83,6 +83,7 @@
 
 #define kPaddingLeft             15
 #define kPaddingTop              12
+#define kBlockIntervalY          10
 
 #define kControllerContentRect              (CGRectMake(0, kNavigationHeight, kScreenWidth, CGRectGetHeight(self.view.bounds) - kNavigationHeight))
 
@@ -118,6 +119,8 @@
 #define kNotification_LogoutSuccess         @"Notification_LogoutSuccess"
 
 #define kNotification_CityChange      @"Notification_CityChange"
+
+#define kNotification_TableHeaderViewFrameChange        @"Notification_TableHeaderViewFrameChange"
 
 //======================
 #define kServicePhoneNumber     @"400-890-9636"

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define CollectionHeaderViewForMeVCHeight 370
+#define CollectionHeaderViewForMeVCHeight 708/2.f
 
 typedef NS_ENUM(NSInteger, CollectionHeaderViewForMeVCClickModel) {
     CollectionHeaderViewModel_userAvatar    = 1,//用户头像
@@ -18,6 +18,10 @@ typedef NS_ENUM(NSInteger, CollectionHeaderViewForMeVCClickModel) {
     CollectionHeaderViewModel_myService     = 5,//我的服务
     CollectionHeaderViewModel_myCollection  = 6,//我的收藏
     CollectionHeaderViewModel_myOrder       = 7,//我的订单
+    
+    CollectionHeaderViewModel_myCollectionHeaderViewBackgrondImage = 100,   //我的收藏首页背景图
+    CollectionHeaderViewModel_setting       = 200,//设置
+    CollectionHeaderViewModel_inbox         = 201,//私信提醒等等
 };
 
 @class CollectionHeaderViewForMeVC;
@@ -30,7 +34,7 @@ typedef NS_ENUM(NSInteger, CollectionHeaderViewForMeVCClickModel) {
 
 @interface CollectionHeaderViewForMeVC : UICollectionReusableView
 
-@property (nonatomic, retain) id <CollectionHeaderViewForMeVCDelegate> delegate;
+@property (nonatomic, weak) id <CollectionHeaderViewForMeVCDelegate> delegate;
 
 - (void)resetData;
 

@@ -13,24 +13,25 @@
 @class TravelBaseData;
 
 typedef NS_ENUM(NSInteger, TravelDataType) {
-    TravelDataTypePicture   = 1, // 图片
-    TravelDataTypeVideo     = 2, // 视频
+    TravelDataTypePicture       = 1,    // 图片
+    TravelDataTypeVideo         = 2,    // 视频
+    TravelDataTravelTogether    = 3,    //一起旅行
 };
 
-@interface Forward : NSObject
+@interface Forward : NSObject<NSCopying>
 
-@property (nonatomic, assign) XWUser *user;
-@property (nonatomic, assign) NSString *context;
+@property (nonatomic, strong) XWUser *user;
+@property (nonatomic, strong) NSString *context;
 
 @end
 
 @interface TravelBaseData : AVObject
 
-@property (nonatomic, assign) TravelDataType *typeId;
-@property (nonatomic, strong) XWUser   *user;
-@property (nonatomic, strong) NSString *context; //文本
-@property (nonatomic, strong) Forward  *forward; //转发信息
-@property (nonatomic, strong) NSArray  *tags; //String数组
+@property (nonatomic, assign) TravelDataType            typeId;
+@property (nonatomic, strong) XWUser                    *user;
+@property (nonatomic, strong) NSString                  *context; //文本
+@property (nonatomic, strong) Forward                   *forward; //转发信息
+@property (nonatomic, strong) NSArray<NSString *>       *tags; //String数组
 
 @end
 

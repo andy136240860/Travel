@@ -50,15 +50,16 @@
 
 - (void)didSelectImage:(UIImage *)image {
     [self showProgressView];
+    __weak __block typeof(self) blockSelf = self;
     NSData *data = [NSData dataWithData:UIImagePNGRepresentation(image)];
     AVFile *file = [AVFile fileWithName:@"1.png" data:data];
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [self hideProgressView];
+        [blockSelf hideProgressView];
         if (!error) {
-            [self insertImage:file.url alt:nil];
+            [blockSelf insertImage:file.url alt:nil];
         }
         else {
-            [self showWarningWithTitle:@"网络错误，请重试"];
+            [blockSelf showWarningWithTitle:@"网络错误，请重试"];
         }
     }];
 }
