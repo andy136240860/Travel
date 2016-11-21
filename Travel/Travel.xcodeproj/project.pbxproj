@@ -603,6 +603,7 @@
 		BC6E3A6F1C8ED473009A0E6F /* introduce_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC6E3A6A1C8ED473009A0E6F /* introduce_3.jpg */; };
 		BC6E3A701C8ED473009A0E6F /* introduce_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC6E3A6B1C8ED473009A0E6F /* introduce_4.jpg */; };
 		BC6E3A711C8ED473009A0E6F /* introduce_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC6E3A6C1C8ED473009A0E6F /* introduce_5.jpg */; };
+		BC6F9F161DDF2B9200792E5D /* XWTravelPublishManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F9F151DDF2B9200792E5D /* XWTravelPublishManager.m */; };
 		BC742A881DD45EDF0040E5B2 /* TravelTextAndImageDetailWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC742A871DD45EDF0040E5B2 /* TravelTextAndImageDetailWebView.m */; };
 		BC8375421DC0AE0700CC7E8B /* TravelTogetherDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8375411DC0AE0700CC7E8B /* TravelTogetherDetailHeaderView.m */; };
 		BC8375451DC0C94C00CC7E8B /* XWSegmentBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8375441DC0C94C00CC7E8B /* XWSegmentBar.m */; };
@@ -1620,6 +1621,8 @@
 		BC6E3A6A1C8ED473009A0E6F /* introduce_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = introduce_3.jpg; sourceTree = "<group>"; };
 		BC6E3A6B1C8ED473009A0E6F /* introduce_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = introduce_4.jpg; sourceTree = "<group>"; };
 		BC6E3A6C1C8ED473009A0E6F /* introduce_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = introduce_5.jpg; sourceTree = "<group>"; };
+		BC6F9F141DDF2B9200792E5D /* XWTravelPublishManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWTravelPublishManager.h; sourceTree = "<group>"; };
+		BC6F9F151DDF2B9200792E5D /* XWTravelPublishManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWTravelPublishManager.m; sourceTree = "<group>"; };
 		BC742A861DD45EDE0040E5B2 /* TravelTextAndImageDetailWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTextAndImageDetailWebView.h; sourceTree = "<group>"; };
 		BC742A871DD45EDF0040E5B2 /* TravelTextAndImageDetailWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelTextAndImageDetailWebView.m; sourceTree = "<group>"; };
 		BC8375401DC0AE0700CC7E8B /* TravelTogetherDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTogetherDetailHeaderView.h; sourceTree = "<group>"; };
@@ -4896,6 +4899,8 @@
 		E1EB1B921B70A43A0048B8EB /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				BC6F9F141DDF2B9200792E5D /* XWTravelPublishManager.h */,
+				BC6F9F151DDF2B9200792E5D /* XWTravelPublishManager.m */,
 				E1EB1B931B70A43A0048B8EB /* AppCore.h */,
 				E1EB1B941B70A43A0048B8EB /* AppCore.m */,
 				E1EB1B951B70A43A0048B8EB /* BusinessManagers */,
@@ -5028,8 +5033,6 @@
 				E1C2F4E91BA875770070224F /* Address.m */,
 				BCC054AE1C4397F200017202 /* DiseaseSubject.h */,
 				BCC054AF1C4397F200017202 /* DiseaseSubject.m */,
-				BC0F1A501DAE862A00F5E5A9 /* Travel.h */,
-				BC0F1A511DAE862A00F5E5A9 /* Travel.m */,
 				BCAA4ACB1C8597F70085A165 /* MyAccount.h */,
 				BCAA4ACC1C8597F70085A165 /* MyAccount.m */,
 				BCAA4ACF1C8686750085A165 /* Diagnosis.h */,
@@ -5040,6 +5043,8 @@
 				7FFB94911C967051003523B4 /* Comment.m */,
 				BC9510ED1D54D49800E9E313 /* XWUser.h */,
 				BC9510EE1D54D49800E9E313 /* XWUser.m */,
+				BC0F1A501DAE862A00F5E5A9 /* Travel.h */,
+				BC0F1A511DAE862A00F5E5A9 /* Travel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6250,6 +6255,7 @@
 				7FD0BBD41C9A58C9004D2E02 /* IQTitleBarButtonItem.m in Sources */,
 				3EDEBAC41A961C4800E72809 /* UIImage+GIF.m in Sources */,
 				3EDEBAB41A961C4800E72809 /* NSFileManager+Size.m in Sources */,
+				BC6F9F161DDF2B9200792E5D /* XWTravelPublishManager.m in Sources */,
 				BC4B791B1D61E77800F57DB5 /* README.md in Sources */,
 				BC91D5AF1D5B4BC2007A335F /* XWBannerView.m in Sources */,
 				E1EB1E421B70A43B0048B8EB /* MobClickConstants.m in Sources */,

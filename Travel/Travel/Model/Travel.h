@@ -8,6 +8,11 @@
 
 #import "AVObject.h"
 #import "XWUser.h"
+#import "AVObject+Subclass.h"
+#import "AVStatus.h"
+
+#define MainDataClassName @"MainData"
+#define MainDataPrivateClassName @"MainDataPrivate"
 
 @class Forward;
 @class TravelBaseData;
@@ -25,31 +30,30 @@ typedef NS_ENUM(NSInteger, TravelDataType) {
 
 @end
 
-@interface TravelBaseData : AVObject
+//@interface XWStatus : AVStatus<AVSubclassing>
+//
+//@property (nonatomic, assign) TravelDataType            travelDataType;
+//@property (nonatomic, strong) NSString                  *context; //文本
+//@property (nonatomic, strong) Forward                   *forward; //转发信息
+//@property (nonatomic, strong) NSArray<NSString *>       *tags; //String数组
+//
+//
+////TravelDataTypePicture       = 1,    // 图片
+//@property (nonatomic, strong) NSArray *picArr; //[string],picURL的数组
+//
+//// TravelDataTypeVideo         = 2,    // 视频
+//@property (nonatomic, strong) NSString *videoURL;
+//@property (nonatomic, assign) NSInteger duration;
+//@property (nonatomic, strong) NSString *videoImageURL;
+//
+////TravelDataTravelTogether    = 3,    //一起旅行
+//@property (nonatomic, strong) AVObject                  *dataSource;
+//
+//@end
 
-@property (nonatomic, assign) TravelDataType            typeId;
-@property (nonatomic, strong) XWUser                    *user;
-@property (nonatomic, strong) NSString                  *context; //文本
-@property (nonatomic, strong) Forward                   *forward; //转发信息
-@property (nonatomic, strong) NSArray<NSString *>       *tags; //String数组
+@interface TravelTogether : AVObject<AVSubclassing>
 
-@end
-
-@interface TravelPicture : TravelBaseData
-
-@property (nonatomic, strong) NSArray *picArr; //[string],picURL的数组
-
-@end
-
-@interface TravelVideo : TravelBaseData
-
-@property (nonatomic, strong) NSString *videoURL;
-@property (nonatomic, assign) NSInteger duration;
-@property (nonatomic, strong) NSString *videoImageURL;
-
-@end
-
-@interface TravelTogether : TravelBaseData
+@property (nonatomic, assign) TravelDataType   travelDataType;
 
 @property (nonatomic, strong) XWUser    *publisher;
 @property (nonatomic, strong) NSString  *headerViewBackgroundImageURL;
@@ -67,5 +71,11 @@ typedef NS_ENUM(NSInteger, TravelDataType) {
 @property (nonatomic, strong) AVRelation   *TravelTogetherGuides;  //导游ralation，给各个user,key:TravelTogetherCompanionsGuides
 
 @property (nonatomic, strong) NSString  *detail; //旅游详情的html字符串
+
+@end
+
+@interface TravelTogetherPrivate : TravelTogether
+
+- (TravelTogether *)convertToTravelTogetherData;
 
 @end

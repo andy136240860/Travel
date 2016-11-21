@@ -84,12 +84,12 @@
                   moduleName = "Travel"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/guo/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/ZXTravel/Travel/Travel/Controller/Login/RegisterAccountVC.m"
-                  timestampString = "500744907.200209"
+                  timestampString = "501401409.229422"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "206"
                   endingLineNumber = "206"
-                  offsetFromSymbolStart = "380">
+                  offsetFromSymbolStart = "292">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -99,12 +99,12 @@
                   moduleName = "Travel"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/guo/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/ZXTravel/Travel/Travel/Controller/Login/RegisterAccountVC.m"
-                  timestampString = "500744907.203272"
+                  timestampString = "501401409.23383"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "207"
                   endingLineNumber = "207"
-                  offsetFromSymbolStart = "40">
+                  offsetFromSymbolStart = "58">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -349,22 +349,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Travel/Controller/TravelTogether/View/EditTravelTogetherTableViewCell.m"
-            timestampString = "498486932.85764"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "-confirmAction"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Travel/View/ZSSRichTextEditor/ZSSRichTextEditor.m"
             timestampString = "498985701.231686"
             startingColumnNumber = "9223372036854775807"
@@ -397,117 +381,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Travel/Controller/Common/View/TravelTextAndImageDetailWebView.m"
-            timestampString = "500473636.111034"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
-            landmarkName = "-webViewDidFinishLoad:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Travel/Controller/Common/View/TravelTextAndImageDetailWebView.m"
-            timestampString = "500471747.707012"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "-setHTMLString:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Travel/Controller/Common/View/TravelTextAndImageDetailWebView.m"
-            timestampString = "500471749.437888"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "-changeContentSizeAction"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Travel/Controller/TravelTogether/TravelTogetherDetailVC.m"
-            timestampString = "500473479.869579"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "-tableHeaderViewFrameChangeAction"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__58-[TravelTogetherDetailVC tableHeaderViewFrameChangeAction]_block_invoke"
-                  moduleName = "Travel"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/guo/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/ZXTravel/Travel/Travel/Controller/TravelTogether/TravelTogetherDetailVC.m"
-                  timestampString = "500744907.286059"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "85"
-                  endingLineNumber = "85"
-                  offsetFromSymbolStart = "160">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__copy_helper_block_"
-                  moduleName = "Travel"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/guo/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/ZXTravel/Travel/Travel/Controller/TravelTogether/TravelTogetherDetailVC.m"
-                  timestampString = "500744907.290146"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "85"
-                  endingLineNumber = "85"
-                  offsetFromSymbolStart = "34">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_"
-                  moduleName = "Travel"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/guo/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/ZXTravel/Travel/Travel/Controller/TravelTogether/TravelTogetherDetailVC.m"
-                  timestampString = "500744907.293852"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "85"
-                  endingLineNumber = "85"
-                  offsetFromSymbolStart = "18">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Travel/Controller/Me/MeViewController.m"
             timestampString = "500741659.666089"
             startingColumnNumber = "9223372036854775807"
@@ -515,6 +388,54 @@
             startingLineNumber = "261"
             endingLineNumber = "261"
             landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Travel/Controller/Me/MyTravelViewController.m"
+            timestampString = "501315948.20375"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Travel/Core/XWTravelPublishManager.m"
+            timestampString = "501395890.466035"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "+saveTravelTogetherPrivate:withBlock:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Travel/Core/XWTravelPublishManager.m"
+            timestampString = "501401407.955218"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "+sendStatusToFollowersWithData:context:block:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

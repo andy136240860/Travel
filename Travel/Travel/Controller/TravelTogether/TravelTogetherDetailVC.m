@@ -10,6 +10,7 @@
 #import "AVOSCloud.h"
 #import "TravelTogetherDetailHeaderView.h"
 #import "TravelDetailHeaderView.h"
+#import "XWTravelPublishManager.h"
 
 @protocol XWTableViewDelegate <NSObject>
 
@@ -196,32 +197,18 @@
 
 - (void)publish {
     __weak __block typeof(self) blockSelf = self;
-    AVObject *object = [AVObject objectWithClassName:@"TravelTogether"];
-    [object setObject:self.travelTogether.title forKey:@"title"];
-    [object setObject:self.travelTogether.destinatin forKey:@"destinatin"];
-    [object setObject:@(self.travelTogether.startTime) forKey:@"startTime"];
-    [object setObject:@(self.travelTogether.endTime) forKey:@"endTime"];
-    [object setObject:@(self.travelTogether.peopleNumber) forKey:@"peopleNumber"];
-    [object setObject:@(self.travelTogether.peopleNumberCanExceed) forKey:@"peopleNumberCanExceed"];
-    [object setObject:@(self.travelTogether.price) forKey:@"price"];
-    [object setObject:self.travelTogether.priceType forKey:@"priceType"];
-    [object setObject:self.travelTogether.traffic forKey:@"traffic"];
-    [object setObject:self.travelTogether.language forKey:@"language"];
-    [object setObject:self.travelTogether.detail forKey:@"detail"];
     
-    AVUser *user = [AVUser currentUser];
-    AVRelation *relationCompanions = [object relationForKey:@"TravelTogetherCompanions"];
-    [relationCompanions addObject:user];
-    AVRelation *relationGuides = [object relationForKey:@"TravelTogetherGuides"];
-    [relationGuides addObject:user];
-
-    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [XWTravelPublishManager saveTravelTogetherPrivate:self.travelTogether withBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             [blockSelf showMessageWithTitle:@"保存成功" type:TSMessageNotificationTypeSuccess];
+            [XWTravelPublishManager sendStatusToFollowersWithData:self.travelTogether context:@"测试一下" block:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    [blockSelf showMessageWithTitle:@"发布成功" type:TSMessageNotificationTypeSuccess];
+                }
+            }];
         }
         else {
             [blockSelf showMessageWithTitle:@"保存失败，请检查网络设置, 数据会在下次联网时保存" type:TSMessageNotificationTypeWarning];
-            [object saveEventually];
         }
     }];
 }

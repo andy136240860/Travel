@@ -43,7 +43,7 @@
     }
     [self addRightButtonWithTitle:@"预览" seletor:@selector(preViewTravelTogether)];
     
-    self.travelTogether = [[TravelTogether alloc]init];
+    self.travelTogether = [[TravelTogetherPrivate alloc]init];
 
     self.KVOController = [[FBKVOController alloc]initWithObserver:self];
     [self.KVOController observe:self.travelTogether keyPath:@"destinatin" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];

@@ -11,6 +11,6 @@
 
 @interface EditTravelTogetherVC : XWViewController
 
-@property (nonatomic, strong) TravelTogether *travelTogether;
+@property (nonatomic, strong) TravelTogetherPrivate *travelTogether;
 
 @end

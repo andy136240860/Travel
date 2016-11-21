@@ -39,6 +39,7 @@
 
 #import "XWTabBarController.h"
 #import "XWUser.h"
+#import "Travel.h"
 
 @interface AppDelegate () <BMKGeneralDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
 
@@ -63,6 +64,8 @@
     [[AppCore sharedInstance] load];
     
     [XWUser registerSubclass];
+    [TravelTogether registerSubclass];
+    [TravelTogetherPrivate registerSubclass];
     [AVOSCloud setApplicationId:@"YpRaRTRbziVSjxPDLoW3jMH9-gzGzoHsz" clientKey:@"hzNWspVOq52ocxjySeXqHrGo"];
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [AVOSCloud setAllLogsEnabled:YES];

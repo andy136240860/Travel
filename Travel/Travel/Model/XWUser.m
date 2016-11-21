@@ -21,6 +21,8 @@
 @dynamic profession;  //职业
 @dynamic selfIntroduction; //自我介绍
 @dynamic signature; //个性签名
+@dynamic privateTravelData;
+@dynamic publishedTravelData;
 
 
 + (NSString *)parseClassName {
