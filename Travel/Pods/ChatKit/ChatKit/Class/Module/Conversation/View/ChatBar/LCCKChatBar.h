@@ -2,18 +2,16 @@
 //  LCCKChatBar.h
 //  LCCKChatBarExample
 //
-//  Created by ElonChan ( https://github.com/leancloud/ChatKit-OC ) on 15/8/17.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) ( https://github.com/leancloud/ChatKit-OC ) on 15/8/17.
 //  Copyright (c) 2015年 https://LeanCloud.cn . All rights reserved.
 //
 
-@import UIKit;
-
 static CGFloat const kChatBarBottomOffset = 8.f;
 static CGFloat const kChatBarTextViewBottomOffset = 6;
-static CGFloat const kLCCKChatBarTextViewFrameMinHeight = 37.f;;//kLCCKChatBarMinHeight - 2*kChatBarTextViewBottomOffset;
-static CGFloat const kLCCKChatBarTextViewFrameMaxHeight = 102.f;//kLCCKChatBarMaxHeight - 2*kChatBarTextViewBottomOffset;
-static CGFloat const kLCCKChatBarMaxHeight = kLCCKChatBarTextViewFrameMaxHeight + 2*kChatBarTextViewBottomOffset;//114.0f;
-static CGFloat const kLCCKChatBarMinHeight = kLCCKChatBarTextViewFrameMinHeight + 2*kChatBarTextViewBottomOffset;//49.0f;
+static CGFloat const kLCCKChatBarTextViewFrameMinHeight = 37.f; //kLCCKChatBarMinHeight - 2*kChatBarTextViewBottomOffset;
+static CGFloat const kLCCKChatBarTextViewFrameMaxHeight = 102.f; //kLCCKChatBarMaxHeight - 2*kChatBarTextViewBottomOffset;
+static CGFloat const kLCCKChatBarMaxHeight = kLCCKChatBarTextViewFrameMaxHeight + 2*kChatBarTextViewBottomOffset; //114.0f;
+static CGFloat const kLCCKChatBarMinHeight = kLCCKChatBarTextViewFrameMinHeight + 2*kChatBarTextViewBottomOffset; //49.0f;
 
 FOUNDATION_EXTERN NSString *const kLCCKBatchDeleteTextPrefix;
 FOUNDATION_EXTERN NSString *const kLCCKBatchDeleteTextSuffix;
@@ -40,6 +38,7 @@ typedef NS_ENUM(NSUInteger, LCCKFunctionViewShowType){
 @interface LCCKChatBar : UIView
 
 @property (weak, nonatomic) id<LCCKChatBarDelegate> delegate;
+@property (nonatomic, readonly) UIViewController *controllerRef;
 
 /*!
  *
@@ -48,11 +47,21 @@ typedef NS_ENUM(NSUInteger, LCCKFunctionViewShowType){
  */
 @property (copy, nonatomic) NSString *cachedText;
 @property (nonatomic, assign) LCCKFunctionViewShowType showType;
+
+/*!
+ * 在 `-presentViewController:animated:completion:` 的completion回调中调用该方法，屏蔽来自其它 ViewController 的键盘通知事件。
+ */
+- (void)close;
+
+/*!
+ * 对应于 `-close` 方法。
+ */
+- (void)open;
+
 /*!
  * 追加后，输入框默认开启编辑模式
  */
 - (void)appendString:(NSString *)string;
-
 - (void)appendString:(NSString *)string beginInputing:(BOOL)beginInputing;
 
 /**
@@ -123,7 +132,5 @@ typedef NS_ENUM(NSUInteger, LCCKFunctionViewShowType){
 - (void)didInputAtSign:(LCCKChatBar *)chatBar;
 
 - (NSArray *)regulationForBatchDeleteText;
-
-- (BOOL)isContactListViewControllerActivceForChatBar:(LCCKChatBar *)chatBar;
 
 @end

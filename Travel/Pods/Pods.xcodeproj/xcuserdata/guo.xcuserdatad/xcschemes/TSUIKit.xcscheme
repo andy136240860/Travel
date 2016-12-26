@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '00E3C18C87BE9FA629395BEAB09A93A3'
+               BlueprintIdentifier = '7ED1A2CED4FCA52D0B2FBCA77234B5C5'
                BlueprintName = 'TSUIKit'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libTSUIKit.a'>

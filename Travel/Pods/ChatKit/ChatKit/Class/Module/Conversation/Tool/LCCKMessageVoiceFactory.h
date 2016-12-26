@@ -2,16 +2,15 @@
 //  LCCKMessageVoiceFactory.h
 //  LeanCloudChatKit-iOS
 //
-//  Created by 陈宜龙 on 16/3/21.
-//  Copyright © 2016年 ElonChan. All rights reserved.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) on 16/3/21.
+//  Copyright © 2016年 LeanCloud. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "LCCKChatUntiles.h"
-@import UIKit;
+#import "LCCKConstants.h"
 
 @interface LCCKMessageVoiceFactory : NSObject
 
-+ (UIImageView *)messageVoiceAnimationImageViewWithBubbleMessageType:(LCCKMessageOwner)owner;
++ (UIImageView *)messageVoiceAnimationImageViewWithBubbleMessageType:(LCCKMessageOwnerType)owner;
 
 @end

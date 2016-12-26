@@ -2,14 +2,20 @@
 //  LCCKChatVoiceMessageCell.m
 //  LCCKChatExample
 //
-//  Created by ElonChan ( https://github.com/leancloud/ChatKit-OC ) on 15/11/16.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) ( https://github.com/leancloud/ChatKit-OC ) on 15/11/16.
 //  Copyright © 2015年 https://LeanCloud.cn . All rights reserved.
 //
 
 #import "LCCKChatVoiceMessageCell.h"
-#import "Masonry.h"
 #import "LCCKMessageVoiceFactory.h"
 #import "LCCKAVAudioPlayer.h"
+
+#if __has_include(<CYLDeallocBlockExecutor/CYLDeallocBlockExecutor.h>)
+#import <CYLDeallocBlockExecutor/CYLDeallocBlockExecutor.h>
+#else
+#import "CYLDeallocBlockExecutor.h"
+#endif
+
 static void * const LCCKChatVoiceMessageCellVoiceMessageStateContext = (void*)&LCCKChatVoiceMessageCellVoiceMessageStateContext;
 
 @interface LCCKChatVoiceMessageCell ()
@@ -31,8 +37,7 @@ static void * const LCCKChatVoiceMessageCellVoiceMessageStateContext = (void*)&L
 
 - (void)updateConstraints {
     [super updateConstraints];
-
-    if (self.messageOwner == LCCKMessageOwnerSelf) {
+    if (self.messageOwner == LCCKMessageOwnerTypeSelf) {
         [self.messageVoiceStatusImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.messageContentView.mas_right).with.offset(-12);
             make.centerY.equalTo(self.messageContentView.mas_centerY);
@@ -46,7 +51,7 @@ static void * const LCCKChatVoiceMessageCellVoiceMessageStateContext = (void*)&L
             make.width.equalTo(@10);
             make.height.equalTo(@10);
         }];
-    } else if (self.messageOwner == LCCKMessageOwnerOther) {
+    } else if (self.messageOwner == LCCKMessageOwnerTypeOther) {
         [self.messageVoiceStatusImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.messageContentView.mas_left).with.offset(12);
             make.centerY.equalTo(self.messageContentView.mas_centerY);
@@ -78,13 +83,13 @@ static void * const LCCKChatVoiceMessageCellVoiceMessageStateContext = (void*)&L
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapMessageImageViewGestureRecognizerHandler:)];
     [self.messageContentView addGestureRecognizer:recognizer];
     [super setup];
+    [self addGeneralView];
     self.voiceMessageState = LCCKVoiceMessageStateNormal;
     [[LCCKAVAudioPlayer sharePlayer]  addObserver:self forKeyPath:@"audioPlayerState" options:NSKeyValueObservingOptionNew context:LCCKChatVoiceMessageCellVoiceMessageStateContext];
-}
-
-- (void)dealloc {
-    // KVO反注册
-    [[LCCKAVAudioPlayer sharePlayer] removeObserver:self forKeyPath:@"audioPlayerState"];
+    __unsafe_unretained __typeof(self) weakSelf = self;
+    [self cyl_executeAtDealloc:^{
+        [[LCCKAVAudioPlayer sharePlayer] removeObserver:weakSelf forKeyPath:@"audioPlayerState"];
+    }];
 }
 
 // KVO监听执行
@@ -99,13 +104,21 @@ static void * const LCCKChatVoiceMessageCellVoiceMessageStateContext = (void*)&L
         LCCKVoiceMessageState audioPlayerState = [audioPlayerStateNumber intValue];
         switch (audioPlayerState) {
             case LCCKVoiceMessageStateCancel:
+            case LCCKVoiceMessageStateNormal:
                 self.voiceMessageState = LCCKVoiceMessageStateCancel;
                 break;
-            default:
+
+            default: {
+                NSString *playerIdentifier = [[LCCKAVAudioPlayer sharePlayer] identifier];
+                if (playerIdentifier) {
+                    NSString *messageId = self.message.messageId;
+                    if (playerIdentifier && [messageId isEqualToString:playerIdentifier]) {
+                        self.voiceMessageState = audioPlayerState;
+                    }
+                }
+            }
                 break;
         }
-        
-        
     }
 }
 
@@ -119,8 +132,20 @@ static void * const LCCKChatVoiceMessageCellVoiceMessageStateContext = (void*)&L
 
 - (void)configureCellWithData:(LCCKMessage *)message {
     [super configureCellWithData:message];
-    self.messageVoiceSecondsLabel.text = [NSString stringWithFormat:@"%@''",message.voiceDuration];
-    CGFloat voiceDuration = [message.voiceDuration floatValue];
+    NSUInteger voiceDuration = [message.voiceDuration integerValue];
+    NSString *voiceDurationString = [NSString stringWithFormat:@"%@", @(voiceDuration)];
+    self.messageVoiceSecondsLabel.text = [NSString stringWithFormat:@"%@''", voiceDurationString];
+        //设置正确的voiceMessageCell播放状态
+        NSString *identifier = [[LCCKAVAudioPlayer sharePlayer] identifier];
+        if (identifier) {
+            NSString *messageId = message.messageId;
+            if (messageId == identifier) {
+                if (message.mediaType == kAVIMMessageMediaTypeAudio) {
+                    [self setVoiceMessageState:[[LCCKAVAudioPlayer sharePlayer] audioPlayerState]];
+                }
+            }
+        }
+
     if (voiceDuration > 2) {
         __block CGFloat length;
         CGFloat lengthUnit = 10.f;
@@ -193,6 +218,17 @@ static void * const LCCKChatVoiceMessageCellVoiceMessageStateContext = (void*)&L
         self.messageVoiceStatusImageView.highlighted = NO;
         [self.messageVoiceStatusImageView stopAnimating];
     }
+}
+
+#pragma mark -
+#pragma mark - LCCKChatMessageCellSubclassing Method
+
++ (void)load {
+    [self registerSubclass];
+}
+
++ (AVIMMessageMediaType)classMediaType {
+    return kAVIMMessageMediaTypeAudio;
 }
 
 @end

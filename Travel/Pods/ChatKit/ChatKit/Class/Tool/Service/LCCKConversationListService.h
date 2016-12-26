@@ -2,8 +2,8 @@
 //  LCCKConversationListService.h
 //  LeanCloudChatKit-iOS
 //
-//  Created by 陈宜龙 on 16/3/22.
-//  Copyright © 2016年 ElonChan. All rights reserved.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) on 16/3/22.
+//  Copyright © 2016年 ElonChan (wechat:chenyilong1010). All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -20,7 +20,6 @@ typedef void(^LCCKPrepareConversationsWhenLoadBlock)(NSArray<AVIMConversation *>
 @property (nonatomic, copy, readonly) LCCKPrepareConversationsWhenLoadBlock prepareConversationsWhenLoadBlock;
 - (void)setPrepareConversationsWhenLoadBlock:(LCCKPrepareConversationsWhenLoadBlock)prepareConversationsWhenLoadBlock;
 
-- (void)fetchConversationsWithConversationIds:(NSSet *)conversationIds callback:(LCCKArrayResultBlock)callback;
 - (void)findRecentConversationsWithBlock:(LCCKRecentConversationsCallback)block;
 
 /**

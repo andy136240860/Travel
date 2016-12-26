@@ -2,7 +2,7 @@
 //  LCCKProgressHUD.m
 //  LCCKChatBarExample
 //
-//  Created by ElonChan ( https://github.com/leancloud/ChatKit-OC ) on 15/8/17.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) ( https://github.com/leancloud/ChatKit-OC ) on 15/8/17.
 //  Copyright (c) 2015年 https://LeanCloud.cn . All rights reserved.
 //
 
@@ -52,7 +52,7 @@
     [self timer];
     dispatch_async(dispatch_get_main_queue(), ^{
         if(!self.superview)
-            [self.overlayWindow addSubview:self];
+            [[UIApplication sharedApplication].keyWindow addSubview:self];
         [UIView animateWithDuration:.5 animations:^{
                 self.alpha = 1;
         } completion:nil];
@@ -208,27 +208,22 @@
 
 - (UIWindow *)overlayWindow {
     if(!_overlayWindow) {
-        
         _overlayWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
         _overlayWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _overlayWindow.userInteractionEnabled = NO;
         [_overlayWindow makeKeyAndVisible];
-        
     }
     return _overlayWindow;
 }
 
-
-
 #pragma mark - Class Methods
-
 
 + (LCCKProgressHUD *)sharedView {
     static dispatch_once_t once;
     static LCCKProgressHUD *sharedView;
     dispatch_once(&once, ^ {
         sharedView = [[LCCKProgressHUD alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        sharedView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
+        sharedView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     });
     return sharedView;
 }

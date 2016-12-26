@@ -2,7 +2,7 @@
 //  LCCKAVAudioPlayer.h
 //  LCCKChatExample
 //
-//  Created by ElonChan ( https://github.com/leancloud/ChatKit-OC ) on 15/11/18.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) ( https://github.com/leancloud/ChatKit-OC ) on 15/11/18.
 //  Copyright © 2015年 https://LeanCloud.cn . All rights reserved.
 //
 
@@ -14,24 +14,16 @@
 
 #import <Foundation/Foundation.h>
 
-#import "LCCKChatUntiles.h"
-
-@protocol LCCKAVAudioPlayerDelegate <NSObject>
-
-- (void)audioPlayerStateDidChanged:(LCCKVoiceMessageState)audioPlayerState forIndex:(NSUInteger)index;
-
-@end
+#import "LCCKConstants.h"
 
 @interface LCCKAVAudioPlayer : NSObject
-
-@property (nonatomic, weak) id<LCCKAVAudioPlayerDelegate> delegate;
 
 @property (nonatomic, copy) NSString *URLString;
 
 /**
- *  index -> 主要作用是提供记录,用来控制对应的tableViewCell的状态
+ *  identifier -> 主要作用是提供记录,用来控制对应的tableViewCell的状态
  */
-@property (nonatomic, assign) NSUInteger index;
+@property (nonatomic, copy) NSString *identifier;
 
 /**
  *  当前播放器播放的状态,当tableView滚动时,匹配index来设置对应的audioPlayerState
@@ -40,7 +32,7 @@
 
 + (instancetype)sharePlayer;
 
-- (void)playAudioWithURLString:(NSString *)URLString atIndex:(NSUInteger)index;
+- (void)playAudioWithURLString:(NSString *)URLString identifier:(NSString *)identifier;
 
 - (void)stopAudioPlayer;
 

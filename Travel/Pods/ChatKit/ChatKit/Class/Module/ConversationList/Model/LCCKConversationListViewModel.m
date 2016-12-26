@@ -2,8 +2,8 @@
 //  LCCKConversationListViewModel.m
 //  LeanCloudChatKit-iOS
 //
-//  Created by 陈宜龙 on 16/3/22.
-//  Copyright © 2016年 ElonChan. All rights reserved.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) on 16/3/22.
+//  Copyright © 2016年 LeanCloud. All rights reserved.
 //
 
 #import "LCCKConversationListViewModel.h"
@@ -12,13 +12,18 @@
 #import "LCCKUserDelegate.h"
 #import "LCCKUserSystemService.h"
 #import "LCCKConversationListViewController.h"
-#import "LCCKChatUntiles.h"
-#import "AVIMConversation+LCCKAddition.h"
+#import "LCCKConstants.h"
+#import "AVIMConversation+LCCKExtension.h"
 #import "LCCKLastMessageTypeManager.h"
 #import "NSDate+LCCKDateTools.h"
-#import "MJRefresh.h"
 #import "LCCKConversationListService.h"
 #import "UIImage+LCCKExtension.h"
+
+#if __has_include(<MJRefresh/MJRefresh.h>)
+    #import <MJRefresh/MJRefresh.h>
+#else
+    #import "MJRefresh.h"
+#endif
 
 #if __has_include(<SDWebImage/UIImageView+WebCache.h>)
     #import <SDWebImage/UIImageView+WebCache.h>
@@ -26,11 +31,18 @@
     #import "UIImageView+WebCache.h"
 #endif
 
+#if __has_include(<CYLDeallocBlockExecutor/CYLDeallocBlockExecutor.h>)
+#import <CYLDeallocBlockExecutor/CYLDeallocBlockExecutor.h>
+#else
+#import "CYLDeallocBlockExecutor.h"
+#endif
+
 
 
 @interface LCCKConversationListViewModel ()
 
-@property (nonatomic, strong) LCCKConversationListViewController *conversationListViewController;
+@property (nonatomic, weak) LCCKConversationListViewController *conversationListViewController;
+@property (nonatomic, assign, getter=isFreshing) BOOL freshing;
 
 @end
 
@@ -47,12 +59,13 @@
     // 当在其它 Tab 的时候，收到消息, badge 增加，所以需要一直监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:LCCKNotificationMessageReceived object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:LCCKNotificationUnreadsUpdated object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:LCCKNotificationConversationListDataSourceUpdated object:nil];
+    __unsafe_unretained __typeof(self) weakSelf = self;
+    [self cyl_executeAtDealloc:^{
+        [[NSNotificationCenter defaultCenter] removeObserver:weakSelf];
+    }];
     _conversationListViewController = conversationListViewController;
     return self;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - table view
@@ -74,6 +87,8 @@
         return customCell;
     }
     LCCKConversationListCell *cell = [LCCKConversationListCell dequeueOrCreateCellByTableView:tableView];
+    [tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    [tableView setSeparatorColor:[[LCCKSettingService sharedInstance] defaultThemeColorForKey:@"TableView-SeparatorColor"]];
     __block NSString *displayName = nil;
     __block NSURL *avatarURL = nil;
     NSString *peerId = nil;
@@ -83,14 +98,16 @@
         peerId = conversation.lcck_lastMessage.clientId;
     }
     if (peerId) {
-        [self asyncCacheElseNetLoadCell:cell identifier:conversation.lcck_displayName peerId:peerId name:&displayName avatarURL:&avatarURL];
+        [self asyncCacheElseNetLoadCell:cell peerId:peerId name:&displayName avatarURL:&avatarURL];
     }
     if (conversation.lcck_type == LCCKConversationTypeSingle) {
         [cell.avatarImageView sd_setImageWithURL:avatarURL placeholderImage:[self imageInBundleForImageName:@"Placeholder_Avatar" ]];
     } else {
-        [cell.avatarImageView setImage:[self imageInBundleForImageName:@"Placeholder_Group"]];
+        NSString *conversationGroupAvatarURLKey = [conversation.attributes valueForKey:LCCKConversationGroupAvatarURLKey];
+        NSURL *conversationGroupAvatarURL = [NSURL URLWithString:conversationGroupAvatarURLKey];
+        [cell.avatarImageView sd_setImageWithURL:conversationGroupAvatarURL placeholderImage:[self imageInBundleForImageName:@"Placeholder_Group" ]];
     }
-    
+    cell.remindMuteImageView.hidden = !conversation.muted;
     cell.nameLabel.text = conversation.lcck_displayName;
     if (conversation.lcck_lastMessage) {
         cell.messageTextLabel.attributedText = [LCCKLastMessageTypeManager attributedStringWithMessage:conversation.lcck_lastMessage conversation:conversation userName:displayName];
@@ -102,9 +119,6 @@
         } else {
             cell.badgeView.badgeText = conversation.lcck_badgeText;
         }
-    }
-    if (conversation.muted == YES) {
-        cell.remindMuteImageView.hidden = NO;
     }
     LCCKConfigureCellBlock configureCellBlock = [[LCCKConversationListService sharedInstance] configureCellBlock];
     if (configureCellBlock) {
@@ -119,8 +133,14 @@
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     LCCKConversationEditActionsBlock conversationEditActionBlock = [[LCCKConversationListService sharedInstance] conversationEditActionBlock];
-    AVIMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
-    NSArray *editActions;
+    AVIMConversation *conversation = nil;
+    if ((NSUInteger)indexPath.row < self.dataArray.count) {
+        conversation = [self.dataArray objectAtIndex:indexPath.row];
+    }
+    else {
+        return nil;
+    }
+    NSArray *editActions = [NSArray array];
     if (conversationEditActionBlock) {
         editActions = conversationEditActionBlock(indexPath, [self defaultRightButtons], conversation, self.conversationListViewController);
     } else {
@@ -129,21 +149,23 @@
     return editActions;
 }
 
-- (void)asyncCacheElseNetLoadCell:(LCCKConversationListCell *)cell identifier:(NSString *)identifier peerId:(NSString *)peerId name:(NSString **)name avatarURL:(NSURL **)avatarURL {
+- (void)asyncCacheElseNetLoadCell:(LCCKConversationListCell *)cell peerId:(NSString *)peerId name:(NSString **)name avatarURL:(NSURL **)avatarURL {
     NSError *error = nil;
-    cell.identifier = identifier;
+    cell.identifier = peerId;
     [[LCCKUserSystemService sharedInstance] getCachedProfileIfExists:peerId name:name avatarURL:avatarURL error:&error];
     if (error) {
 //        NSLog(@"%@", error);
     }
+    //头像消息一般和昵称消息一同返回，故假设如果服务端返回了昵称，那么如果该用户有头像就一定会返回头像。反之，没返回昵称，一定是还未缓存用户信息。如果你的App中，不是这样的逻辑，可联系维护者将这一逻辑修改得严谨些，邮箱luohanchenyilong@163.com.
     if (!*name) {
-        if (peerId != NULL) {
+        if (peerId != NULL && ![LCCKSettingService sharedInstance].isDisablePreviewUserId) {
             *name = peerId;
         }
         __weak __typeof(self) weakSelf = self;
         __weak __typeof(cell) weakCell = cell;
         [[LCCKUserSystemService sharedInstance] getProfileInBackgroundForUserId:peerId callback:^(id<LCCKUserDelegate> user, NSError *error) {
-            if (!error && [weakCell.identifier isEqualToString:user.userId]) {
+            BOOL hasData = user.name;
+            if (hasData && [weakCell.identifier isEqualToString:user.clientId]) {
                 NSIndexPath *indexPath_ = [weakSelf.conversationListViewController.tableView indexPathForCell:weakCell];
                 if (!indexPath_) {
                     return;
@@ -175,14 +197,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AVIMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
     [conversation markAsReadInBackground];
-    [self refresh];
+//    [self refreshIfNeeded];
     ![LCCKConversationListService sharedInstance].didSelectConversationsListCellBlock ?: [LCCKConversationListService sharedInstance].didSelectConversationsListCellBlock(indexPath, conversation, self.conversationListViewController);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AVIMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
     LCCKHeightForRowBlock heightForRowBlock = [[LCCKConversationListService sharedInstance] heightForRowBlock];
     if (heightForRowBlock) {
+        AVIMConversation *conversation = [self.dataArray objectAtIndex:indexPath.row];
         return heightForRowBlock(tableView, indexPath, conversation);
     }
     return LCCKConversationListCellDefaultHeight;
@@ -190,15 +212,38 @@
 
 #pragma mark - refresh
 
+- (void)setFreshing:(BOOL)freshing {
+    _freshing = freshing;
+    if (freshing == NO) {
+        [self.conversationListViewController.tableView.mj_header endRefreshing];
+    }
+}
+
 - (void)refresh {
+    self.freshing = YES;
     [[LCCKConversationListService sharedInstance] findRecentConversationsWithBlock:^(NSArray *conversations, NSInteger totalUnreadCount, NSError *error) {
         dispatch_block_t finishBlock = ^{
-            [self.conversationListViewController.tableView.mj_header endRefreshing];
+            self.freshing = NO;
             if ([self.conversationListViewController filterAVIMError:error]) {
                 self.dataArray = [NSMutableArray arrayWithArray:conversations];
                 [self.conversationListViewController.tableView reloadData];
-                ![LCCKConversationListService sharedInstance].markBadgeWithTotalUnreadCountBlock ?: [LCCKConversationListService sharedInstance].markBadgeWithTotalUnreadCountBlock(totalUnreadCount, self.conversationListViewController.navigationController);
                 [self selectConversationIfHasRemoteNotificatoinConvid];
+                LCCKMarkBadgeWithTotalUnreadCountBlock markBadgeWithTotalUnreadCountBlock = [LCCKConversationListService sharedInstance].markBadgeWithTotalUnreadCountBlock;
+                if (markBadgeWithTotalUnreadCountBlock) {
+                    [LCCKConversationListService sharedInstance].markBadgeWithTotalUnreadCountBlock(totalUnreadCount, self.conversationListViewController.navigationController);
+                    return;
+                }
+                if (totalUnreadCount > 0) {
+                    NSString *badgeValue = [NSString stringWithFormat:@"%ld", (long)totalUnreadCount];
+                    if (totalUnreadCount > 99) {
+                        badgeValue = LCCKBadgeTextForNumberGreaterThanLimit;
+                    }
+                    [self.conversationListViewController.navigationController tabBarItem].badgeValue = badgeValue;
+                    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:totalUnreadCount];
+                } else {
+                    [self.conversationListViewController.navigationController tabBarItem].badgeValue = nil;
+                    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+                }
             }
         };
         if([LCCKConversationListService sharedInstance].prepareConversationsWhenLoadBlock) {
@@ -206,7 +251,7 @@
                 if ([self.conversationListViewController filterAVIMError:error]) {
                     finishBlock();
                 } else {
-                    [self.conversationListViewController.tableView.mj_header endRefreshing];
+                    self.freshing = NO;
                 }
             });
         } else {
@@ -232,7 +277,7 @@
         }];
         
         if (!found) {
-            NSLog(@"not found remoteNofitciaonID");
+            LCCKLog(@"not found remoteNofitciaonID");
         }
         [LCCKConversationService sharedInstance].remoteNotificationConversationId = nil;
     }
@@ -248,8 +293,7 @@
  */
 - (NSMutableArray *)dataArray {
     if (_dataArray == nil) {
-        NSMutableArray *dataArray = [[NSMutableArray alloc] init];
-        _dataArray = dataArray;
+        _dataArray = @[].mutableCopy;
     }
     return _dataArray;
 }

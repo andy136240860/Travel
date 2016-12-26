@@ -2,15 +2,19 @@
 //  NSString+LCCKExtension.m
 //  ChatKit
 //
-//  Created by 陈宜龙 on 16/7/12.
-//  Copyright © 2016年 ElonChan. All rights reserved.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) on 16/7/12.
+//  Copyright © 2016年 LeanCloud. All rights reserved.
 //
 
 #import "NSString+LCCKExtension.h"
+#import "NSFileManager+LCCKExtension.h"
+#import "LCCKConstants.h"
+#import "LCCKSessionService.h"
+#import "LCCKConversationService.h"
 
-static NSString *const LCCKURLRegex = @"(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))";
+NSString *const LCCKURLRegex = @"(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))";
 //匹配10到12位连续数字，或者带连字符/空格的固话号，空格和连字符可以省略。
-static NSString *const LCCKPhoneRegex =  @"\\d{3,4}[- ]?\\d{7,8}";
+NSString *const LCCKPhoneRegex =  @"\\d{3,4}[- ]?\\d{7,8}";
 
 @implementation NSString (LCCKExtension)
 
@@ -21,6 +25,13 @@ static NSString *const LCCKPhoneRegex =  @"\\d{3,4}[- ]?\\d{7,8}";
     return YES;
 }
 
+- (BOOL)lcck_onlyContainsLetterAndNumber {
+    if (![[self stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]] isEqualToString:self]
+        && ![[self stringByTrimmingCharactersInSet:[NSCharacterSet letterCharacterSet]] isEqualToString:self]) {
+        return YES;
+    }
+    return NO;
+}
 - (BOOL)lcck_isLink {
     return [self lcck_isType:NSTextCheckingTypeLink];
 }
@@ -80,6 +91,24 @@ static NSString *const LCCKPhoneRegex =  @"\\d{3,4}[- ]?\\d{7,8}";
     return arrayOfAllMatches;
 }
 
+- (NSArray *)lcck_allRangesWithPattern:(NSString *)pattern error:(NSError **)error {
+    NSArray *arrayOfAllMatches = [self lcck_allMatchsWithPattern:pattern error:error];
+    NSMutableArray *allRanges = [NSMutableArray arrayWithCapacity:1];
+    for (NSTextCheckingResult *match in arrayOfAllMatches) {
+        [allRanges addObject:[NSValue valueWithRange:match.range]];
+    }
+    return [allRanges copy];
+}
+
+- (NSArray<NSValue *> *)lcck_allURLsWithPattern:(NSString *)pattern error:(NSError **)error {
+    NSArray *arrayOfAllMatches = [self lcck_allMatchsWithPattern:pattern error:error];
+    NSMutableArray *allRanges = [NSMutableArray arrayWithCapacity:1];
+    for (NSTextCheckingResult *match in arrayOfAllMatches) {
+        [allRanges addObject:[NSValue valueWithRange:match.range]];
+    }
+    return [allRanges copy];
+}
+
 - (NSArray<NSString *> *)lcck_allCheckingTypeWithPattern:(NSString *)pattern error:(NSError **)error {
     NSArray *arrayOfAllMatches = [self lcck_allMatchsWithPattern:pattern error:error];
     NSMutableArray *arrayOfCheckingType = [[NSMutableArray alloc] init];
@@ -91,22 +120,24 @@ static NSString *const LCCKPhoneRegex =  @"\\d{3,4}[- ]?\\d{7,8}";
     return [NSArray arrayWithArray:arrayOfCheckingType];
 }
 
-// memory killer:
-//- (NSArray<NSTextCheckingResult *> *)lcck_allMatchsForCheckingType:(NSTextCheckingType)type error:(NSError **)error {
-//    NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:type error:&error];
-//    NSArray *matches = [linkDetector matchesInString:self options:0 range:NSMakeRange(0, [self length])];
-//    return matches;
-//}
-//
-//- (NSArray<NSString *> *)lcck_allCheckingType:(NSTextCheckingType)type error:(NSError **)error {
-//    NSArray *matches = [self lcck_allCheckingType:type error:error];
-//    NSMutableArray *arrayOfCheckingType = [[NSMutableArray alloc] init];
-//    for (NSTextCheckingResult *match in matches) {
-//        NSString* substringForMatch = [self substringWithRange:match.range];
-//        [arrayOfCheckingType addObject:substringForMatch];
-//    }
-//    // return non-mutable version of the array
-//    return [arrayOfCheckingType copy];
-//}
+- (UIColor *)lcck_hexStringToColor {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:self];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+}
+
+- (NSString *)lcck_pathForConversationBackgroundImage {
+    NSString *path = [NSString stringWithFormat:@"%@/APP/%@/User/%@/Conversation/%@/Background/", [NSFileManager lcck_documentsPath], [LCChatKit sharedInstance].appId,[LCCKSessionService sharedInstance].clientId, [LCCKConversationService sharedInstance].currentConversation.conversationId];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        NSError *error;
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
+        if (error) {
+            LCCKLog(@"File Create Failed: %@", path);
+        }
+    }
+    return [path stringByAppendingString:self];
+}
 
 @end

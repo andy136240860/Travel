@@ -2,23 +2,28 @@
 //  LCCKConversationService.m
 //  LeanCloudChatKit-iOS
 //
-//  Created by ElonChan on 16/3/1.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) on 16/3/1.
 //  Copyright © 2016年 LeanCloud. All rights reserved.
 //
 
 #import "LCCKConversationService.h"
+#if __has_include(<ChatKit/LCChatKit.h>)
+#import <ChatKit/LCChatKit.h>
+#else
 #import "LCChatKit.h"
+#endif
 #if __has_include(<FMDB/FMDB.h>)
 #import <FMDB/FMDB.h>
 #else
 #import "FMDB.h"
 #endif
 
-#import "AVIMConversation+LCCKAddition.h"
+#import "AVIMConversation+LCCKExtension.h"
 #import "LCCKConversationViewController.h"
 #import "LCCKConversationListViewController.h"
 #import "LCCKMessage.h"
 #import "LCCKConversationListService.h"
+#import "AVIMMessage+LCCKExtension.h"
 
 NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceErrorDomain";
 
@@ -26,10 +31,17 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
 
 @property (nonatomic, strong) FMDatabaseQueue *databaseQueue;
 @property (nonatomic, strong) AVIMClient *client;
-
+@property (nonatomic, strong) NSMutableDictionary<NSString *, AVIMConversation *> *conversationDictionary;
+@property (nonatomic, strong) dispatch_queue_t sqliteQueue;
 @end
 
 @implementation LCCKConversationService
+@synthesize currentConversation = _currentConversation;
+@synthesize fetchConversationHandler = _fetchConversationHandler;
+@synthesize conversationInvalidedHandler = _conversationInvalidedHandler;
+@synthesize loadLatestMessagesHandler = _loadLatestMessagesHandler;
+@synthesize filterMessagesBlock = _filterMessagesBlock;
+@synthesize sendMessageHookBlock = _sendMessageHookBlock;
 
 /**
  *  根据 conversationId 获取对话
@@ -45,7 +57,7 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
     }
     
     NSSet *conversationSet = [NSSet setWithObject:conversationId];
-    [[LCCKConversationListService sharedInstance] fetchConversationsWithConversationIds:conversationSet callback:^(NSArray *objects, NSError *error) {
+    [self fetchConversationsWithConversationIds:conversationSet callback:^(NSArray *objects, NSError *error) {
         if (error) {
             !callback ?: callback(nil, error);
         } else {
@@ -53,7 +65,7 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
                 NSString *errorReasonText = [NSString stringWithFormat:@"conversation of %@ are not exists", conversationId];
                 NSInteger code = 0;
                 NSDictionary *errorInfo = @{
-                                            @"code":@(code),
+                                            @"code" : @(code),
                                             NSLocalizedDescriptionKey : errorReasonText,
                                             };
                 NSError *error = [NSError errorWithDomain:LCCKConversationServiceErrorDomain
@@ -67,7 +79,31 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
     }];
 }
 
+- (void)fetchConversationsWithConversationIds:(NSSet *)conversationIds
+                                     callback:(LCCKArrayResultBlock)callback {
+    AVIMConversationQuery *query = [[LCCKSessionService sharedInstance].client conversationQuery];
+    [query whereKey:@"objectId" containedIn:[conversationIds allObjects]];
+    query.limit = conversationIds.count;
+    [query findConversationsWithCallback: ^(NSArray *objects, NSError *error) {
+        !callback ?: callback(objects, error);
+    }];
+}
+
 - (void)fecthConversationWithPeerId:(NSString *)peerId callback:(AVIMConversationResultBlock)callback {
+    if (![LCCKSessionService sharedInstance].connect) {
+        NSInteger code = 0;
+        NSString *errorReasonText = @"Session not opened";
+        NSDictionary *errorInfo = @{
+                                    @"code":@(code),
+                                    NSLocalizedDescriptionKey : errorReasonText,
+                                    };
+        NSError *error = [NSError errorWithDomain:LCCKConversationServiceErrorDomain
+                                             code:code
+                                         userInfo:errorInfo];
+        
+        !callback ?: callback(nil, error);
+        return;
+    }
     if ([peerId isEqualToString:[[LCCKSessionService sharedInstance] clientId]]) {
         NSString *formatString = @"\n\n\
         ------ BEGIN NSException Log ---------------\n \
@@ -123,14 +159,19 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
 
 - (NSString *)groupConversaionDefaultNameForUserIds:(NSArray *)userIds {
     NSError *error = nil;
-    NSArray *array = [[LCCKUserSystemService sharedInstance] getProfilesForUserIds:userIds error:&error];
-    if (error) {
-        return nil;
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:userIds];
+    NSString *currentClientId = [LCChatKit sharedInstance].clientId;
+    [mutableArray addObject:currentClientId];
+    userIds = [mutableArray copy];
+    NSArray<id<LCCKUserDelegate>> *array = [[LCCKUserSystemService sharedInstance] getCachedProfilesIfExists:userIds error:&error];
+    if (error || (array.count == 0)) {
+        NSString *groupName = [userIds componentsJoinedByString:@","];
+        return groupName;
     }
     
     NSMutableArray *names = [NSMutableArray array];
     [array enumerateObjectsUsingBlock:^(id<LCCKUserDelegate>  _Nonnull user, NSUInteger idx, BOOL * _Nonnull stop) {
-        [names addObject:user.name];
+        [names addObject:user.name ?: user.clientId];
     }];
     return [names componentsJoinedByString:@","];
 }
@@ -161,18 +202,34 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
 - (void)updateConversationAsRead {
     AVIMConversation *conversation = self.currentConversation;
     NSString *conversationId = conversation.conversationId;
-    if (!conversation.creator) {
-        NSAssert(conversation.imClient, @"类名与方法名：%@（在第%@行），描述：%@", @(__PRETTY_FUNCTION__), @(__LINE__), @"imClient is nil");
+    if (!conversation.createAt || !conversation.imClient) {
+        NSLog( @"类名与方法名：%@（在第%@行），描述：%@", @(__PRETTY_FUNCTION__), @(__LINE__), @"imClient or conversation is nil");
         return;
     }
-    [self insertRecentConversation:conversation];
-    [self updateUnreadCountToZeroWithConversationId:conversationId];
-    [self updateMentioned:NO conversationId:conversationId];
+    [self insertRecentConversation:conversation shouldRefreshWhenFinished:NO];
+    [self updateUnreadCountToZeroWithConversationId:conversationId shouldRefreshWhenFinished:NO];
+    [self updateMentioned:NO conversationId:conversationId shouldRefreshWhenFinished:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:LCCKNotificationUnreadsUpdated object:nil];
 }
 
 - (void)setCurrentConversation:(AVIMConversation *)currentConversation {
     _currentConversation = currentConversation;
+    [self pinIMClientToConversationIfNeeded:currentConversation];
+}
+
+- (void)pinIMClientToConversationIfNeeded:(AVIMConversation *)conversation {
+    if (!conversation.imClient) {
+        [conversation setValue:[LCChatKit sharedInstance].client forKey:@"imClient"];
+    }
+}
+
+- (AVIMConversation *)currentConversation {
+    [self pinIMClientToConversationIfNeeded:_currentConversation];
+    return _currentConversation;
+}
+
+- (BOOL)isChatting {
+    return (self.currentConversationId.length > 0);
 }
 
 #pragma mark - conversations local data
@@ -183,75 +240,144 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
     return data;
 }
 
-- (AVIMConversation *)conversationFromData:(NSData *)data{
-
+- (AVIMConversation *)conversationFromData:(NSData *)data {
     AVIMKeyedConversation *keyedConversation = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    return [[LCCKSessionService sharedInstance].client conversationWithKeyedConversation:keyedConversation];
+    AVIMConversation *conversation = [[LCCKSessionService sharedInstance].client conversationWithKeyedConversation:keyedConversation];
+    return conversation;
 }
 
 - (void)updateUnreadCountToZeroWithConversationId:(NSString *)conversationId {
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:LCCKConversationTableUpdateUnreadCountSQL  withArgumentsInArray:@[@0, conversationId]];
-    }];
+    [self updateUnreadCountToZeroWithConversationId:conversationId shouldRefreshWhenFinished:YES];
+}
+
+- (void)updateUnreadCountToZeroWithConversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished {
+    AVIMConversation *cachedConversation = [self.conversationDictionary objectForKey:conversationId];
+    cachedConversation.lcck_unreadCount = 0;
+    dispatch_async(self.sqliteQueue, ^{
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            [db executeUpdate:LCCKConversationTableUpdateUnreadCountSQL  withArgumentsInArray:@[@0, conversationId]];
+        }];
+    });
+    if (shouldRefreshWhenFinished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LCCKNotificationConversationListDataSourceUpdated object:self];
+    }
 }
 
 - (void)deleteRecentConversationWithConversationId:(NSString *)conversationId {
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:LCCKConversationTableDeleteSQL withArgumentsInArray:@[conversationId]];
-    }];
+    [self deleteRecentConversationWithConversationId:conversationId shouldRefreshWhenFinished:YES];
+}
+
+- (void)deleteRecentConversationWithConversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished {
+    [self.conversationDictionary removeObjectForKey:conversationId];
+    dispatch_async(self.sqliteQueue, ^{
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            [db executeUpdate:LCCKConversationTableDeleteSQL withArgumentsInArray:@[conversationId]];
+        }];
+    });
+    if (shouldRefreshWhenFinished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LCCKNotificationConversationListDataSourceUpdated object:self];
+    }
 }
 
 - (void)insertRecentConversation:(AVIMConversation *)conversation {
-    if (!conversation.creator) {
+    [self insertRecentConversation:conversation shouldRefreshWhenFinished:YES];
+}
+
+- (void)insertRecentConversation:(AVIMConversation *)conversation shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished {
+    if (!conversation.createAt) {
         return;
     }
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        NSData *data = [self dataFromConversation:conversation];
-        [db executeUpdate:LCCKConversationTableInsertSQL withArgumentsInArray:@[conversation.conversationId, data, @0, @(NO), @""]];
-    }];
+    AVIMConversation *cachedConversation = [self.conversationDictionary objectForKey:conversation.conversationId];
+    if (!cachedConversation) {
+        [self.conversationDictionary setObject:conversation forKey:conversation.conversationId];
+    }
+    dispatch_async(self.sqliteQueue, ^{
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            NSData *data = [self dataFromConversation:conversation];
+            [db executeUpdate:LCCKConversationTableInsertSQL withArgumentsInArray:@[conversation.conversationId, data, @0, @(NO), @""]];
+        }];
+    });
+    if (shouldRefreshWhenFinished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LCCKNotificationConversationListDataSourceUpdated object:self];
+    }
 }
 
 - (BOOL)isRecentConversationExistWithConversationId:(NSString *)conversationId {
-    __block BOOL exists = NO;
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        FMResultSet *resultSet = [db executeQuery:LCCKConversationTableSelectOneSQL withArgumentsInArray:@[conversationId]];
-        if ([resultSet next]) {
-            exists = YES;
-        }
-        [resultSet close];
-    }];
+    AVIMConversation *cachedConversation = [self.conversationDictionary objectForKey:conversationId];
+    BOOL exists = NO;
+    if (cachedConversation) {
+        exists = YES;
+    }
     return exists;
 }
 
 - (void)increaseUnreadCountWithConversationId:(NSString *)conversationId {
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:LCCKConversationTableIncreaseUnreadCountSQL withArgumentsInArray:@[conversationId]];
-    }];
+    [self increaseUnreadCountWithConversationId:conversationId shouldRefreshWhenFinished:YES];
 }
 
+- (void)increaseUnreadCountWithConversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished {
+    AVIMConversation *cachedConversation = [self.conversationDictionary objectForKey:conversationId];
+    cachedConversation.lcck_unreadCount += 1;
+    dispatch_async(self.sqliteQueue, ^{
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            [db executeUpdate:LCCKConversationTableIncreaseOneUnreadCountSQL withArgumentsInArray:@[conversationId]];
+        }];
+    });
+    if (shouldRefreshWhenFinished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LCCKNotificationConversationListDataSourceUpdated object:self];
+    }
+}
+- (void)increaseUnreadCount:(NSUInteger)increaseUnreadCount withConversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished {
+    AVIMConversation *cachedConversation = [self.conversationDictionary objectForKey:conversationId];
+    cachedConversation.lcck_unreadCount += increaseUnreadCount;
+    dispatch_async(self.sqliteQueue, ^{
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            [db executeUpdate:LCCKConversationTableIncreaseUnreadCountSQL withArgumentsInArray:@[@(increaseUnreadCount) ,conversationId]];
+        }];
+    });
+    if (shouldRefreshWhenFinished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LCCKNotificationConversationListDataSourceUpdated object:self];
+    }
+}
 - (void)updateMentioned:(BOOL)mentioned conversationId:(NSString *)conversationId {
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:LCCKConversationTableUpdateMentionedSQL withArgumentsInArray:@[@(mentioned), conversationId]];
-    }];
+    [self updateMentioned:mentioned conversationId:conversationId shouldRefreshWhenFinished:YES];
+}
+
+- (void)updateMentioned:(BOOL)mentioned conversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished {
+    AVIMConversation *cachedConversation = [self.conversationDictionary objectForKey:conversationId];
+    cachedConversation.lcck_mentioned = mentioned;
+    dispatch_async(self.sqliteQueue, ^{
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            [db executeUpdate:LCCKConversationTableUpdateMentionedSQL withArgumentsInArray:@[@(mentioned), conversationId]];
+        }];
+    });
+    if (shouldRefreshWhenFinished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LCCKNotificationConversationListDataSourceUpdated object:self];
+    }
 }
 
 - (NSString *)draftWithConversationId:(NSString *)conversationId {
-    __block NSString *draft = nil;
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-       FMResultSet *resultSet = [db executeQuery:LCCKConversationTableSelectDraftSQL withArgumentsInArray:@[conversationId]];
-        if ([resultSet next]) {
-            draft = [resultSet stringForColumn:LCCKConversationTableKeyDraft];
-        }
-        [resultSet close];
-    }];
-    return draft;
+    AVIMConversation *cachedConversation = [self.conversationDictionary objectForKey:conversationId];
+    return [cachedConversation.lcck_draft copy];
 }
-             
+
 - (void)updateDraft:(NSString *)draft conversationId:(NSString *)conversationId {
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:LCCKConversationTableUpdateDraftSQL withArgumentsInArray:@[draft ?: @"", conversationId]];
-    }];
+    [self updateDraft:draft conversationId:conversationId shouldRefreshWhenFinished:YES];
 }
+
+- (void)updateDraft:(NSString *)draft conversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished {
+    AVIMConversation *cachedConversation = [self.conversationDictionary objectForKey:conversationId];
+    cachedConversation.lcck_draft = [draft copy];
+    dispatch_async(self.sqliteQueue, ^{
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            [db executeUpdate:LCCKConversationTableUpdateDraftSQL withArgumentsInArray:@[draft ?: @"", conversationId]];
+        }];
+    });
+    if (shouldRefreshWhenFinished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LCCKNotificationConversationListDataSourceUpdated object:self];
+    }
+}
+
 - (AVIMConversation *)createConversationFromResultSet:(FMResultSet *)resultSet {
     NSData *data = [resultSet dataForColumn:LCCKConversationTableKeyData];
     NSInteger unreadCount = [resultSet intForColumn:LCCKConversationTableKeyUnreadCount];
@@ -261,29 +387,41 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
     conversation.lcck_unreadCount = unreadCount;
     conversation.lcck_mentioned = mentioned;
     conversation.lcck_draft = draft;
+    [self pinIMClientToConversationIfNeeded:conversation];
     return conversation;
 }
 
 - (NSArray *)allRecentConversations {
-    NSMutableArray *conversations = [NSMutableArray array];
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        FMResultSet  *resultSet = [db executeQuery:LCCKConversationTableSelectSQL withArgumentsInArray:@[]];
-        while ([resultSet next]) {
-            [conversations addObject:[self createConversationFromResultSet:resultSet]];
-        }
-        [resultSet close];
-    }];
+    NSArray *conversations = [self.conversationDictionary allValues];
     return conversations;
 }
 
 - (void)updateRecentConversation:(NSArray *)conversations {
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db beginTransaction];
-        for (AVIMConversation *conversation in conversations) {
-            [db executeUpdate:LCCKConversationTableUpdateDataSQL, [self dataFromConversation:conversation], conversation.conversationId];
+    [self updateRecentConversation:conversations shouldRefreshWhenFinished:YES];
+}
+
+- (void)updateRecentConversation:(NSArray *)conversations shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished {
+    for (AVIMConversation *conversation in conversations) {
+        AVIMConversation *cachedConversation = [self.conversationDictionary objectForKey:conversation.conversationId];
+        if (cachedConversation) {
+            conversation.lcck_unreadCount = cachedConversation.lcck_unreadCount;
+            conversation.lcck_draft = [cachedConversation.lcck_draft copy];
+            conversation.lcck_mentioned = cachedConversation.lcck_mentioned;
+            [self.conversationDictionary setObject:conversation forKey:conversation.conversationId];
         }
-        [db commit];
-    }];
+    }
+    dispatch_async(self.sqliteQueue, ^{
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            [db beginTransaction];
+            for (AVIMConversation *conversation in conversations) {
+                [db executeUpdate:LCCKConversationTableUpdateDataSQL, [self dataFromConversation:conversation], conversation.conversationId];
+            }
+            [db commit];
+        }];
+    });
+    if (shouldRefreshWhenFinished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LCCKNotificationConversationListDataSourceUpdated object:self];
+    }
 }
 
 /**
@@ -292,7 +430,6 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
  */
 - (void)removeCacheForConversationId:(NSString *)conversationId {
     [self deleteRecentConversationWithConversationId:conversationId];
-    
 }
 
 /**
@@ -303,12 +440,50 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         removeAllCachedRecentConversationsSuccess = [db executeUpdate:LCCKDeleteConversationTable];
     }];
+    if (removeAllCachedRecentConversationsSuccess) {
+        [self.conversationDictionary removeAllObjects];
+    }
     return removeAllCachedRecentConversationsSuccess;
 }
 
-///----------------------------------------------------------------------
-///---------------------FailedMessageStore-------------------------------
-///----------------------------------------------------------------------
+#pragma mark - conversationDictionary
+
+/**
+ *  在内存中缓存对话，避免反复查询数据库，与数据库保持一致，只对数据库只做增、删、改操作。
+ */
+- (NSMutableDictionary *)conversationDictionary{
+    if (!_conversationDictionary) {
+        _conversationDictionary = [[NSMutableDictionary alloc] init];
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            FMResultSet  *resultSet = [db executeQuery:LCCKConversationTableSelectSQL withArgumentsInArray:@[]];
+            while ([resultSet next]) {
+                AVIMConversation *conversation = [self createConversationFromResultSet:resultSet];
+                BOOL isAvailable = conversation.createAt;
+                if (isAvailable) {
+                    [_conversationDictionary setObject:conversation forKey:conversation.conversationId];
+                }
+            }
+            [resultSet close];
+        }];
+    }
+    return _conversationDictionary;
+}
+
+/**
+ *  数据库增删改queue，对数据库的操作在这个queue上执行。
+ */
+
+- (dispatch_queue_t)sqliteQueue{
+    if (!_sqliteQueue) {
+        _sqliteQueue = dispatch_queue_create("com.chatkit-oc.sqliteQueue", DISPATCH_QUEUE_SERIAL);
+    }
+    return _sqliteQueue;
+}
+
+#pragma mark - FailedMessageStore
+///=============================================================================
+/// @name FailedMessageStore
+///=============================================================================
 
 /**
  *  openClient 时调用
@@ -419,7 +594,7 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:message];
     NSAssert(data, @"You can not insert nil message to DB");
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:LCCKInsertMessageSQL, message.messageId, message.conversationId, data];
+        [db executeUpdate:LCCKInsertMessageSQL, message.localMessageId, message.conversationId, data];
     }];
 }
 
@@ -449,6 +624,14 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
        conversation:(AVIMConversation *)conversation
       progressBlock:(AVProgressBlock)progressBlock
            callback:(LCCKBooleanResultBlock)block {
+    [self sendMessage:message conversation:conversation options:AVIMMessageSendOptionNone progressBlock:progressBlock callback:block];
+}
+
+- (void)sendMessage:(AVIMTypedMessage*)message
+       conversation:(AVIMConversation *)conversation
+            options:(AVIMMessageSendOption)options
+      progressBlock:(AVProgressBlock)progressBlock
+           callback:(LCCKBooleanResultBlock)block  {
     id<LCCKUserDelegate> currentUser = [[LCCKUserSystemService sharedInstance] fetchCurrentUser];
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     // 云代码中获取到用户名，来设置推送消息, 老王:今晚约吗？
@@ -465,7 +648,7 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
         [attributes addEntriesFromDictionary:message.attributes];
         message.attributes = attributes;
     }
-    [conversation sendMessage:message options:AVIMMessageSendOptionNone progressBlock:progressBlock callback:block];
+    [conversation sendMessage:message options:options progressBlock:progressBlock callback:block];
 }
 
 - (void)sendWelcomeMessageToPeerId:(NSString *)peerId text:(NSString *)text block:(LCCKBooleanResultBlock)block {
@@ -479,7 +662,30 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
     }];
 }
 
+- (void)sendWelcomeMessageToConversationId:(NSString *)conversationId text:(NSString *)text block:(LCCKBooleanResultBlock)block {
+    [self fecthConversationWithConversationId:conversationId callback:^(AVIMConversation *conversation, NSError *error) {
+        if (error) {
+            !block ?: block(NO, error);
+        } else {
+            AVIMTextMessage *textMessage = [AVIMTextMessage messageWithText:text attributes:nil];
+            [self sendMessage:textMessage conversation:conversation progressBlock:nil callback:block];
+        }
+    }];
+}
+
 #pragma mark - query msgs
+
+- (void)setFetchConversationHandler:(LCCKFetchConversationHandler)fetchConversationHandler {
+    _fetchConversationHandler = fetchConversationHandler;
+}
+
+- (void)setConversationInvalidedHandler:(LCCKConversationInvalidedHandler)conversationInvalidedHandler {
+    _conversationInvalidedHandler = conversationInvalidedHandler;
+}
+
+- (void)setLoadLatestMessagesHandler:(LCCKLoadLatestMessagesHandler)loadLatestMessagesHandler {
+    _loadLatestMessagesHandler = loadLatestMessagesHandler;
+}
 
 - (void)queryTypedMessagesWithConversation:(AVIMConversation *)conversation
                                  timestamp:(int64_t)timestamp
@@ -489,32 +695,34 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
         if (!messages) {
             NSString *errorReason = [NSString stringWithFormat:@"类名与方法名：%@（在第%@行），描述：%@", @(__PRETTY_FUNCTION__), @(__LINE__), @"SDK处理异常，请联系SDK维护者修复luohanchenyilong@163.com"];
             NSLog(@"🔴类名与方法名：%@（在第%@行），描述：%@", @(__PRETTY_FUNCTION__), @(__LINE__), errorReason);
+            // NSAssert(messages, errorReason);
         }
-        //        NSAssert(messages, errorReason);
-        //以下过滤为了避免非法的消息，引起崩溃
+        //以下过滤为了避免非法的消息，引起崩溃，确保展示的只有 AVIMTypedMessage 类型
         NSMutableArray *typedMessages = [NSMutableArray array];
         for (AVIMTypedMessage *message in messages) {
-            if ([message isKindOfClass:[AVIMTypedMessage class]]) {
-                [typedMessages addObject:message];
-            }
+            [typedMessages addObject:[message lcck_getValidTypedMessage]];
         }
         !block ?: block(typedMessages, error);
     };
-    if(timestamp == 0) {
-        // sdk 会设置好 timestamp
-        [conversation queryMessagesWithLimit:limit callback:callback];
-    } else {
-        [conversation queryMessagesBeforeId:nil timestamp:timestamp limit:limit callback:callback];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        if(timestamp == 0) {
+            // 该方法能确保在有网络时总是从服务端拉取最新的消息，首次拉取必须使用该方法
+            // sdk 会设置好 timestamp
+            [conversation queryMessagesWithLimit:limit callback:callback];
+        } else {
+            //会先根据本地缓存判断是否有必要从服务端拉取，这个方法不能用于首次拉取
+            [conversation queryMessagesBeforeId:nil timestamp:timestamp limit:limit callback:callback];
+        }
+    });
 }
 
 + (void)cacheFileTypeMessages:(NSArray<AVIMTypedMessage *> *)messages callback:(AVBooleanResultBlock)callback {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-        NSMutableSet *userIds = [[NSMutableSet alloc] init];
-        for (AVIMTypedMessage *message in messages) {
-            if (message.clientId) {
-                [userIds addObject:message.clientId];
-            }
+    NSString *queueBaseLabel = [NSString stringWithFormat:@"com.chatkit.%@", NSStringFromClass([self class])];
+    const char *queueName = [[NSString stringWithFormat:@"%@.ForBarrier",queueBaseLabel] UTF8String];
+    dispatch_queue_t queue = dispatch_queue_create(queueName, DISPATCH_QUEUE_CONCURRENT);
+    
+    for (AVIMTypedMessage *message in messages) {
+        dispatch_async(queue, ^(void) {
             if (message.mediaType == kAVIMMessageMediaTypeImage || message.mediaType == kAVIMMessageMediaTypeAudio) {
                 AVFile *file = message.file;
                 if (file && file.isDataAvailable == NO) {
@@ -537,19 +745,21 @@ NSString *const LCCKConversationServiceErrorDomain = @"LCCKConversationServiceEr
                     }
                 }
             }
-        }
-        
-        [[LCCKUserSystemService sharedInstance] cacheUsersWithIds:userIds callback:^(BOOL succeeded, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(),^{
-                !callback ?: callback(succeeded, error);
-            });
-        }];
+        });
+    }
+    dispatch_barrier_async(queue, ^{
+        dispatch_async(dispatch_get_main_queue(),^{
+            !callback ?: callback(YES, nil);
+        });
     });
 }
 
 - (AVIMClient *)client {
-    AVIMClient *client = [LCCKSessionService sharedInstance].client;
-    return client;
+    if (!_client) {
+        AVIMClient *client = [LCCKSessionService sharedInstance].client;
+        _client = client;
+    }
+    return _client;
 }
 
 @end

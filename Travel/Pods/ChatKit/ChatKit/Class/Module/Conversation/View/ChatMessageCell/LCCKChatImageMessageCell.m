@@ -2,12 +2,11 @@
 //  LCCKChatImageMessageCell.m
 //  LCCKChatExample
 //
-//  Created by ElonChan ( https://github.com/leancloud/ChatKit-OC ) on 15/11/16.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) ( https://github.com/leancloud/ChatKit-OC ) on 15/11/16.
 //  Copyright © 2015年 https://LeanCloud.cn . All rights reserved.
 //
 
 #import "LCCKChatImageMessageCell.h"
-#import "Masonry.h"
 #import "UIImage+LCCKExtension.h"
 
 #if __has_include(<SDWebImage/UIImageView+WebCache.h>)
@@ -42,30 +41,36 @@
 #pragma mark - Public Methods
 
 - (void)setup {
-
     [self.messageContentView addSubview:self.messageImageView];
     [self.messageContentView addSubview:self.messageProgressView];
+    UIEdgeInsets edgeMessageBubbleCustomize;
+    if (self.messageOwner == LCCKMessageOwnerTypeSelf) {
+        UIEdgeInsets rightEdgeMessageBubbleCustomize = [LCCKSettingService sharedInstance].rightHollowEdgeMessageBubbleCustomize;
+        edgeMessageBubbleCustomize = rightEdgeMessageBubbleCustomize;
+    } else {
+        UIEdgeInsets leftEdgeMessageBubbleCustomize = [LCCKSettingService sharedInstance].leftHollowEdgeMessageBubbleCustomize;
+        edgeMessageBubbleCustomize = leftEdgeMessageBubbleCustomize;
+    }
     [self.messageImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.messageContentView);
+        make.edges.equalTo(self.messageContentView).with.insets(edgeMessageBubbleCustomize);
         make.height.lessThanOrEqualTo(@200).priorityHigh();
     }];
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapMessageImageViewGestureRecognizerHandler:)];
     [self.messageContentView addGestureRecognizer:recognizer];
     [super setup];
+    [self addGeneralView];
 }
 
 - (void)singleTapMessageImageViewGestureRecognizerHandler:(UITapGestureRecognizer *)tapGestureRecognizer {
     if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
         if ([self.delegate respondsToSelector:@selector(messageCellTappedMessage:)]) {
             [self.delegate messageCellTappedMessage:self];
-            [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
         }
     }
 }
 
 - (void)configureCellWithData:(LCCKMessage *)message {
     [super configureCellWithData:message];
-//    self.messageImageView.image = [self imageInBundleForImageName:@"Placeholder_Accept_Defeat"];
     UIImage *thumbnailPhoto = message.thumbnailPhoto;
     do {
         if (self.messageImageView.image && (self.messageImageView.image == thumbnailPhoto)) {
@@ -168,6 +173,17 @@
         [_messageProgressView addSubview:self.messageProgressLabel = progressLabel];
     }
     return _messageProgressView;
+}
+
+#pragma mark -
+#pragma mark - LCCKChatMessageCellSubclassing Method
+
++ (void)load {
+    [self registerSubclass];
+}
+
++ (AVIMMessageMediaType)classMediaType {
+    return kAVIMMessageMediaTypeImage;
 }
 
 @end

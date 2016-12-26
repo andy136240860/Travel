@@ -2,12 +2,9 @@
 //  ChatKitHeaders.h
 //  LeanCloudIMKit-iOS
 //
-//  Created by 陈宜龙 on 16/3/11.
-//  Copyright © 2016年 ElonChan. All rights reserved.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) on 16/3/11.
+//  Copyright © 2016年 LeanCloud. All rights reserved.
 //
-
-FOUNDATION_EXPORT double LCChatKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char LCChatKitVersionString[];
 
 #if __has_include(<AVOSCloud/AVOSCloud.h>)
     #import <AVOSCloud/AVOSCloud.h>
@@ -22,7 +19,7 @@ FOUNDATION_EXPORT const unsigned char LCChatKitVersionString[];
 #endif
 
 #if __has_include(<ChatKit/LCChatKit.h>)
-    #import <ChatKit/LCCKConstants.h>
+
     #import <ChatKit/LCCKSessionService.h>
     #import <ChatKit/LCCKUserSystemService.h>
     #import <ChatKit/LCCKSignatureService.h>
@@ -33,7 +30,7 @@ FOUNDATION_EXPORT const unsigned char LCChatKitVersionString[];
     #import <ChatKit/LCCKServiceDefinition.h>
     #import <ChatKit/LCCKConversationViewController.h>
     #import <ChatKit/LCCKConversationListViewController.h>
-    #import <ChatKit/AVIMConversation+LCCKAddition.h>
+    #import <ChatKit/AVIMConversation+LCCKExtension.h>
     #import <ChatKit/UIImageView+LCCKExtension.h>
     #import <ChatKit/LCCKBaseTableViewController.h>
     #import <ChatKit/LCCKBaseNavigationController.h>
@@ -42,15 +39,22 @@ FOUNDATION_EXPORT const unsigned char LCChatKitVersionString[];
     #import <ChatKit/NSString+LCCKExtension.h>
     #import <ChatKit/NSObject+LCCKIsFirstLaunch.h>
     #import <ChatKit/LCCKContactListViewController.h>
-    #import <ChatKit/LCCKContactManager.h>
     #import <ChatKit/LCCKBaseViewController.h>
     #import <ChatKit/LCCKBaseTableViewController.h>
     #import <ChatKit/LCCKBaseNavigationController.h>
     #import <ChatKit/LCCKBaseConversationViewController.h>
     #import <ChatKit/LCCKContact.h>
+    #import <ChatKit/AVIMTypedMessage+LCCKExtension.h>
+    #import <ChatKit/LCCKInputViewPlugin.h>
+    #import <ChatKit/LCCKInputViewPluginPickImage.h>
+    #import <ChatKit/LCCKInputViewPluginTakePhoto.h>
+    #import <ChatKit/LCCKInputViewPluginLocation.h>
+    #import <ChatKit/LCCKAlertController.h>
+    #import <ChatKit/NSFileManager+LCCKExtension.h>
+    #import <NSObject+LCCKExtension.h>
 
 #else
-    #import "LCCKConstants.h"
+
     #import "LCCKSessionService.h"
     #import "LCCKUserSystemService.h"
     #import "LCCKSignatureService.h"
@@ -61,7 +65,7 @@ FOUNDATION_EXPORT const unsigned char LCChatKitVersionString[];
     #import "LCCKServiceDefinition.h"
     #import "LCCKConversationViewController.h"
     #import "LCCKConversationListViewController.h"
-    #import "AVIMConversation+LCCKAddition.h"
+    #import "AVIMConversation+LCCKExtension.h"
     #import "UIImageView+LCCKExtension.h"
     #import "LCCKBaseTableViewController.h"
     #import "LCCKBaseNavigationController.h"
@@ -70,12 +74,19 @@ FOUNDATION_EXPORT const unsigned char LCChatKitVersionString[];
     #import "NSString+LCCKExtension.h"
     #import "NSObject+LCCKIsFirstLaunch.h"
     #import "LCCKContactListViewController.h"
-    #import "LCCKContactManager.h"
     #import "LCCKBaseViewController.h"
     #import "LCCKBaseTableViewController.h"
     #import "LCCKBaseNavigationController.h"
     #import "LCCKBaseConversationViewController.h"
     #import "LCCKContact.h"
+    #import "AVIMTypedMessage+LCCKExtension.h"
+    #import "LCCKInputViewPlugin.h"
+    #import "LCCKInputViewPluginPickImage.h"
+    #import "LCCKInputViewPluginTakePhoto.h"
+    #import "LCCKInputViewPluginLocation.h"
+    #import "LCCKAlertController.h"
+    #import "NSFileManager+LCCKExtension.h"
+    #import "NSObject+LCCKExtension.h"
 #endif
 
 

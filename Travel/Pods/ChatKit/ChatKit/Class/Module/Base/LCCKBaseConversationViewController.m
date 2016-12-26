@@ -2,17 +2,31 @@
 //  LCCKBaseConversationViewController.m
 //  LeanCloudIMKit-iOS
 //
-//  Created by 陈宜龙 on 16/3/21.
-//  Copyright © 2016年 ElonChan. All rights reserved.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) on 16/3/21.
+//  Copyright © 2016年 ElonChan (微信向我报BUG:chenyilong1010). All rights reserved.
 //
 //#define LCCKDebugging 1
 #import "LCCKBaseConversationViewController.h"
-
 #import "LCCKCellRegisterController.h"
 #import "LCCKChatBar.h"
-#import "MJRefresh.h"
 #import "LCCKConversationRefreshHeader.h"
+
+#if __has_include(<CYLDeallocBlockExecutor/CYLDeallocBlockExecutor.h>)
+#import <CYLDeallocBlockExecutor/CYLDeallocBlockExecutor.h>
+#else
+#import "CYLDeallocBlockExecutor.h"
+#endif
+
+#if __has_include(<Masonry/Masonry.h>)
+#import <Masonry/Masonry.h>
+#else
 #import "Masonry.h"
+#endif
+#if __has_include(<MJRefresh/MJRefresh.h>)
+    #import <MJRefresh/MJRefresh.h>
+#else
+    #import "MJRefresh.h"
+#endif
 
 static void * const LCCKBaseConversationViewControllerRefreshContext = (void*)&LCCKBaseConversationViewControllerRefreshContext;
 static CGFloat const LCCKScrollViewInsetTop = 20.f;
@@ -34,7 +48,6 @@ static CGFloat const LCCKScrollViewInsetTop = 20.f;
         make.left.and.right.and.bottom.equalTo(self.view);
         make.height.mas_greaterThanOrEqualTo(@(kLCCKChatBarMinHeight));
     }];
-    
 }
 
 - (void)initilzer {
@@ -43,15 +56,19 @@ static CGFloat const LCCKScrollViewInsetTop = 20.f;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // KVO注册监听
     [self addObserver:self forKeyPath:@"loadingMoreMessage" options:NSKeyValueObservingOptionNew context:LCCKBaseConversationViewControllerRefreshContext];
-    
-    [LCCKCellRegisterController registerLCCKChatMessageCellClassForTableView:self.tableView];
+    __unsafe_unretained __typeof(self) weakSelf = self;
+    [self cyl_executeAtDealloc:^{
+        [weakSelf removeObserver:weakSelf forKeyPath:@"loadingMoreMessage"];
+    }];
+    [LCCKCellRegisterController registerChatMessageCellClassForTableView:self.tableView];
 //    [self setTableViewInsetsWithBottomValue:kLCCKChatBarMinHeight];
+    __weak __typeof(self) weakSelf_ = self;
     self.tableView.mj_header = [LCCKConversationRefreshHeader headerWithRefreshingBlock:^{
-        if (self.shouldLoadMoreMessagesScrollToTop && !self.loadingMoreMessage) {
+        if (weakSelf_.shouldLoadMoreMessagesScrollToTop && !weakSelf_.loadingMoreMessage) {
             // 进入刷新状态后会自动调用这个block
-            [self loadMoreMessagesScrollTotop];
+            [weakSelf_ loadMoreMessagesScrollTotop];
         } else {
-            [self.tableView.mj_header endRefreshing];
+            [weakSelf_.tableView.mj_header endRefreshing];
         }
     }];
 }
@@ -73,9 +90,6 @@ static CGFloat const LCCKScrollViewInsetTop = 20.f;
 
 - (void)setShouldLoadMoreMessagesScrollToTop:(BOOL)shouldLoadMoreMessagesScrollToTop {
     _shouldLoadMoreMessagesScrollToTop = shouldLoadMoreMessagesScrollToTop;
-    if (!_shouldLoadMoreMessagesScrollToTop) {
-        self.tableView.mj_header = nil;
-    }
 }
 
 // KVO监听执行
@@ -90,13 +104,11 @@ static CGFloat const LCCKScrollViewInsetTop = 20.f;
         BOOL boolValue = [newKey boolValue];
         if (!boolValue) {
             [self.tableView.mj_header endRefreshing];
+            if (!_shouldLoadMoreMessagesScrollToTop) {
+                self.tableView.mj_header = nil;
+            }
         }
     }
-}
-
-- (void)dealloc {
-    // KVO反注册
-    [self removeObserver:self forKeyPath:@"loadingMoreMessage"];
 }
 
 - (void)loadMoreMessagesScrollTotop {
@@ -137,14 +149,5 @@ static CGFloat const LCCKScrollViewInsetTop = 20.f;
     }
     return _chatBar;
 }
-
-#pragma mark - Previte Method
-
-//- (void)setIsUserScrolling:(BOOL)isUserScrolling {
-//    _isUserScrolling = isUserScrolling;
-//    if (isUserScrolling) {
-////        _allowScrollToBottom = NO;
-//    }
-//}
 
 @end

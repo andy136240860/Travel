@@ -2,19 +2,17 @@
 //  LCCKMessage.h
 //  LeanCloudChatKit-iOS
 //
-//  Created by 陈宜龙 on 16/3/21.
-//  Copyright © 2016年 ElonChan. All rights reserved.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) on 16/3/21.
+//  Copyright © 2016年 LeanCloud. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "LCCKConstants.h"
-#import "LCCKChatUntiles.h"
-#import "LCCKUserDelegate.h"
+#import "LCCKMessageDelegate.h"
 
 @class AVIMTypedMessage;
 
-@interface LCCKMessage : NSObject <NSCoding, NSCopying>
+@interface LCCKMessage : NSObject <NSCoding, NSCopying, LCCKMessageDelegate>
 
 @property (nonatomic, copy, readonly) NSString *text;
 @property (nonatomic, copy, readonly) NSString *systemText;
@@ -31,51 +29,42 @@
 @property (nonatomic, strong, readonly) NSURL *voiceURL;
 @property (nonatomic, copy, readonly) NSString *voiceDuration;
 
-@property (nonatomic, copy, readonly) NSString *emotionName;
-@property (nonatomic, copy, readonly) NSString *emotionPath;
+//@property (nonatomic, copy, readonly) NSString *emotionName;
+//@property (nonatomic, copy, readonly) NSString *emotionPath;
 
 @property (nonatomic, strong, readonly) UIImage *localPositionPhoto;
 @property (nonatomic, copy, readonly) NSString *geolocations;
 @property (nonatomic, strong, readonly) CLLocation *location;
 
-@property (nonatomic, strong) id<LCCKUserDelegate> user;
-/*!
- * 与 user 属性中 clientId 的区别在于，本属性永远不为空，但前者可能为空。
- */
-@property (nonatomic, copy) NSString *userId;
-
-@property (nonatomic, assign, readonly) NSTimeInterval timestamp;
-
-@property (nonatomic, assign, readonly) BOOL sended;
-
-@property (nonatomic, assign, readonly) LCCKMessageType messageMediaType;
-
-@property (nonatomic, assign) LCCKConversationType messageGroupType;
-
-@property (nonatomic, assign) LCCKMessageOwner bubbleMessageType;
-
+@property (nonatomic, assign, readonly) AVIMMessageMediaType mediaType;
+//@property (nonatomic, assign) LCCKConversationType messageGroupType;
 @property (nonatomic, assign, readonly) LCCKMessageReadState messageReadState;
-
-@property (nonatomic,assign) LCCKMessageSendState status;
-
-@property (nonatomic, assign, readonly) BOOL isRead;
-
+@property (nonatomic, copy, readonly) NSString *serverMessageId;
+@property (nonatomic, assign) NSTimeInterval timestamp;
 
 /*!
- * just for failed message store, not meaning messageId
+ * 有localMessageId且没有serviceMessageId的属于localMessage，其中
+ * systemMessage不属于localMessage，localFeedbackText属于。
  */
-@property (nonatomic, copy, readwrite) NSString *messageId;
+@property (nonatomic, assign, getter=isLocalMessage) BOOL localMessage;
+/*!
+ * just for failed message store, its value is always not same to serverMessageId. value is same to timestamp.
+ */
+@property (nonatomic, copy, readwrite) NSString *localMessageId;
 
-@property (nonatomic, copy, readwrite) NSString *conversationId;
+@property (nonatomic, copy, readonly) NSString *localDisplayName;
 
 - (instancetype)initWithText:(NSString *)text
-                      userId:(NSString *)userId
-                       user:(id<LCCKUserDelegate>)user
-                   timestamp:(NSTimeInterval)timestamp;
+                      senderId:(NSString *)senderId
+                       sender:(id<LCCKUserDelegate>)sender
+                   timestamp:(NSTimeInterval)timestamp
+             serverMessageId:(NSString *)serverMessageId;
 
 - (instancetype)initWithSystemText:(NSString *)text;
 + (instancetype)systemMessageWithTimestamp:(NSTimeInterval)timestamp;
-- (NSString *)getTimestampString;
+- (instancetype)initWithLocalFeedbackText:(NSString *)localFeedbackText;
++ (instancetype)localFeedbackText:(NSString *)localFeedbackText;
+
 /**
  *  初始化图片类型的消息
  *
@@ -93,9 +82,10 @@
                     photoPath:(NSString *)photoPath
                  thumbnailURL:(NSURL *)thumbnailURL
                originPhotoURL:(NSURL *)originPhotoURL
-                       userId:(NSString *)userId
-                       user:(id<LCCKUserDelegate>)user
-                    timestamp:(NSTimeInterval)timestamp;
+                       senderId:(NSString *)senderId
+                       sender:(id<LCCKUserDelegate>)sender
+                    timestamp:(NSTimeInterval)timestamp
+              serverMessageId:(NSString *)serverMessageId;
 
 /**
  *  初始化视频类型的消息
@@ -111,9 +101,10 @@
 - (instancetype)initWithVideoConverPhoto:(UIImage *)videoConverPhoto
                                videoPath:(NSString *)videoPath
                                 videoURL:(NSURL *)videoURL
-                                  userId:(NSString *)userId
-                                   user:(id<LCCKUserDelegate>)user
-                               timestamp:(NSTimeInterval)timestamp;
+                                  senderId:(NSString *)senderId
+                                   sender:(id<LCCKUserDelegate>)sender
+                               timestamp:(NSTimeInterval)timestamp
+                         serverMessageId:(NSString *)serverMessageId;
 
 /**
  *  初始化语音类型的消息
@@ -129,9 +120,10 @@
 - (instancetype)initWithVoicePath:(NSString *)voicePath
                          voiceURL:(NSURL *)voiceURL
                     voiceDuration:(NSString *)voiceDuration
-                           userId:(NSString *)userId
-                            user:(id<LCCKUserDelegate>)user
-                        timestamp:(NSTimeInterval)timestamp;
+                           senderId:(NSString *)senderId
+                            sender:(id<LCCKUserDelegate>)sender
+                        timestamp:(NSTimeInterval)timestamp
+                  serverMessageId:(NSString *)serverMessageId;
 
 /**
  *  初始化语音类型的消息。增加已读未读标记
@@ -141,26 +133,27 @@
  *  @param voiceDuration    目标语音的时长
  *  @param sender           发送者
  *  @param date             发送时间
- *  @param isRead           已读未读标记
+ *  @param hasRead           已读未读标记
  *
  *  @return 返回Message model 对象
  */
 - (instancetype)initWithVoicePath:(NSString *)voicePath
                          voiceURL:(NSURL *)voiceURL
                     voiceDuration:(NSString *)voiceDuration
-                           userId:(NSString *)userId
-                            user:(id<LCCKUserDelegate>)user
+                           senderId:(NSString *)senderId
+                            sender:(id<LCCKUserDelegate>)sender
                         timestamp:(NSTimeInterval)timestamp
-                           isRead:(BOOL)isRead;
+                           hasRead:(BOOL)hasRead
+                  serverMessageId:(NSString *)serverMessageId;
 
 - (instancetype)initWithLocalPositionPhoto:(UIImage *)localPositionPhoto
                               geolocations:(NSString *)geolocations
                                   location:(CLLocation *)location
-                                    userId:(NSString *)userId
-                                     user:(id<LCCKUserDelegate>)user
-                                 timestamp:(NSTimeInterval)timestamp;
-// 是否显示时间轴Label
-- (BOOL)shouldDisplayTimestampForMessages:(NSArray *)messages;
-+ (LCCKMessage *)messageWithAVIMTypedMessage:(AVIMTypedMessage *)message;
+                                    senderId:(NSString *)senderId
+                                     sender:(id<LCCKUserDelegate>)sender
+                                 timestamp:(NSTimeInterval)timestamp
+                           serverMessageId:(NSString *)serverMessageId;
+
++ (id)messageWithAVIMTypedMessage:(AVIMTypedMessage *)message;
 
 @end

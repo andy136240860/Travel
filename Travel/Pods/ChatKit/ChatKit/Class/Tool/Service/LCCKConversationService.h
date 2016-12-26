@@ -2,7 +2,7 @@
 //  LCCKConversationService.h
 //  LeanCloudChatKit-iOS
 //
-//  Created by ElonChan on 16/3/1.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) on 16/3/1.
 //  Copyright © 2016年 LeanCloud. All rights reserved.
 //
 
@@ -27,7 +27,7 @@ FOUNDATION_EXTERN NSString *const LCCKConversationServiceErrorDomain;
 @interface LCCKConversationService : LCCKSingleton <LCCKConversationService>
 
 /**
- *  当前正在聊天的 conversationId，当前不在聊天界面则为nil
+ *  当前正在聊天的 conversationId，当前不在聊天界面则为nil。如果想判断当前是否在对话页面，请判断该值是否为nil。
  */
 @property (nonatomic, strong) NSString *currentConversationId;
 
@@ -36,9 +36,12 @@ FOUNDATION_EXTERN NSString *const LCCKConversationServiceErrorDomain;
  */
 @property (nonatomic, strong) NSString *remoteNotificationConversationId;
 
-@property (nonatomic, strong) AVIMConversation *currentConversation;
+@property (nonatomic, assign, readonly, getter=isChatting) BOOL chatting;
 
-@property (nonatomic, assign, getter=isContactListViewControllerActivce) BOOL contactListViewControllerActivce;
+/*!
+ * 只要进过聊天页面，这个值总不为nil。当前不在聊天界面则为nil，这是因为考虑到可能会在对话页面，Present其它页面，比如联系人列表，需要用到currentConversation信息，所以如果想判断当前是否在对话页面，请判断currentConversationId是否为nil。
+ */
+@property (nonatomic, strong) AVIMConversation *currentConversation;
 
 /*!
  *  根据 conversationId 获取对话
@@ -46,6 +49,7 @@ FOUNDATION_EXTERN NSString *const LCCKConversationServiceErrorDomain;
  *  @param callback
  */
 - (void)fecthConversationWithConversationId:(NSString *)conversationId callback:(LCCKConversationResultBlock)callback;
+- (void)fetchConversationsWithConversationIds:(NSSet *)conversationIds callback:(LCCKArrayResultBlock)callback;
 
 /*!
  *  根据 peerId 获取对话,
@@ -55,10 +59,17 @@ FOUNDATION_EXTERN NSString *const LCCKConversationServiceErrorDomain;
  */
 - (void)fecthConversationWithPeerId:(NSString *)peerId callback:(LCCKConversationResultBlock)callback;
 
-- (void)sendMessage:(AVIMTypedMessage*)message conversation:(AVIMConversation *)conversation
+- (void)sendMessage:(AVIMTypedMessage*)message
+       conversation:(AVIMConversation *)conversation
       progressBlock:(AVProgressBlock)progressBlock
            callback:(LCCKBooleanResultBlock)block;
-- (void)sendWelcomeMessageToPeerId:(NSString *)peerId text:(NSString *)text block:(LCCKBooleanResultBlock)block;
+
+- (void)sendMessage:(AVIMTypedMessage*)message
+       conversation:(AVIMConversation *)conversation
+            options:(AVIMMessageSendOption)options
+      progressBlock:(AVProgressBlock)progressBlock
+           callback:(LCCKBooleanResultBlock)block;
+
 - (void)queryTypedMessagesWithConversation:(AVIMConversation *)conversation timestamp:(int64_t)timestamp limit:(NSInteger)limit block:(LCCKArrayResultBlock)block;
 
 /**
@@ -67,9 +78,11 @@ FOUNDATION_EXTERN NSString *const LCCKConversationServiceErrorDomain;
  */
 - (void)removeCacheForConversationId:(NSString *)conversationID;
 - (void)updateConversationAsRead;
-///--------------------------------------------------------------------------------------------
-///---------------------最近对话的本地缓存，最近对话将保存在本地数据库中-------------------------------
-///--------------------------------------------------------------------------------------------
+
+#pragma mark - 最近对话的本地缓存，最近对话将保存在本地数据库中
+///=============================================================================
+/// @name 最近对话的本地缓存，最近对话将保存在本地数据库中
+///=============================================================================
 
 /**
  *  会在 openClient 时调用
@@ -77,32 +90,35 @@ FOUNDATION_EXTERN NSString *const LCCKConversationServiceErrorDomain;
  */
 - (void)setupDatabaseWithUserId:(NSString *)userId;
 
-/**
- *  插入一条最近对话
- *  @param conversation
- */
-- (void)insertRecentConversation:(AVIMConversation *)conversation;
+- (void)insertRecentConversation:(AVIMConversation *)conversation shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished;
 
+- (void)increaseUnreadCount:(NSUInteger)increaseUnreadCount withConversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished;
 /**
  *  更新 mentioned 值，当接收到消息发现 @了我的时候，设为 YES，进入聊天页面，设为 NO
  *  @param mentioned  要更新的值
  *  @param conversation 相应对话
  */
 - (void)updateMentioned:(BOOL)mentioned conversationId:(NSString *)conversationId;
-
+- (void)updateMentioned:(BOOL)mentioned conversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished;
 /**
  *  更新 draft 值
  *  @param draft  要更新的值
  *  @param conversation 相应对话
  */
 - (void)updateDraft:(NSString *)draft conversationId:(NSString *)conversationId;
+- (void)updateDraft:(NSString *)draft conversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished;
 
 /**
  *  更新每条最近对话记录里的 conversation 值，也即某对话的名字、成员可能变了，需要更新应用打开时，第一次加载最近对话列表时，会去向服务器要对话的最新数据，然后更新
  *  @param conversations 要更新的对话
  */
 - (void)updateRecentConversation:(NSArray *)conversations;
+- (void)updateRecentConversation:(NSArray *)conversations shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished;
+- (void)increaseUnreadCountWithConversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished;
 
+- (void)deleteRecentConversationWithConversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished;
+- (void)updateUnreadCountToZeroWithConversationId:(NSString *)conversationId shouldRefreshWhenFinished:(BOOL)shouldRefreshWhenFinished;
+ 
 /**
  *  从数据库查找所有的对话，即所有的最近对话
  *  @return 对话数据
@@ -118,9 +134,10 @@ FOUNDATION_EXTERN NSString *const LCCKConversationServiceErrorDomain;
 
 - (NSString *)draftWithConversationId:(NSString *)conversationId;
 
-///---------------------------------------------------------------------
-///---------------------FailedMessageStore-------------------------------
-///---------------------------------------------------------------------
+#pragma mark - FailedMessageStore
+///=============================================================================
+/// @name FailedMessageStore
+///=============================================================================
 
 /*!
  *  失败消息的管理类，职责：

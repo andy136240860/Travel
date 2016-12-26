@@ -3,7 +3,7 @@
 //
 //  Version 1.3.2
 //
-//  Created by Nick Lockwood on 03/09/2010.
+//  v0.8.5 Created by Nick Lockwood on 03/09/2010.
 //  Copyright 2010 Charcoal Design
 //
 //  Distributed under the permissive zlib License
@@ -40,7 +40,11 @@
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wselector"
 #pragma GCC diagnostic ignored "-Wgnu"
+#if __has_include(<Masonry/Masonry.h>)
+#import <Masonry/Masonry.h>
+#else
 #import "Masonry.h"
+#endif
 
 
 #import <Availability.h>
@@ -141,12 +145,7 @@
         [self reloadData];
     }
 }
-//- (void)updateConstraints {
-//    [super updateConstraints];
-//    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.mas_equalTo(self);
-//    }];
-//}
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if ((self = [super initWithCoder:aDecoder]))

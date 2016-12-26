@@ -2,7 +2,7 @@
 //  LCCKChatFaceView.m
 //  LCCKChatBarExample
 //
-//  Created by ElonChan ( https://github.com/leancloud/ChatKit-OC ) on 15/8/21.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) ( https://github.com/leancloud/ChatKit-OC ) on 15/8/21.
 //  Copyright (c) 2015年 https://LeanCloud.cn . All rights reserved.
 //
 
@@ -11,7 +11,11 @@
 #import "LCCKSwipeView.h"
 #import "LCCKFacePageView.h"
 #import "UIImage+LCCKExtension.h"
+#if __has_include(<Masonry/Masonry.h>)
+#import <Masonry/Masonry.h>
+#else
 #import "Masonry.h"
+#endif
 
 @interface LCCKChatFaceView ()<UIScrollViewDelegate,LCCKSwipeViewDelegate,LCCKSwipeViewDataSource,LCCKFacePageViewDelegate>
 
@@ -84,22 +88,19 @@
 }
 
 #pragma mark - Private Methods
-- (void)updateConstraints {
-    [super updateConstraints];
-    //WithFrame:CGRectMake(0, 10, self.frame.size.width, self.frame.size.height - 60)];
+- (void)setupConstraints {
+//    [super updateConstraints];
     [self.swipeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.width.mas_equalTo(self);
-        make.bottom.mas_equalTo(self).offset(-60);
+        make.bottom.mas_equalTo(self).offset(-40);
         make.top.mas_equalTo(self);
     }];
-    //WithFrame:CGRectMake(0, self.swipeView.frame.size.height, self.frame.size.width, 20)];
     [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.width.mas_equalTo(self);
-        make.top.mas_equalTo(self.swipeView.mas_bottom);
-        make.height.mas_equalTo(20);
+        make.bottom.mas_equalTo(self.swipeView.mas_bottom);
+        make.height.mas_equalTo(10);
     }];
     
-    //WithFrame:CGRectMake(0, self.frame.size.height - 40, self.frame.size.width, 40)];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.width.and.bottom.mas_equalTo(self);
         make.height.mas_equalTo(40);
@@ -122,9 +123,7 @@
     self.faceViewType = LCCKShowEmojiFace;
     [self setupFaceView];
     self.userInteractionEnabled = YES;
-    
-    [self updateConstraintsIfNeeded];
-    [self layoutIfNeeded];
+    [self setupConstraints];
 }
 
 - (void)setupFaceView {
@@ -147,16 +146,17 @@
     self.pageCount = 1;
     [self.faceArray removeAllObjects];
     [self.faceArray addObjectsFromArray:[LCCKFaceManager recentFaces]];
-    
 }
 
 /**
  *  初始化所有的emoji表情数组,添加删除按钮
  */
 - (void)setupEmojiFaces{
-    
-    self.maxRows = 3;
-    self.columnPerRow = self.frame.size.width > 320 ? 8 : 7;
+    CGFloat width = [UIApplication sharedApplication].keyWindow.frame.size.width;
+    CGFloat height = [UIApplication sharedApplication].keyWindow.frame.size.height;
+
+    self.maxRows =  height > 480 ? 3 : 4;
+    self.columnPerRow = width > 320 ? 8 : 7;
     
     //计算每一页最多显示多少个表情  - 1(删除按钮)
     NSInteger pageItemCount = self.itemsPerPage - 1;
@@ -212,7 +212,7 @@
 
 - (LCCKSwipeView *)swipeView {
     if (!_swipeView) {
-        _swipeView = [[LCCKSwipeView alloc] init];//WithFrame:CGRectMake(0, 10, self.frame.size.width, self.frame.size.height - 60)];
+        _swipeView = [[LCCKSwipeView alloc] init];
         _swipeView.delegate = self;
         _swipeView.dataSource = self;
     }
@@ -221,7 +221,7 @@
 
 - (UIPageControl *)pageControl{
     if (!_pageControl) {
-        _pageControl = [[UIPageControl alloc] init];//WithFrame:CGRectMake(0, self.swipeView.frame.size.height, self.frame.size.width, 20)];
+        _pageControl = [[UIPageControl alloc] init];
         _pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
         _pageControl.currentPageIndicatorTintColor = [UIColor darkGrayColor];
         _pageControl.hidesForSinglePage = YES;

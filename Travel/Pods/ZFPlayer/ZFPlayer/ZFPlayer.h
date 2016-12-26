@@ -25,7 +25,7 @@
 // 监听TableView的contentOffset
 #define kZFPlayerViewContentOffset          @"contentOffset"
 // player的单例
-#define ZFPlayerShared                      [ZFBrightnessView sharedBrightnesView]
+#define ZFPlayerShared                      [ZFBrightnessView sharedBrightnessView]
 // 屏幕的宽
 #define ScreenWidth                         [[UIScreen mainScreen] bounds].size.width
 // 屏幕的高
@@ -35,8 +35,22 @@
 // 图片路径
 #define ZFPlayerSrcName(file)               [@"ZFPlayer.bundle" stringByAppendingPathComponent:file]
 
+#define ZFPlayerFrameworkSrcName(file)      [@"Frameworks/ZFPlayer.framework/ZFPlayer.bundle" stringByAppendingPathComponent:file]
+
+#define ZFPlayerImage(file)                 [UIImage imageNamed:ZFPlayerSrcName(file)] ? :[UIImage imageNamed:ZFPlayerFrameworkSrcName(file)]
+
+#define ZFPlayerOrientationIsLandscape      UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)
+
+#define ZFPlayerOrientationIsPortrait       UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)
+
+
 #import "ZFPlayerView.h"
+#import "ZFPlayerModel.h"
 #import "ZFPlayerControlView.h"
 #import "ZFBrightnessView.h"
-#import "ZFDownloadManager.h"
+#import "UITabBarController+ZFPlayerRotation.h"
+#import "UIViewController+ZFPlayerRotation.h"
+#import "UINavigationController+ZFPlayerRotation.h"
+#import "UIImageView+ZFCache.h"
+#import "ZFPlayerControlViewDelegate.h"
 #import <Masonry/Masonry.h>

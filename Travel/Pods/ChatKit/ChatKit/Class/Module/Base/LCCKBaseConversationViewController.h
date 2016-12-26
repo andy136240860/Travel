@@ -2,13 +2,13 @@
 //  LCCKBaseConversationViewController.h
 //  LeanCloudChatKit-iOS
 //
-//  Created by 陈宜龙 on 16/3/21.
-//  Copyright © 2016年 ElonChan. All rights reserved.
+//  v0.8.5 Created by ElonChan (微信向我报BUG:chenyilong1010) on 16/3/21.
+//  Copyright © 2016年 ElonChan (wechat:chenyilong1010). All rights reserved.
 //
 
-#import "LCCKChatBar.h"
-#import "LCCKConversationViewModel.h"
 #import "LCCKBaseTableViewController.h"
+
+@class LCCKChatBar, LCCKConversationViewModel;
 
 @interface LCCKBaseConversationViewController : LCCKBaseTableViewController
 
@@ -24,6 +24,11 @@
  *  @return 返回BOOL值，判定是否拥有这个功能
  */
 @property (nonatomic, assign) BOOL shouldLoadMoreMessagesScrollToTop;
+
+/*!
+ * 发送消息时，会置YES
+ * 输入框高度变更，比如输入文字换行、切换到 More、Face 页面、键盘弹出、键盘收缩
+ */
 @property (nonatomic, assign) BOOL allowScrollToBottom;
 //somewhere in the header
 @property (nonatomic, assign) CGFloat tableViewLastContentOffset;
