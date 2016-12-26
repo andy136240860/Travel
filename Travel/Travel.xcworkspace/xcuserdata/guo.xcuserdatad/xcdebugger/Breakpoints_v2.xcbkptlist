@@ -83,13 +83,13 @@
                   symbolName = "-[RegisterAccountVC nextButtonAction]"
                   moduleName = "Travel"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/guo/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/ZXTravel/Travel/Travel/Controller/Login/RegisterAccountVC.m"
-                  timestampString = "501401409.229422"
+                  urlString = "file:///Users/guo/Documents/ZXTravel/Travel/Travel/Controller/Login/RegisterAccountVC.m"
+                  timestampString = "504454526.520504"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "206"
                   endingLineNumber = "206"
-                  offsetFromSymbolStart = "292">
+                  offsetFromSymbolStart = "380">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -98,13 +98,13 @@
                   symbolName = "__37-[RegisterAccountVC nextButtonAction]_block_invoke"
                   moduleName = "Travel"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/guo/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/ZXTravel/Travel/Travel/Controller/Login/RegisterAccountVC.m"
-                  timestampString = "501401409.23383"
+                  urlString = "file:///Users/guo/Documents/ZXTravel/Travel/Travel/Controller/Login/RegisterAccountVC.m"
+                  timestampString = "504454526.523109"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "207"
                   endingLineNumber = "207"
-                  offsetFromSymbolStart = "58">
+                  offsetFromSymbolStart = "40">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -419,7 +419,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "45"
             endingLineNumber = "45"
-            landmarkName = "+saveTravelTogetherPrivate:withBlock:"
+            landmarkName = "+publishTravelTogether:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -435,7 +435,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "76"
             endingLineNumber = "76"
-            landmarkName = "+sendStatusToFollowersWithData:context:block:"
+            landmarkName = "+getALLStatuswithPage:pageSize:minDataTimestamp:block:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

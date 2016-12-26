@@ -85,7 +85,7 @@
     _headerView.title = _travelTogether.title;
 //    _headerView.subTitle =
     _headerView.avatarImageURL = _travelTogether.publisher.avatarURL;
-    _headerView.backgroundImageURL = _travelTogether.headerViewBackgroundImageURL;
+    _headerView.backgroundImageURL = _travelTogether.coverImageURL;
     
     _travelTiTleAndDetailView.title = @"成都周边的一日游有什么比较漂亮的景点可以玩？";
     _travelTiTleAndDetailView.time = @"2016.08.16 19:23";

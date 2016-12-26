@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, HomeCellType) {
 @property                   HomeCellType    homeCellType;
 @property (copy, nonatomic) NSString        *avatarURL;    //头像地址
 @property (copy, nonatomic) NSString        *username;     //头像名称
-@property (copy, nonatomic) NSString        *timeInterval;  //记录时间戳
+@property (assign, nonatomic) NSTimeInterval  timeInterval;  //记录时间戳
 @property (copy, nonatomic) NSString        *title;        //cell里显示的文字， 一般只有一个文字段， type 0 2 就都用这个了
 //图片组
 @property (copy, nonatomic) NSArray         *contentImageURLArray;  // type 0 2 的图片URL数组

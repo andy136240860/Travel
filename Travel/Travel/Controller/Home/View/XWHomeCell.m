@@ -14,7 +14,7 @@
 #import "XWImageShowView.h"
 #import "CommentCell.h"
 #import "CommentModel.h"
-#import "UITableViewCell+HYBMasonryAutoCellHeight.h"
+//#import "UITableViewCell+HYBMasonryAutoCellHeight.h"
 @interface XWHomeCell ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic) UIView  *headerIntervalView;
@@ -83,6 +83,7 @@
     titleLabel.font = [UIFont systemFontOfSize:14];
     titleLabel.numberOfLines = 0;
     [self.contentView addSubview:titleLabel];
+    titleLabel.preferredMaxLayoutWidth = kScreenWidth - 20;
     self.titleLabel = titleLabel;
     
     XWImageShowView *contentDetailViewForImage = [[XWImageShowView alloc]init];
@@ -109,8 +110,8 @@
     self.tableView.scrollEnabled = NO;
     [self.contentView addSubview:self.tableView];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.hyb_lastViewInCell = self.tableView;
-    self.hyb_bottomOffsetToCell = 0.0;
+//    self.hyb_lastViewInCell = self.tableView;
+//    self.hyb_bottomOffsetToCell = 0.0;
 }
 
 #pragma mark - 在此方法内使用 Masonry 设置控件的约束,设置约束不需要在layoutSubviews中设置，只需要在初始化的时候设置
@@ -198,19 +199,10 @@
     
     [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:feed.avatarURL]];
     self.userLabel.text = feed.username;
-    self.userLabel.text = @"14-津-机械-薛玮";
     
     self.titleLabel.text = feed.title;
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:14.0]};
-    CGFloat h = [feed.title boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 20, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size.height;
-    [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.avatarImageView.mas_left);
-        make.top.mas_equalTo(self.avatarImageView.mas_bottom).offset(20);
-        make.width.mas_equalTo(self.contentView.mas_width).offset(-20);
-        make.height.mas_equalTo(h);
-    }];
     
-    self.timeLabel.text = [NSDate convertDateIntervalToStringWith:feed.timeInterval];
+    self.timeLabel.text = [NSDate convertDateIntervalToStringWith:[NSString stringWithFormat:@"%lf",feed.timeInterval]];
     
     //图片九宫格
     self.contentDetailViewForImage.imageURLArray = feed.contentImageURLArray;
@@ -226,18 +218,18 @@
     
     //评论
     CGFloat tableViewHeight = 0;
-    for (CommentModel *commentModel in _feed.commentModelArray) {
-        CGFloat cellHeight = [CommentCell hyb_heightForTableView:self.tableView config:^(UITableViewCell *sourceCell) {
-            CommentCell *cell = (CommentCell *)sourceCell;
-            [cell configCellWithModel:commentModel];
-        } cache:^NSDictionary *{
-            return @{kHYBCacheUniqueKey : commentModel.commentId,
-                     kHYBCacheStateKey : @"",
-                     kHYBRecalculateForStateKey : @(YES)};
-        }];
-        tableViewHeight += cellHeight;
-    }
-    
+//    for (CommentModel *commentModel in _feed.commentModelArray) {
+//        CGFloat cellHeight = [CommentCell hyb_heightForTableView:self.tableView config:^(UITableViewCell *sourceCell) {
+//            CommentCell *cell = (CommentCell *)sourceCell;
+//            [cell configCellWithModel:commentModel];
+//        } cache:^NSDictionary *{
+//            return @{kHYBCacheUniqueKey : commentModel.commentId,
+//                     kHYBCacheStateKey : @"",
+//                     kHYBRecalculateForStateKey : @(YES)};
+//        }];
+//        tableViewHeight += cellHeight;
+//    }
+//    
     [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(tableViewHeight);
     }];
@@ -264,45 +256,45 @@
     return self.feed.commentModelArray.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CommentModel *model = [self.feed.commentModelArray objectAtIndex:indexPath.row];
-    CGFloat cell_height = [CommentCell hyb_heightForTableView:self.tableView config:^(UITableViewCell *sourceCell) {
-        CommentCell *cell = (CommentCell *)sourceCell;
-        [cell configCellWithModel:model];
-    } cache:^NSDictionary *{
-        NSDictionary *cache = @{kHYBCacheUniqueKey : model.commentId,
-                                kHYBCacheStateKey : @"",
-                                kHYBRecalculateForStateKey : @(NO)};
-        return cache;
-    }];
-    return cell_height;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.indexPath = indexPath;
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    CommentModel *commentModel = [self.feed.commentModelArray objectAtIndex:indexPath.row];
-    CGFloat cell_height = [CommentCell hyb_heightForTableView:self.tableView config:^(UITableViewCell *sourceCell) {
-        CommentCell *cell = (CommentCell *)sourceCell;
-
-
-
-        [cell configCellWithModel:commentModel];
-    } cache:^NSDictionary *{
-        NSDictionary *cache = @{kHYBCacheUniqueKey : commentModel.commentId,
-                                kHYBCacheStateKey : @"",
-                                kHYBRecalculateForStateKey : @(NO)};
-        return cache;
-    }];
-
-
-    if ([self.delegate respondsToSelector:@selector(passCellHeightWithMessageModel:commentModel:atCommentIndexPath:cellHeight:commentCell:messageCell:)]) {
-//        self.feed.shouldUpdateCache = YES;
-        CommentCell *commetCell =  (CommentCell *)[tableView cellForRowAtIndexPath:indexPath];
-        [self.delegate passCellHeightWithMessageModel:_messageModel commentModel:commentModel atCommentIndexPath:indexPath cellHeight:cell_height commentCell:commetCell messageCell:self];
-    }
-    
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    CommentModel *model = [self.feed.commentModelArray objectAtIndex:indexPath.row];
+//    CGFloat cell_height = [CommentCell hyb_heightForTableView:self.tableView config:^(UITableViewCell *sourceCell) {
+//        CommentCell *cell = (CommentCell *)sourceCell;
+//        [cell configCellWithModel:model];
+//    } cache:^NSDictionary *{
+//        NSDictionary *cache = @{kHYBCacheUniqueKey : model.commentId,
+//                                kHYBCacheStateKey : @"",
+//                                kHYBRecalculateForStateKey : @(NO)};
+//        return cache;
+//    }];
+//    return cell_height;
+//}
+//
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    self.indexPath = indexPath;
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    CommentModel *commentModel = [self.feed.commentModelArray objectAtIndex:indexPath.row];
+//    CGFloat cell_height = [CommentCell hyb_heightForTableView:self.tableView config:^(UITableViewCell *sourceCell) {
+//        CommentCell *cell = (CommentCell *)sourceCell;
+//
+//
+//
+//        [cell configCellWithModel:commentModel];
+//    } cache:^NSDictionary *{
+//        NSDictionary *cache = @{kHYBCacheUniqueKey : commentModel.commentId,
+//                                kHYBCacheStateKey : @"",
+//                                kHYBRecalculateForStateKey : @(NO)};
+//        return cache;
+//    }];
+//
+//
+//    if ([self.delegate respondsToSelector:@selector(passCellHeightWithMessageModel:commentModel:atCommentIndexPath:cellHeight:commentCell:messageCell:)]) {
+////        self.feed.shouldUpdateCache = YES;
+//        CommentCell *commetCell =  (CommentCell *)[tableView cellForRowAtIndexPath:indexPath];
+//        [self.delegate passCellHeightWithMessageModel:_messageModel commentModel:commentModel atCommentIndexPath:indexPath cellHeight:cell_height commentCell:commetCell messageCell:self];
+//    }
+//    
+//}
 
 
 

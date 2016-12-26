@@ -29,7 +29,7 @@
         self.homeCellType = 0;
         self.avatarURL = @"http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDLxM_tmwEQrAIY-gEyCJ4f3nX5Lepz";
         self.username = dictionary[@"username"];
-        self.timeInterval = @"1468826426";
+        self.timeInterval = 1468826426;
         self.title = dictionary[@"content"];
         
         self.contentImageURLArray = @[@"http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDLxM_tmwEQrAIY-gEyCJ4f3nX5Lepz",@"http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDLxM_tmwEQrAIY-gEyCJ4f3nX5Lepz",@"http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDLxM_tmwEQrAIY-gEyCJ4f3nX5Lepz",@"http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDLxM_tmwEQrAIY-gEyCJ4f3nX5Lepz"];

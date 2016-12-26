@@ -14,18 +14,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    XWUser *user = [XWUser currentUser];
-    
-    AVQuery *query = [AVQuery queryWithClassName:@"TravelTogether"];
-    
-    [query whereKey:@"TravelTogetherCompanions" equalTo:user];
-//    [query includeKey:@"TravelTogetherCompanions"];
-    
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            
-        }
-    }];
+//    XWUser *user = [XWUser currentUser];
+//    
+//    AVQuery *query = [AVQuery queryWithClassName:@"TravelTogether"];
+//    
+//    [query whereKey:@"TravelTogetherCompanions" equalTo:user];
+////    [query includeKey:@"TravelTogetherCompanions"];
+//    
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if (!error) {
+//            
+//        }
+//    }];
     
 }
 

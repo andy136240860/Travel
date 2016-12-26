@@ -21,12 +21,29 @@
 @dynamic profession;  //职业
 @dynamic selfIntroduction; //自我介绍
 @dynamic signature; //个性签名
-@dynamic privateTravelData;
-@dynamic publishedTravelData;
+@dynamic privateTravelData_TravelTogether;
+@dynamic publishedTravelData_TravelTogether;
+
+
+- (NSString *)displayName {
+    return self.nickName.length == 0? self.username:self.nickName;
+}
 
 
 + (NSString *)parseClassName {
     return @"_User";
+}
+
+- (BOOL)isEqualtoUser:(XWUser *)user {
+    if ([user isKindOfClass:[XWUser class]] && [self isKindOfClass:[XWUser class]]) {
+        if ([self.objectId isEqualToString:user.objectId] && self.objectId.length > 0) {
+            return YES;
+        }
+        else {
+            return NO;
+        }
+    }
+    else return NO;
 }
 
 //+ (void)logInWithUsernameInBackground:(NSString *)username

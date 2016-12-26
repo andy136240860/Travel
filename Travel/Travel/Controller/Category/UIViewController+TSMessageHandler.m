@@ -18,6 +18,14 @@
     [TSMessage showNotificationWithTitle:title type:TSMessageNotificationTypeError];
 }
 
+- (void)showSuccessWithTitle:(NSString *)title{
+    [TSMessage showNotificationWithTitle:title type:TSMessageNotificationTypeSuccess];
+}
+
+- (void)showMessageWithTitle:(NSString *)title{
+    [TSMessage showNotificationWithTitle:title type:TSMessageNotificationTypeMessage];
+}
+
 - (void)showMessageWithTitle:(NSString *)title type:(TSMessageNotificationType)type{
     [TSMessage showNotificationWithTitle:title type:type];
 }

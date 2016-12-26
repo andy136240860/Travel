@@ -26,8 +26,9 @@
 @property (nonatomic, strong) NSString *selfIntroduction; //自我介绍
 @property (nonatomic, strong) NSString *signature; //个性签名
 
-@property (retain) AVRelation *privateTravelData; //保存在自己账户的数据， 比如一起旅行，旅行详情等等
-@property (retain) AVRelation *publishedTravelData; //保存在自己账户的数据， 比如一起旅行，旅行详情等等
-+ (NSString *)parseClassName;
+@property (retain) AVRelation *privateTravelData_TravelTogether; //保存在自己账户的数据， 比如一起旅行
+@property (retain) AVRelation *publishedTravelData_TravelTogether; //保存在自己账户的数据， 比如一起旅行
 
+- (NSString *)displayName;
+- (BOOL)isEqualtoUser:(XWUser *)user;
 @end

@@ -59,7 +59,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"朋友圈";
-    self.navigationController.navigationBar.barTintColor = kGreenColor;
+    self.navigationController.navigationBar.barTintColor = kAppStyleColor;
     self.navigationController.navigationBar.translucent = NO;
     
     self.tableView = [[UITableView alloc]initWithFrame:self.contentView.bounds style:UITableViewStylePlain];
@@ -156,12 +156,13 @@
         NSURL *videoURL = [NSURL URLWithString:weakCell.feed.contentVideoURL];
         
         // 设置player相关参数(需要设置imageView的tag值，此处设置的为101)
-        [weakSelf.playerView setVideoURL:videoURL
-                           withTableView:weakSelf.tableView
-                             AtIndexPath:weakIndexPath
-                        withImageViewTag:101];
-        [weakSelf.playerView addPlayerToCellImageView:weakCell.picView];
-        
+//        [weakSelf.playerView ]
+//        [weakSelf.playerView setVideoURL:videoURL
+//                           withTableView:weakSelf.tableView
+//                             AtIndexPath:weakIndexPath
+//                        withImageViewTag:101];
+//        [weakSelf.playerView addPlayerToCellImageView:weakCell.picView];
+//        
         // 下载功能
         weakSelf.playerView.hasDownload   = YES;
         // 赋值分辨率字典

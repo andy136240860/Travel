@@ -133,8 +133,8 @@
 
 - (void)setTravelTogether:(TravelTogether *)travelTogether {
     _travelTogether = travelTogether;
-    NSString *text = self.travelTogether.destinatin.length > 0 ? self.travelTogether.destinatin:@"未选择";
-    self.detailTextLabel.text = text;
+//    NSString *text = self.travelTogether.destination.latitude == 0  ? self.travelTogether.destination:@"未选择";
+//    self.detailTextLabel.text = text;
 }
 
 @end

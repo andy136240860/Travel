@@ -8,34 +8,20 @@
 
 #import "XWTravelPublishManager.h"
 #import "MBProgressHUD.h"
+#import "XWBaseListModel.h"
 
 @implementation XWTravelPublishManager
 
 + (void)saveTravelTogetherPrivate:(TravelTogetherPrivate *)travelTogetherPrivate withBlock:(AVBooleanResultBlock)block {
-    TravelTogetherPrivate *object = [TravelTogetherPrivate objectWithClassName:MainDataPrivateClassName];
-    object.travelDataType = TravelDataTravelTogether;
-    object.title = travelTogetherPrivate.title;
-    object.destinatin = travelTogetherPrivate.destinatin;
-    object.startTime = travelTogetherPrivate.startTime;
-    object.endTime = travelTogetherPrivate.endTime;
-    object.peopleNumber = travelTogetherPrivate.peopleNumber;
-    object.peopleNumberCanExceed = travelTogetherPrivate.peopleNumberCanExceed;
-    object.price = travelTogetherPrivate.price;
-    object.priceType = travelTogetherPrivate.priceType;
-    object.traffic = travelTogetherPrivate.traffic;
-    object.language = travelTogetherPrivate.language;
-    object.detail = travelTogetherPrivate.detail;
-    XWUser *user = [XWUser currentUser];
-    //    object.TravelTogetherCompanions = [object relationForKey:@"TravelTogetherCompanions"];
-    [object.TravelTogetherCompanions addObject:user];
-    //    object.TravelTogetherGuides = [object relationForKey:@"TravelTogetherGuides"];
-    [object.TravelTogetherGuides addObject:user];
+    XWUser *user = [XWUser currentUser];;
+    [travelTogetherPrivate.TravelTogetherCompanions addObject:user];
+    [travelTogetherPrivate.TravelTogetherGuides addObject:user];
     
 
     if ([user isAuthenticated]) {
-        [object saveEventually:^(BOOL succeeded, NSError *error) {
+        [travelTogetherPrivate saveEventually:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
-                [user.privateTravelData addObject:object];
+                [user.privateTravelData_TravelTogether addObject:travelTogetherPrivate];
                 [user saveEventually];
             }
             block(succeeded,error);
@@ -53,8 +39,9 @@
     [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             XWUser *user = [XWUser currentUser];
-            [user.privateTravelData removeObject:travelTogether];
-            [user.publishedTravelData addObject:object];
+            [user.privateTravelData_TravelTogether removeObject:travelTogether];
+            [travelTogether deleteInBackground];
+            [user.publishedTravelData_TravelTogether addObject:object];
             [user saveEventually];
         }
         block(succeeded,error,object);
@@ -67,8 +54,10 @@
         [[self class] publishTravelTogether:travelTogetherPrivate withBlock:^(BOOL succeeded, NSError *error, TravelTogether *travelTogether) {
             if (succeeded) {
                 AVStatus *status=[[AVStatus alloc] init];
-
-                status.data= @{@"dataSource":@{@"__type":@"Pointer",@"className":MainDataClassName,@"objectId":travelTogether.objectId},@"TravelDataType":@(TravelDataTravelTogether)};
+                status.data= @{dataSourceTravelTogether:@{__type:Pointer,className:NSStringFromClass([TravelTogether class]),objectId:travelTogether.objectId},
+                               @"TravelDataType":@(TravelDataTravelTogether),
+                                   contentText:context
+                               };
 
                 [AVStatus sendStatusToFollowers:status andCallback:^(BOOL succeeded, NSError *error) {
                     NSLog(@"============ Send %@", [status debugDescription]);
@@ -79,6 +68,49 @@
     if ([data isMemberOfClass:[TravelTogether class]]) {
 
     }
+}
+
++ (void)getALLStatuswithPage:(NSUInteger)page pageSize:(NSUInteger)pageSize minDataTimestamp:(NSUInteger)minDataTimestamp block:(XWServerAPIBlock)block {
+    AVQuery *query = [AVQuery queryWithClassName:@"_Status"];
+    [query orderByDescending:@"createdAt"];
+    query.limit = pageSize;
+    [query includeKey:dataSourceTravelTogether];
+    [query includeKey:@"dataSourceTravelTogether.publisher"];
+    [query includeKey:source];
+    if (minDataTimestamp) {
+        [query whereKey:@"createdAt" lessThanOrEqualTo:[NSDate dateWithTimeIntervalSince1970:minDataTimestamp]];
+    }
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        SNServerAPIResultData *result = [[SNServerAPIResultData alloc]init];
+        result.hasError = error;
+        result.error = error;
+        if (!result.hasError) {
+//            for (AVObject *object in objects) {
+//                TravelDataType travelDataType = [[object objectForKey:@"TravelDataType"] integerValue];
+//                AVRelation *commendedUser = [object objectForKey:@"commendedUser"];
+//                TravelTogether
+//                if (travelDataType == TravelDataTravelTogether) {
+//                    AVQuery *query = [[AVQuery alloc]initWithClassName:NSStringFromClass([TravelTogether class])];
+//                    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+//                        for (objects; <#condition#>; <#increment#>) {
+//                            <#statements#>
+//                        }
+//                    }]
+//                }
+//                
+//                
+//            }
+
+            XWBaseListModel *list = [[XWBaseListModel alloc]init];
+            list.items = [NSMutableArray arrayWithArray:objects];
+            result.responseAVObjects = objects;
+            result.parsedModelObject = list;
+            block(nil,result);
+        }
+        else {
+            block(nil,result);
+        }
+    }];
 }
 
 @end

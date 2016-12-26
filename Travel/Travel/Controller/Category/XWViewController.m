@@ -37,7 +37,7 @@
 
 - (void)addContentView
 {
-    self.content = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.content = [[UIView alloc] initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
     self.content.frameHeight -= Height_NavigationBar;
     [self.view addSubview:self.content];
 //    self.content.backgroundColor = UIColorFromHex(Color_Hex_ContentViewBackground);

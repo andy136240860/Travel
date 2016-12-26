@@ -11,7 +11,7 @@
 #import "XWHomeModel.h"
 #import "XWHomeCell.h"
 #import "Masonry.h"
-#import "UITableViewCell+HYBMasonryAutoCellHeight.h"
+//#import "UITableViewCell+HYBMasonryAutoCellHeight.h"
 
 
 @interface CommentCell ()
@@ -37,8 +37,8 @@
         }];
         
         
-        self.hyb_lastViewInCell = self.contentLabel;
-        self.hyb_bottomOffsetToCell = 3.0;//cell底部距离为3.0个间隙
+//        self.hyb_lastViewInCell = self.contentLabel;
+//        self.hyb_bottomOffsetToCell = 3.0;//cell底部距离为3.0个间隙
     }
     
     return self;

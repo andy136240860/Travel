@@ -12,7 +12,11 @@
 
 #import "MeViewController.h"
 #import "HomeViewController.h"
+#import "SRListModel.h"
+#import "SRListVC.h"
+
 #import "EditTravelTogetherVC.h"
+
 #define RGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define kOneUnitForPublish kScreenWidth/6.9282032302756f * 1.2
 
@@ -35,25 +39,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 添加子控制器
-    HomeViewController *asdkHomeFeedVC      = [[HomeViewController alloc] init];
-    UINavigationController *asdkHomeFeedNavCtrl  = [[UINavigationController alloc] initWithRootViewController:asdkHomeFeedVC];
-    asdkHomeFeedNavCtrl.tabBarItem               = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"tabbar_home_nor"] tag:0];
+    HomeViewController *vc0 = [[HomeViewController alloc] init];
+    UINavigationController *ctrl0  = [[UINavigationController alloc] initWithRootViewController:vc0];
+    vc0.tabBarItem               = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"tabbar_home_nor"] tag:0];
     
-    // ASDK Home Feed viewController & navController
-    MeViewController *uikitHomeFeedVC     = [[MeViewController alloc] init];
-    UINavigationController *uikitHomeFeedNavCtrl = [[UINavigationController alloc] initWithRootViewController:uikitHomeFeedVC];
-    uikitHomeFeedNavCtrl.tabBarItem              = [[UITabBarItem alloc] initWithTitle:@"我" image:[UIImage imageNamed:@"tabbar_home_nor"] tag:1];
+    SRListModel *listModel2 = [[SRListModel alloc]init];
+    SRListVC *vc2 = [[SRListVC alloc] initWithPageName:NSStringFromClass([SRListVC class]) listModel:listModel2];
+    UINavigationController *ctrl2 = [[UINavigationController alloc] initWithRootViewController:vc2];
+    ctrl2.tabBarItem              = [[UITabBarItem alloc] initWithTitle:@"S%R" image:[UIImage imageNamed:@"tabbar_home_nor"] tag:2];
+    
+    MeViewController *vc3 = [[MeViewController alloc] init];
+    UINavigationController *ctrl3 = [[UINavigationController alloc] initWithRootViewController:vc3];
+    vc3.tabBarItem              = [[UITabBarItem alloc] initWithTitle:@"我" image:[UIImage imageNamed:@"tabbar_home_nor"] tag:3];
     
     // UITabBarController
-    self.viewControllers             = @[uikitHomeFeedNavCtrl, asdkHomeFeedNavCtrl,uikitHomeFeedNavCtrl,uikitHomeFeedNavCtrl];
-    self.selectedViewController      = asdkHomeFeedNavCtrl;
-    [[UITabBar appearance] setTintColor:kGreenColor];
+    self.viewControllers             = @[ctrl0, ctrl2,ctrl3];
+    self.selectedViewController      = ctrl3;
+    [[UITabBar appearance] setTintColor:kAppStyleColor];
     
     XWTabBar *tabBar = [[XWTabBar alloc] init];
     tabBar.delegate = self;
     // KVC：如果要修系统的某些属性，但被设为readOnly，就是用KVC，即setValue：forKey：。
     [self setValue:tabBar forKey:@"tabBar"];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 /**

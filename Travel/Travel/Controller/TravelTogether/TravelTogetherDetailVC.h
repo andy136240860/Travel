@@ -6,11 +6,13 @@
 //  Copyright © 2016年 li na. All rights reserved.
 //
 
-#import "XWViewController.h"
+#import "XWListController.h"
 #import "Travel.h"
+#import "TravelTogetherDetailListModel.h"
 
-@interface TravelTogetherDetailVC : XWViewController
+@interface TravelTogetherDetailVC : XWListController
 
+@property (nonatomic, strong) TravelTogetherDetailListModel *listModel;
 @property (nonatomic, strong) TravelTogetherPrivate *travelTogether;
 
 @end

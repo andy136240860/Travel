@@ -8,6 +8,7 @@
 
 @interface UIViewController (Login)
 
+- (void)loginAction;
 - (void)pushViewControllerWithVerifyLogin:(UIViewController *)viewController animated:(BOOL)animated;
 
 @end

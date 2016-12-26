@@ -25,4 +25,10 @@
 
 }
 
+- (void)loginAction {
+    LoginOrRegisterVC *loginVC = [[LoginOrRegisterVC alloc]init];
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:loginVC];
+    [self.navigationController presentViewController:navVC animated:YES completion:nil];
+}
+
 @end

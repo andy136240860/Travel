@@ -18,21 +18,16 @@
 
 @end
 
-//@implementation XWStatus
-//
-//+ (NSString *)parseClassName {
-//    return @"_Status";
-//}
-//
-//@end
+@implementation XWStatus
+@end
 
 @implementation TravelTogether
 
 @dynamic travelDataType;
 @dynamic publisher;
-@dynamic headerViewBackgroundImageURL;
+@dynamic coverImageURL;
 @dynamic title;  //标题
-@dynamic destinatin; //地区
+@dynamic destination; //地区
 @dynamic startTime; //开始时间
 @dynamic endTime;  //结束时间
 @dynamic peopleNumber; //人数
@@ -40,13 +35,15 @@
 @dynamic price;  //钱数
 @dynamic priceType; //钱的单位（美元或者元XXXX）
 @dynamic traffic;
-@dynamic language; //NSString，ISOLanguageCodes，有逗号分隔
+@dynamic language; 
 @dynamic TravelTogetherCompanions; //同伴ralation，为各个user,key:TravelTogetherCompanions
 @dynamic TravelTogetherGuides;  //导游ralation，给各个user,key:TravelTogetherCompanionsGuides
 @dynamic detail; //旅游详情的html字符串
+@dynamic joinedPeopleNumber;
+@dynamic commendedUserArray;
 
 + (NSString *)parseClassName {
-    return MainDataClassName;
+    return NSStringFromClass([TravelTogether class]);
 }
 
 @end
@@ -54,10 +51,10 @@
 @implementation TravelTogetherPrivate
 
 - (TravelTogether *)convertToTravelTogetherData {
-    TravelTogether *object = [TravelTogether objectWithClassName:MainDataClassName];
+    TravelTogether *object = [TravelTogether objectWithClassName:NSStringFromClass([TravelTogether class])];
     object.travelDataType = TravelDataTravelTogether;
     object.title = self.title;
-    object.destinatin = self.destinatin;
+    object.destination = self.destination;
     object.startTime = self.startTime;
     object.endTime = self.endTime;
     object.peopleNumber = self.peopleNumber;
@@ -74,7 +71,33 @@
 }
 
 + (NSString *)parseClassName {
-    return MainDataPrivateClassName;
+    return NSStringFromClass([TravelTogetherPrivate class]);
+}
+
+@end
+
+@implementation XWComment
+
+@dynamic superData;
+@dynamic toUser;
+@dynamic user;
+@dynamic context;
+@dynamic relayArr;
+@dynamic baseComment;
+
++ (NSString *)parseClassName {
+    return NSStringFromClass([XWComment class]);
+}
+
+@end
+
+@implementation XWCommend
+
+@dynamic superData;
+//@dynamic commendUserArr;
+
++ (NSString *)parseClassName {
+    return NSStringFromClass([XWCommend class]);
 }
 
 @end

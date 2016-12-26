@@ -9,6 +9,7 @@
 #import "MyTravelDetailViewController.h"
 #import "MyTravelDetailHeaderView.h"
 #import "AVOSCloud.h"
+#import "Travel.h"
 
 @interface MyTravelDetailViewController () {
 
@@ -24,11 +25,34 @@
     [super viewDidLoad];
 //    self.fd_prefersNavigationBarHidden = YES;
     self.title = @"我的旅行";
+    
+//    XWCommend *commend = [[XWCommend alloc] init];
+//    commend.superData = [TravelTogether objectWithClassName:NSStringFromClass([TravelTogether class]) objectId:@"584163e5ac502e006b9783c7"];
+//    [commend saveInBackground];
+    AVQuery *qurey = [[AVQuery alloc]initWithClassName:NSStringFromClass([XWCommend class])];
+    [qurey includeKey:@"superData"];
+    [qurey findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        for (XWCommend *command  in  objects) {
+            if([command.superData isMemberOfClass:[TravelTogether class]]) {
+                TravelTogether *object = (TravelTogether *)command.superData;
+                NSLog(@"%@",object.title);
+            }
+        }
+    }];
+
     // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+//    NSArray *array = [NSArray arrayWithObjects:[XWUser currentUser],nil];
+//    [AVObject saveAllInBackground:array block:^(BOOL succeeded, NSError * _Nullable error) {
+//        if (succeeded) {
+//            [commend addUniqueObjectsFromArray:[NSArray arrayWithObjects:[XWUser currentUser],nil]  forKey:commendUserArr];
+//            [commend saveInBackground];
+//        }
+//    }];
 //    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 //    [dic setObjectSafely:@(0) forKey:@"typeid"];
 //    [dic setObjectSafely:@(0) forKey:@"startnumber"];

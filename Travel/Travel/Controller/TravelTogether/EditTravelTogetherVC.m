@@ -13,6 +13,7 @@
 #import "ChooseLanguageVC.h"
 #import "TravelContentRichTextEditor.h"
 #import "TravelTogetherDetailVC.h"
+#import "TravelTogetherDetailListModel.h"
 
 @interface EditTravelTogetherVC ()<EditTravelTogetherHeaderViewDelegate,UITableViewDelegate,UITableViewDataSource,TravelContentRichTextEditorDelegate>
 
@@ -46,7 +47,7 @@
     self.travelTogether = [[TravelTogetherPrivate alloc]init];
 
     self.KVOController = [[FBKVOController alloc]initWithObserver:self];
-    [self.KVOController observe:self.travelTogether keyPath:@"destinatin" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];
+    [self.KVOController observe:self.travelTogether keyPath:@"destination" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];
     [self.KVOController observe:self.travelTogether keyPath:@"startTime" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];
     [self.KVOController observe:self.travelTogether keyPath:@"endTime" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];
     [self.KVOController observe:self.travelTogether keyPath:@"peopleNumber" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];
@@ -275,10 +276,6 @@
     self.travelTogether.detail = contentString;
 }
 
-
-
-
-
 - (void)closeAction {
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
         
@@ -286,7 +283,9 @@
 }
 
 - (void)preViewTravelTogether {
-    TravelTogetherDetailVC *vc = [[TravelTogetherDetailVC alloc]init];
+    TravelTogetherDetailListModel *listModel = [[TravelTogetherDetailListModel alloc]init];
+    listModel.travelTogether = self.travelTogether;
+    TravelTogetherDetailVC *vc = [[TravelTogetherDetailVC alloc]initWithPageName:NSStringFromClass([TravelTogetherDetailVC class]) listModel:listModel];
     vc.travelTogether = self.travelTogether;
     [self.navigationController pushViewController:vc animated:YES];
 }

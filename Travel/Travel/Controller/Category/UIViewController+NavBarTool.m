@@ -27,7 +27,7 @@
 }
 
 - (void)useDefaultNavBarBackgroudColor {
-    self.navigationController.navigationBar.barTintColor = kGreenColor;
+    self.navigationController.navigationBar.barTintColor = kAppStyleColor;
     self.navigationController.navigationBar.translucent = NO;
 }
 

@@ -25,7 +25,7 @@
 #define kLightBlueColor    UIColorFromRGB(240, 251, 252)
 
 #define kDarkLineColor     UIColorFromHex(0xcccccc)
-#define kLightLineColor    UIColorFromHex(0xdddddd)
+#define kLightLineColor    UIColorFromHex(0xe5e5e5)
 
 #define kHomeBackColor UIColorFromRGB(41,155,157)
 
@@ -33,6 +33,9 @@
 
 #define kPayBtnColor       kGreenColor
 #define kDarkPayBtnColor   kDarkGreenColor
+
+#define kAppStyleColor      kGreenColor
+#define kDarkAppStyleColor   kDarkGreenColor
 
 #pragma =====  FontSize =========
 #define kCommonTitleFontSize      16
@@ -121,6 +124,7 @@
 #define kNotification_CityChange      @"Notification_CityChange"
 
 #define kNotification_TableHeaderViewFrameChange        @"Notification_TableHeaderViewFrameChange"
+#define kNotification_CommentCountDidChange             @"Notification_CommentCountDidChange"
 
 //======================
 #define kServicePhoneNumber     @"400-890-9636"
@@ -128,3 +132,5 @@
 #define kPlatForm     @"APP_IOS_USER"
 
 typedef void(^CUCommomButtonAction)(void);
+
+typedef void(^CUButtonBlock)(void);

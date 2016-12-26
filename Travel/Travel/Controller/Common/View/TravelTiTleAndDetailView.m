@@ -54,7 +54,7 @@
     
     _titleLabel = [[UILabel alloc]init];
     _titleLabel.font = [UIFont systemFontOfSize:17];
-    _titleLabel.textColor = kGreenColor;
+    _titleLabel.textColor = kAppStyleColor;
     _titleLabel.numberOfLines = 0;
     _titleLabel.preferredMaxLayoutWidth = kScreenWidth - 2*kPaddingLeft;
     [self addSubview:_titleLabel];
@@ -67,7 +67,7 @@
     [self addSubview:_timeLabel];
     
     _priceLabel = [[UILabel alloc]init];
-    _priceLabel.textColor = kGreenColor;
+    _priceLabel.textColor = kAppStyleColor;
     _priceLabel.numberOfLines = 1;
     _priceLabel.preferredMaxLayoutWidth = (kScreenWidth - 2*kPaddingLeft)/2.f;
     _priceLabel.textAlignment = NSTextAlignmentRight;
