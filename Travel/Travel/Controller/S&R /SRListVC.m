@@ -28,6 +28,7 @@ static NSString *travelTogetherCellIdentifier = @"TravelTogetherCell";
     self.navigationController.navigationBar.barTintColor = kAppStyleColor;
     self.navigationController.navigationBar.translucent = NO;
     
+    
     self.contentTableView.backgroundColor = kTableViewGrayColor;
     
     [self.contentTableView registerClass:[XWTravelTogetherCell class] forCellReuseIdentifier:travelTogetherCellIdentifier];
@@ -73,7 +74,7 @@ static NSString *travelTogetherCellIdentifier = @"TravelTogetherCell";
 - (void) setupModelOfTravelTogetherCell:(XWTravelTogetherCell *) cell atIndexPath:(NSIndexPath *) indexPath {
     id data = [self.listModel.items objectAtIndexSafely:indexPath.row];
     AVObject *object = (AVObject *)data;
-    TravelTogether *travelTogether = [object objectForKey:dataSourceTravelTogether];
+    TravelTogether *travelTogether = [object objectForKey:dataSource];
     XWUser *user = [object objectForKey:source];
     cell.fd_enforceFrameLayout = NO;
     cell.indexPath = indexPath;
@@ -84,15 +85,5 @@ static NSString *travelTogetherCellIdentifier = @"TravelTogetherCell";
     cell.titleLabel.text = [object objectForKey:contentText];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

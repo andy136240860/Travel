@@ -72,7 +72,7 @@
     
     self.interactionView = [[XWTravelInteractionCellView alloc]init];
     self.interactionView.commendActionBlock = ^{
-    
+        
     };
     self.interactionView.commentActionBlock = ^{
         
@@ -143,7 +143,7 @@
     }];
     
     [self.interactionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_left);
+        make.left.and.right.equalTo(self.contentView);
         make.top.mas_equalTo(self.detailView.mas_bottom).with.offset(magin);
         make.bottom.mas_equalTo(self.contentView.mas_bottom);
     }];

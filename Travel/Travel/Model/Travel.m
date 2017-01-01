@@ -19,12 +19,24 @@
 @end
 
 @implementation XWStatus
+
++ (TravelDataType)TravelDataTypeWithObject:(id)object {
+    if ([object isMemberOfClass:[TravelTogether class]]) {
+        return TravelDataTravelTogether;
+    }
+    else return -1;
+}
+
 @end
+
+//@implementation TravelBaseData
+//
+
+//
+//@end
 
 @implementation TravelTogether
 
-@dynamic travelDataType;
-@dynamic publisher;
 @dynamic coverImageURL;
 @dynamic title;  //标题
 @dynamic destination; //地区
@@ -40,7 +52,17 @@
 @dynamic TravelTogetherGuides;  //导游ralation，给各个user,key:TravelTogetherCompanionsGuides
 @dynamic detail; //旅游详情的html字符串
 @dynamic joinedPeopleNumber;
-@dynamic commendedUserArray;
+
+@dynamic travelDataType;
+@dynamic publisher;
+@dynamic comment;
+@dynamic commend;
+@dynamic commentNumber;
+
+@dynamic geoCity;
+@dynamic geoState;
+@dynamic geoCountryRegion;
+
 
 + (NSString *)parseClassName {
     return NSStringFromClass([TravelTogether class]);
@@ -49,6 +71,28 @@
 @end
 
 @implementation TravelTogetherPrivate
+
+@dynamic travelDataType;
+@dynamic publisher;
+@dynamic comment;
+@dynamic commend;
+
+@dynamic coverImageURL;
+@dynamic title;  //标题
+@dynamic destination; //地区
+@dynamic startTime; //开始时间
+@dynamic endTime;  //结束时间
+@dynamic peopleNumber; //人数
+@dynamic peopleNumberCanExceed; //人数可超
+@dynamic price;  //钱数
+@dynamic priceType; //钱的单位（美元或者元XXXX）
+@dynamic traffic;
+@dynamic language;
+@dynamic TravelTogetherCompanions; //同伴ralation，为各个user,key:TravelTogetherCompanions
+@dynamic TravelTogetherGuides;  //导游ralation，给各个user,key:TravelTogetherCompanionsGuides
+@dynamic detail; //旅游详情的html字符串
+@dynamic joinedPeopleNumber;
+
 
 - (TravelTogether *)convertToTravelTogetherData {
     TravelTogether *object = [TravelTogether objectWithClassName:NSStringFromClass([TravelTogether class])];

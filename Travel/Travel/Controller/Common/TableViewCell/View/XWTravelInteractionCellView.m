@@ -26,6 +26,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        self.userInteractionEnabled = YES;
         [self initSubView];
         [self createAutoLayout];
     }
@@ -139,19 +140,27 @@
 }
 
 - (void)commendAction {
-    
+    if (self.commendActionBlock) {
+        self.commendActionBlock();
+    }
 }
 
 - (void)commentAction {
-
+    if (self.commentActionBlock) {
+        self.commentActionBlock();
+    }
 }
 
 - (void)shareAction {
-    
+    if (self.shareActionBlock) {
+        self.shareActionBlock();
+    }
 }
 
 - (void)moreAction {
-    
+    if (self.moreActionBlock) {
+        self.moreActionBlock();
+    }
 }
 
 

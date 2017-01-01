@@ -12,15 +12,6 @@
 #import "Travel.h"
 #import "SNServerAPIResultData.h"
 
-static NSString * const dataSourceTravelTogether = @"dataSourceTravelTogether";
-static NSString * const __type = @"__type";
-static NSString * const Pointer = @"Pointer";
-static NSString * const className = @"className";
-static NSString * const objectId = @"objectId";
-static NSString * const source = @"source";
-static NSString * const contentText = @"contentText";
-
-
 typedef void (^XWTravelTogetherPublishResultBlock)(BOOL succeeded, NSError *error, TravelTogether *travelTogether);
 typedef void (^XWServerResultBlock)(BOOL succeeded, NSError *error, id responseObject , id parsedModelObject);
 

@@ -457,6 +457,8 @@
 		BC190E851C9257F7007BA6A8 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = BC190E811C9257F7007BA6A8 /* Icon-120.png */; };
 		BC190E861C9257F7007BA6A8 /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = BC190E821C9257F7007BA6A8 /* Icon-152.png */; };
 		BC190E871C9257F7007BA6A8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC190E831C9257F7007BA6A8 /* Icon@2x.png */; };
+		BC37114E1E19380F00B58E5B /* XWGeoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = BC37114D1E19380F00B58E5B /* XWGeoTool.m */; };
+		BC3711501E19384400B58E5B /* LocList.xml in Resources */ = {isa = PBXBuildFile; fileRef = BC37114F1E19384400B58E5B /* LocList.xml */; };
 		BC3A62131D61EA26006C8DFD /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3A62121D61EA26006C8DFD /* HexColor.m */; };
 		BC4B791B1D61E77800F57DB5 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = BC4B79181D61E77800F57DB5 /* README.md */; };
 		BC4F953C1D6469760007BD40 /* tabar_PlusButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC4F953B1D6469760007BD40 /* tabar_PlusButton@2x.png */; };
@@ -770,6 +772,7 @@
 		BCD473CF1DD851C0006898B5 /* commen_settingButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCD473CE1DD851C0006898B5 /* commen_settingButton@3x.png */; };
 		BCD473D81DD88AAB006898B5 /* CustomIOS7AlertView+TextMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD473D51DD88AAB006898B5 /* CustomIOS7AlertView+TextMessage.m */; };
 		BCD473D91DD88AAB006898B5 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD473D71DD88AAB006898B5 /* CustomIOS7AlertView.m */; };
+		BCDE8CBB1E17786E000547E3 /* XWCommendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BCDE8CBA1E17786E000547E3 /* XWCommendManager.m */; };
 		D405CC671C00CBB900A56264 /* login_hide_password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D405CC651C00CBB900A56264 /* login_hide_password@2x.png */; };
 		D405CC681C00CBB900A56264 /* login_show_password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D405CC661C00CBB900A56264 /* login_show_password@2x.png */; };
 		D4A54FB11C0C184B00952B30 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A54FB01C0C184B00952B30 /* libc++.tbd */; };
@@ -1174,7 +1177,6 @@
 		BC123D571E115961004DC266 /* Platform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Platform.m; sourceTree = "<group>"; };
 		BC123D581E115961004DC266 /* Travel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Travel.h; sourceTree = "<group>"; };
 		BC123D591E115961004DC266 /* Travel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Travel.m; sourceTree = "<group>"; };
-		BC123D5A1E115961004DC266 /* TravelStatusExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelStatusExtension.h; sourceTree = "<group>"; };
 		BC123D5B1E115961004DC266 /* XWUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWUser.h; sourceTree = "<group>"; };
 		BC123D5C1E115961004DC266 /* XWUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWUser.m; sourceTree = "<group>"; };
 		BC123D621E1159C3004DC266 /* AppCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCore.h; sourceTree = "<group>"; };
@@ -1578,6 +1580,9 @@
 		BC190E811C9257F7007BA6A8 /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
 		BC190E821C9257F7007BA6A8 /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
 		BC190E831C9257F7007BA6A8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		BC37114C1E19380F00B58E5B /* XWGeoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWGeoTool.h; sourceTree = "<group>"; };
+		BC37114D1E19380F00B58E5B /* XWGeoTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWGeoTool.m; sourceTree = "<group>"; };
+		BC37114F1E19384400B58E5B /* LocList.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LocList.xml; sourceTree = "<group>"; };
 		BC3A62111D61EA26006C8DFD /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
 		BC3A62121D61EA26006C8DFD /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
 		BC4B79151D61E77800F57DB5 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
@@ -1918,6 +1923,9 @@
 		BCD473D51DD88AAB006898B5 /* CustomIOS7AlertView+TextMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CustomIOS7AlertView+TextMessage.m"; sourceTree = "<group>"; };
 		BCD473D61DD88AAB006898B5 /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
 		BCD473D71DD88AAB006898B5 /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
+		BCDE8CB91E17786E000547E3 /* XWCommendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWCommendManager.h; sourceTree = "<group>"; };
+		BCDE8CBA1E17786E000547E3 /* XWCommendManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWCommendManager.m; sourceTree = "<group>"; };
+		BCDE8CBC1E17ED52000547E3 /* TravelExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelExtension.h; sourceTree = "<group>"; };
 		C3BF72F04D9EDA939E4FB4F5 /* Pods-Travel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Travel/Pods-Travel.debug.xcconfig"; sourceTree = "<group>"; };
 		D405CC651C00CBB900A56264 /* login_hide_password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_hide_password@2x.png"; sourceTree = "<group>"; };
 		D405CC661C00CBB900A56264 /* login_show_password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_show_password@2x.png"; sourceTree = "<group>"; };
@@ -3599,6 +3607,9 @@
 				BC123E9E1E115AAC004DC266 /* XWTabulationView.m */,
 				BC123E9F1E115AAC004DC266 /* YYPhotoView.h */,
 				BC123EA01E115AAC004DC266 /* YYPhotoView.m */,
+				BC37114C1E19380F00B58E5B /* XWGeoTool.h */,
+				BC37114D1E19380F00B58E5B /* XWGeoTool.m */,
+				BC37114F1E19384400B58E5B /* LocList.xml */,
 			);
 			path = XWTool;
 			sourceTree = "<group>";
@@ -5298,6 +5309,8 @@
 				BC123D701E1159C3004DC266 /* XWCommentManager.m */,
 				BC123D711E1159C3004DC266 /* XWTravelPublishManager.h */,
 				BC123D721E1159C3004DC266 /* XWTravelPublishManager.m */,
+				BCDE8CB91E17786E000547E3 /* XWCommendManager.h */,
+				BCDE8CBA1E17786E000547E3 /* XWCommendManager.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -5364,9 +5377,9 @@
 				BC123D571E115961004DC266 /* Platform.m */,
 				BC123D581E115961004DC266 /* Travel.h */,
 				BC123D591E115961004DC266 /* Travel.m */,
-				BC123D5A1E115961004DC266 /* TravelStatusExtension.h */,
 				BC123D5B1E115961004DC266 /* XWUser.h */,
 				BC123D5C1E115961004DC266 /* XWUser.m */,
+				BCDE8CBC1E17ED52000547E3 /* TravelExtension.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6189,6 +6202,7 @@
 				BC62C50A1D3F27B900977F58 /* f_static_031@2x.png in Resources */,
 				BC123F491E115AAC004DC266 /* ZSSforcejustify@2x.png in Resources */,
 				BC62C57D1D3F27B900977F58 /* f_static_088@3x.png in Resources */,
+				BC3711501E19384400B58E5B /* LocList.xml in Resources */,
 				BC1240091E115E6B004DC266 /* myrequest@3x.png in Resources */,
 				BC1240121E115E6B004DC266 /* searchontop@3x.png in Resources */,
 				E1EB1DD11B70A43B0048B8EB /* navbar_back_button@2x.png in Resources */,
@@ -6620,6 +6634,7 @@
 				BC123E261E115A2D004DC266 /* CollectionViewCellForMeVC.m in Sources */,
 				BC123E2D1E115A2D004DC266 /* TravelTogetherDetailListModel.m in Sources */,
 				3EDEBABD1A961C4800E72809 /* SNServerAPIResultData.m in Sources */,
+				BC37114E1E19380F00B58E5B /* XWGeoTool.m in Sources */,
 				E1EB1E3F1B70A43B0048B8EB /* UIImageView+LBBlurredImage.m in Sources */,
 				BC123F1D1E115AAC004DC266 /* SNCycleScrollView.m in Sources */,
 				BC91D5B01D5B4BC2007A335F /* XWBannerViewCell.m in Sources */,
@@ -6693,6 +6708,7 @@
 				3EDEBAB81A961C4800E72809 /* SNSingleton.m in Sources */,
 				BC62C5B01D3F27B900977F58 /* FaceButton.m in Sources */,
 				3EDEBAC31A961C4800E72809 /* UIImage+Draw.m in Sources */,
+				BCDE8CBB1E17786E000547E3 /* XWCommendManager.m in Sources */,
 				BC123E021E115A2D004DC266 /* XWListController.m in Sources */,
 				E1EB1ED21B70A4D70048B8EB /* DataVerifier.m in Sources */,
 				BC123F3A1E115AAC004DC266 /* XWSegmentBar.m in Sources */,

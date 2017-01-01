@@ -10,6 +10,7 @@
 #import "MyTravelDetailHeaderView.h"
 #import "AVOSCloud.h"
 #import "Travel.h"
+#import "XWGeoTool.h"
 
 @interface MyTravelDetailViewController () {
 
@@ -26,50 +27,19 @@
 //    self.fd_prefersNavigationBarHidden = YES;
     self.title = @"我的旅行";
     
-//    XWCommend *commend = [[XWCommend alloc] init];
-//    commend.superData = [TravelTogether objectWithClassName:NSStringFromClass([TravelTogether class]) objectId:@"584163e5ac502e006b9783c7"];
-//    [commend saveInBackground];
-    AVQuery *qurey = [[AVQuery alloc]initWithClassName:NSStringFromClass([XWCommend class])];
-    [qurey includeKey:@"superData"];
-    [qurey findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        for (XWCommend *command  in  objects) {
-            if([command.superData isMemberOfClass:[TravelTogether class]]) {
-                TravelTogether *object = (TravelTogether *)command.superData;
-                NSLog(@"%@",object.title);
-            }
-        }
-    }];
+    [self addRightButtonWithTitle:@"保存" seletor:@selector(rightButtonAction)];
+    
+    XWGeoTool *geoTool = [[XWGeoTool alloc]init];
+    [geoTool parse];
+}
 
-    // Do any additional setup after loading the view.
+- (void)rightButtonAction {
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-//    NSArray *array = [NSArray arrayWithObjects:[XWUser currentUser],nil];
-//    [AVObject saveAllInBackground:array block:^(BOOL succeeded, NSError * _Nullable error) {
-//        if (succeeded) {
-//            [commend addUniqueObjectsFromArray:[NSArray arrayWithObjects:[XWUser currentUser],nil]  forKey:commendUserArr];
-//            [commend saveInBackground];
-//        }
-//    }];
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//    [dic setObjectSafely:@(0) forKey:@"typeid"];
-//    [dic setObjectSafely:@(0) forKey:@"startnumber"];
-//    [AVCloud callFunctionInBackground:@"Home" withParameters:dic block:^(id object, NSError *error) {
-//        
-//    }];
-//    AVSearchQuery
-//    AVObject *GuideService =[AVObject objectWithClassName:@"GuideService" objectId:@"57b554e8c4c971005f909151"];
-//    [GuideService fetchInBackgroundWithBlock:^(AVObject *avObject, NSError *error) {
-//        if (!error) {
-//            [GuideService incrementKey:nil ];
-//        }
-//    }];
-//    AVQuery *queue;
-//    [queue includeKey:nil];
-//    AVStatus *status;
-//    [AVStatus sendStatusToFollowers:<#(AVStatus *)#> andCallback:<#^(BOOL succeeded, NSError *error)callback#>]
+
 }
 
 - (void)loadContentView {
@@ -90,14 +60,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
