@@ -12,7 +12,7 @@
 #import "Travel.h"
 #import "XWGeoTool.h"
 
-@interface MyTravelDetailViewController () {
+@interface MyTravelDetailViewController ()<XWGeoToolDelegate> {
 
 }
 
@@ -30,7 +30,7 @@
     [self addRightButtonWithTitle:@"保存" seletor:@selector(rightButtonAction)];
     
     XWGeoTool *geoTool = [[XWGeoTool alloc]init];
-    [geoTool parse];
+    geoTool.delegate = self;
 }
 
 - (void)rightButtonAction {

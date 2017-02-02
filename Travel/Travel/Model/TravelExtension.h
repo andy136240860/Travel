@@ -26,8 +26,8 @@ typedef NS_ENUM(NSInteger, TravelDataType) {
 @property (nonatomic, strong) XWComment         *comment;
 @property (nonatomic, assign) NSInteger         commentNumber;
 
-@property (nonatomic, assign) NSInteger         geoCountryRegion;
-@property (nonatomic, assign) NSInteger         geoState;
-@property (nonatomic, assign) NSInteger         geoCity;
+@property (nonatomic, strong) NSString          *geoCountryRegion;
+@property (nonatomic, strong) NSString          *geoState;
+@property (nonatomic, strong) NSString          *geoCity;
 
 @end

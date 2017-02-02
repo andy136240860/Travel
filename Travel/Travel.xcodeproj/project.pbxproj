@@ -453,6 +453,7 @@
 		BC1240251E115E6C004DC266 /* video@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC123FDF1E115E6B004DC266 /* video@3x.png */; };
 		BC1240261E115E6C004DC266 /* weibo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC123FE01E115E6B004DC266 /* weibo@3x.png */; };
 		BC1240271E115E6C004DC266 /* wx@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC123FE11E115E6B004DC266 /* wx@3x.png */; };
+		BC12E16F1E1E813800F81BFE /* ChooseCountryRegionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC12E16E1E1E813800F81BFE /* ChooseCountryRegionVC.m */; };
 		BC190E841C9257F7007BA6A8 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = BC190E801C9257F7007BA6A8 /* Icon-76.png */; };
 		BC190E851C9257F7007BA6A8 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = BC190E811C9257F7007BA6A8 /* Icon-120.png */; };
 		BC190E861C9257F7007BA6A8 /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = BC190E821C9257F7007BA6A8 /* Icon-152.png */; };
@@ -768,6 +769,10 @@
 		BCB383F31D655AF40055F6AE /* tabar_closeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCB383F21D655AF40055F6AE /* tabar_closeButton@2x.png */; };
 		BCC0267E1D533C7A003AFD58 /* CollectionHeaderViewForMeVC_backgrounddefaultImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCC0267D1D533C7A003AFD58 /* CollectionHeaderViewForMeVC_backgrounddefaultImage@2x.png */; };
 		BCC026801D533E40003AFD58 /* CollectionHeaderViewForMeVC_userAvatarDefaultImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCC0267F1D533E40003AFD58 /* CollectionHeaderViewForMeVC_userAvatarDefaultImage@2x.png */; };
+		BCC3A6C81E1A8EE000870306 /* XWMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC3A6C41E1A8EE000870306 /* XWMessage.m */; };
+		BCC3A6C91E1A8EE000870306 /* XWMessageImageError@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCC3A6C51E1A8EE000870306 /* XWMessageImageError@3x.png */; };
+		BCC3A6CA1E1A8EE000870306 /* XWMessageImageSuccess@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCC3A6C61E1A8EE000870306 /* XWMessageImageSuccess@3x.png */; };
+		BCC3A6CB1E1A8EE000870306 /* XWMessageImageWarning@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCC3A6C71E1A8EE000870306 /* XWMessageImageWarning@3x.png */; };
 		BCC9AAED1CA238D7009D3F9B /* ParserTools.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC9AAEC1CA238D7009D3F9B /* ParserTools.m */; };
 		BCD473CF1DD851C0006898B5 /* commen_settingButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCD473CE1DD851C0006898B5 /* commen_settingButton@3x.png */; };
 		BCD473D81DD88AAB006898B5 /* CustomIOS7AlertView+TextMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD473D51DD88AAB006898B5 /* CustomIOS7AlertView+TextMessage.m */; };
@@ -1576,6 +1581,8 @@
 		BC123FDF1E115E6B004DC266 /* video@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video@3x.png"; sourceTree = "<group>"; };
 		BC123FE01E115E6B004DC266 /* weibo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weibo@3x.png"; sourceTree = "<group>"; };
 		BC123FE11E115E6B004DC266 /* wx@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wx@3x.png"; sourceTree = "<group>"; };
+		BC12E16D1E1E813800F81BFE /* ChooseCountryRegionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCountryRegionVC.h; sourceTree = "<group>"; };
+		BC12E16E1E1E813800F81BFE /* ChooseCountryRegionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCountryRegionVC.m; sourceTree = "<group>"; };
 		BC190E801C9257F7007BA6A8 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
 		BC190E811C9257F7007BA6A8 /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
 		BC190E821C9257F7007BA6A8 /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
@@ -1916,6 +1923,11 @@
 		BCB383F21D655AF40055F6AE /* tabar_closeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabar_closeButton@2x.png"; sourceTree = "<group>"; };
 		BCC0267D1D533C7A003AFD58 /* CollectionHeaderViewForMeVC_backgrounddefaultImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CollectionHeaderViewForMeVC_backgrounddefaultImage@2x.png"; sourceTree = "<group>"; };
 		BCC0267F1D533E40003AFD58 /* CollectionHeaderViewForMeVC_userAvatarDefaultImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CollectionHeaderViewForMeVC_userAvatarDefaultImage@2x.png"; sourceTree = "<group>"; };
+		BCC3A6C31E1A8EE000870306 /* XWMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWMessage.h; sourceTree = "<group>"; };
+		BCC3A6C41E1A8EE000870306 /* XWMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWMessage.m; sourceTree = "<group>"; };
+		BCC3A6C51E1A8EE000870306 /* XWMessageImageError@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "XWMessageImageError@3x.png"; sourceTree = "<group>"; };
+		BCC3A6C61E1A8EE000870306 /* XWMessageImageSuccess@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "XWMessageImageSuccess@3x.png"; sourceTree = "<group>"; };
+		BCC3A6C71E1A8EE000870306 /* XWMessageImageWarning@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "XWMessageImageWarning@3x.png"; sourceTree = "<group>"; };
 		BCC9AAEB1CA238D7009D3F9B /* ParserTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParserTools.h; sourceTree = "<group>"; };
 		BCC9AAEC1CA238D7009D3F9B /* ParserTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParserTools.m; sourceTree = "<group>"; };
 		BCD473CE1DD851C0006898B5 /* commen_settingButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "commen_settingButton@3x.png"; sourceTree = "<group>"; };
@@ -3176,6 +3188,7 @@
 		BC123D8D1E115A2C004DC266 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BC12E16C1E1E80A000F81BFE /* ChooseGeo */,
 				BC123D8E1E115A2C004DC266 /* ChooseLanguageVC.h */,
 				BC123D8F1E115A2C004DC266 /* ChooseLanguageVC.m */,
 				BC123D901E115A2C004DC266 /* Comment */,
@@ -3597,6 +3610,7 @@
 		BC123E961E115AAC004DC266 /* XWTool */ = {
 			isa = PBXGroup;
 			children = (
+				BCC3A6C21E1A8EE000870306 /* XWMessage */,
 				BC123E971E115AAC004DC266 /* TitleView.h */,
 				BC123E981E115AAC004DC266 /* TitleView.m */,
 				BC123E991E115AAC004DC266 /* XWImageShowView.h */,
@@ -3821,6 +3835,15 @@
 				BC123FE11E115E6B004DC266 /* wx@3x.png */,
 			);
 			path = xxhdpi;
+			sourceTree = "<group>";
+		};
+		BC12E16C1E1E80A000F81BFE /* ChooseGeo */ = {
+			isa = PBXGroup;
+			children = (
+				BC12E16D1E1E813800F81BFE /* ChooseCountryRegionVC.h */,
+				BC12E16E1E1E813800F81BFE /* ChooseCountryRegionVC.m */,
+			);
+			path = ChooseGeo;
 			sourceTree = "<group>";
 		};
 		BC3A62081D61E9ED006C8DFD /* HexColors */ = {
@@ -5167,6 +5190,18 @@
 			path = Me;
 			sourceTree = "<group>";
 		};
+		BCC3A6C21E1A8EE000870306 /* XWMessage */ = {
+			isa = PBXGroup;
+			children = (
+				BCC3A6C31E1A8EE000870306 /* XWMessage.h */,
+				BCC3A6C41E1A8EE000870306 /* XWMessage.m */,
+				BCC3A6C51E1A8EE000870306 /* XWMessageImageError@3x.png */,
+				BCC3A6C61E1A8EE000870306 /* XWMessageImageSuccess@3x.png */,
+				BCC3A6C71E1A8EE000870306 /* XWMessageImageWarning@3x.png */,
+			);
+			path = XWMessage;
+			sourceTree = "<group>";
+		};
 		BCD473D31DD88AAB006898B5 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
@@ -6033,6 +6068,7 @@
 				BC62C51E1D3F27B900977F58 /* f_static_041@2x.png in Resources */,
 				BC62C52E1D3F27B900977F58 /* f_static_049@2x.png in Resources */,
 				BC62C4F41D3F27B900977F58 /* f_static_020@2x.png in Resources */,
+				BCC3A6CB1E1A8EE000870306 /* XWMessageImageWarning@3x.png in Resources */,
 				BC62C53A1D3F27B900977F58 /* f_static_055@2x.png in Resources */,
 				BC123F741E115AAC004DC266 /* ZSSrightjustify.png in Resources */,
 				BC62C5701D3F27B900977F58 /* f_static_082@2x.png in Resources */,
@@ -6298,6 +6334,7 @@
 				BC123FF21E115E6B004DC266 /* edit2@3x.png in Resources */,
 				BC123F471E115AAC004DC266 /* ZSSfonts@2x.png in Resources */,
 				7F2B65651C90245B007C2860 /* Launch.jpg in Resources */,
+				BCC3A6CA1E1A8EE000870306 /* XWMessageImageSuccess@3x.png in Resources */,
 				BC62C59B1D3F27B900977F58 /* f_static_103@3x.png in Resources */,
 				BC62C5091D3F27B900977F58 /* f_static_030@3x.png in Resources */,
 				BC123F811E115AAC004DC266 /* ZSSunderline@2x.png in Resources */,
@@ -6360,6 +6397,7 @@
 				BC123FEA1E115E6B004DC266 /* chat2@3x.png in Resources */,
 				BC62C59F1D3F27B900977F58 /* f_static_105@3x.png in Resources */,
 				3E239E731AB33BC1001F0B3F /* checkmark_fail@2x.png in Resources */,
+				BCC3A6C91E1A8EE000870306 /* XWMessageImageError@3x.png in Resources */,
 				BC62C58E1D3F27B900977F58 /* f_static_097@2x.png in Resources */,
 				BC1240081E115E6B004DC266 /* myorder@3x.png in Resources */,
 				BC123F831E115AAC004DC266 /* ZSSundo@2x.png in Resources */,
@@ -6571,6 +6609,7 @@
 				BC123D731E1159C3004DC266 /* AppCore.m in Sources */,
 				3EDEBAC41A961C4800E72809 /* UIImage+GIF.m in Sources */,
 				BC123F181E115AAC004DC266 /* CUPageControl.m in Sources */,
+				BCC3A6C81E1A8EE000870306 /* XWMessage.m in Sources */,
 				BC123F141E115AAC004DC266 /* CellContentView.m in Sources */,
 				3EDEBAB41A961C4800E72809 /* NSFileManager+Size.m in Sources */,
 				BC123E2A1E115A2D004DC266 /* SRListVC.m in Sources */,
@@ -6600,6 +6639,7 @@
 				3EDEBAB31A961C4800E72809 /* NSDictionary++SNExtension.m in Sources */,
 				BC123E101E115A2D004DC266 /* TravelContentRichTextEditor.m in Sources */,
 				BC123F241E115AAC004DC266 /* JTCalendarSettings.m in Sources */,
+				BC12E16F1E1E813800F81BFE /* ChooseCountryRegionVC.m in Sources */,
 				BC123D791E1159C3004DC266 /* XWTravelPublishManager.m in Sources */,
 				7FD0BBCE1C9A58C9004D2E02 /* IQUIWindow+Hierarchy.m in Sources */,
 				BC123E191E115A2D004DC266 /* XWHomeCell.m in Sources */,

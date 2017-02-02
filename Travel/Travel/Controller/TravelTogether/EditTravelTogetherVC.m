@@ -55,7 +55,7 @@
     [self.KVOController observe:self.travelTogether keyPath:@"endTime" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];
     [self.KVOController observe:self.travelTogether keyPath:@"peopleNumber" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];
     [self.KVOController observe:self.travelTogether keyPath:@"peopleNumberCanExceed" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];
-    [self.KVOController observe:self.travelTogether keyPath:@"peopleNumberCanExceed" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];
+//    [self.KVOController observe:self.travelTogether keyPath:@"peopleNumberCanExceed" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(changeValue)];
     // Do any additional setup after loading the view.
 }
 

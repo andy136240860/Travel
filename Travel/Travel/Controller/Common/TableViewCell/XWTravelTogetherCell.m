@@ -10,7 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "NSDate+SNExtension.h"
 #import "XWCommendManager.h"
-#import "MBProgressHUD.h"
+#import "XWMessage.h"
 
 @implementation XWTravelTogetherCell
 @dynamic detailView;
@@ -42,19 +42,13 @@
                     }
                 }
                 else {
-                    MBProgressHUD *hud = [[MBProgressHUD alloc]init];
-                    hud.labelText = @"请先登录";
-                    hud.mode = MBProgressHUDModeText;
-                    [hud show:YES];
+                    [XWMessage showWarningWithTitle:@"请先登录" message:@"登录后可以点赞收藏登录后可以点赞收藏登录后可以点赞收藏登录后可以点赞收藏登录后可以点赞收藏登录后可以点赞收藏登录后可以点赞收藏"];
                 }
             }];
 
         }
         else {
-            MBProgressHUD *hud = [[MBProgressHUD alloc]init];
-            hud.labelText = @"请先登录";
-            hud.mode = MBProgressHUDModeText;
-            [hud show:YES];
+            [XWMessage showWarningWithTitle:@"请先登录" message:@"登录后可以点赞收藏登录后可以点赞收藏登录后可以点赞收藏登录后可以点赞收藏登录后可以点赞收藏登录后可以点赞收藏登录后可以点赞收藏"];
         }
     };
 }

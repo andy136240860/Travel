@@ -15,7 +15,7 @@
 @interface GeoCountryRegion : NSObject
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, assign) NSInteger code;
+@property (nonatomic, assign) NSString *code;
 @property (nonatomic, strong) NSMutableArray<GeoState *> *stateArr;
 
 - (instancetype)init;
@@ -25,7 +25,7 @@
 @interface GeoState : NSObject
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, assign) NSInteger code;
+@property (nonatomic, assign) NSString *code;
 @property (nonatomic, strong) NSMutableArray<GeoCity *> *cityArr;
 
 - (instancetype)init;
@@ -35,12 +35,24 @@
 @interface GeoCity : NSObject
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, assign) NSInteger code;
+@property (nonatomic, assign) NSString *code;
+
+@end
+
+@protocol XWGeoToolDelegate <NSObject>
+
+@optional
+
+- (void)parserDidEndGeoList:(NSArray *)list;
 
 @end
 
 @interface XWGeoTool : NSObject
 
--(void)parse;
+SINGLETON_DECLARE(XWGeoTool);
+
+@property (nonatomic, strong) NSMutableArray<GeoCountryRegion *> *list;
+
+@property (nonatomic, weak) id <XWGeoToolDelegate> delegate;
 
 @end

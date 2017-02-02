@@ -66,7 +66,7 @@ static NSString * const createdAt = @"createdAt";
 @property (nonatomic, assign) NSInteger     startTime; //开始时间
 @property (nonatomic, assign) NSInteger     endTime;  //结束时间
 @property (nonatomic, assign) NSInteger     peopleNumber; //人数
-@property (nonatomic, assign) BOOL          peopleNumberCanExceed; //人数可超
+@property (nonatomic, assign) BOOL          peopleNumberCanExceed;//人数可超
 @property (nonatomic, assign) NSInteger     price;  //钱数
 @property (nonatomic, strong) NSString      *priceType; //钱的单位（美元或者元XXXX）
 @property (nonatomic, assign) BOOL          traffic;

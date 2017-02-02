@@ -72,11 +72,6 @@
 
 @implementation TravelTogetherPrivate
 
-@dynamic travelDataType;
-@dynamic publisher;
-@dynamic comment;
-@dynamic commend;
-
 @dynamic coverImageURL;
 @dynamic title;  //标题
 @dynamic destination; //地区
@@ -92,6 +87,16 @@
 @dynamic TravelTogetherGuides;  //导游ralation，给各个user,key:TravelTogetherCompanionsGuides
 @dynamic detail; //旅游详情的html字符串
 @dynamic joinedPeopleNumber;
+
+@dynamic travelDataType;
+@dynamic publisher;
+@dynamic comment;
+@dynamic commend;
+@dynamic commentNumber;
+
+@dynamic geoCity;
+@dynamic geoState;
+@dynamic geoCountryRegion;
 
 
 - (TravelTogether *)convertToTravelTogetherData {
